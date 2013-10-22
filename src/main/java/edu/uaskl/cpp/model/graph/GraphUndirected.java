@@ -28,9 +28,9 @@ public class GraphUndirected extends GraphBasic {
     }
 
     /** Running time: O(log(|nodes| + |edgesFromGivenNode|*|edgesFromRelatedNode|)) */
-    public boolean removeNode(final NodeCpp nodeToRemove) {
-        final boolean successful = this.nodes.remove(nodeToRemove);
-        if (!successful)
+    public boolean removeNode(final String id) {
+    	NodeCpp nodeToRemove = this.nodes.remove(id);
+        if (nodeToRemove == null)
             return false;
         nodeToRemove.removeAllEdges();
         return true;

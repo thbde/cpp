@@ -97,25 +97,31 @@ public class OsmImporter {
 		//connect them
 		Element documentElement = osmFile.getDocumentElement();
 		NodeList ways = documentElement.getElementsByTagName("way");
-		
 		for(int i=0;i< ways.getLength();++i){
 			NodeList childNodes = ways.item(i).getChildNodes();
 			String lastWaypoint = null;
 			for(int j=0;j<childNodes.getLength();++j){
-				Element childNode = (Element) childNodes.item(j);
-				if(lastWaypoint == null && childNode.getNodeName()=="nd"){
-					lastWaypoint = childNode.getAttribute("ref");
-				}
-				else{
-					if( childNode.getNodeName()=="nd"){
-						int distance = getDistance(osmNodes.get(lastWaypoint),osmNodes.get(childNode.getAttribute("ref")));
-						
-						nodea.connectWithNodeAndWeigth(nodeb,distance);
-						
-						
-						//add edge
+				Node cNode =  childNodes.item(j);
+				if(cNode.getNodeType() == Node.ELEMENT_NODE){
+					Element childNode = (Element) cNode;
+					if(lastWaypoint == null && childNode.getNodeName()=="nd"){
+						lastWaypoint = childNode.getAttribute("ref");
+						if(!osmNodes.containsKey(lastWaypoint)){
+							lastWaypoint = null;
+						}
 					}
-					// for non naive: check for roundabout
+					else{
+						if( childNode.getNodeName()=="nd"){
+							String nodeId = childNode.getAttribute("ref");
+							NodeCpp node = osmGraph.getNode(nodeId);
+							if (!(node == null)){
+								int distance = getDistance(osmNodes.get(lastWaypoint),osmNodes.get(childNode.getAttribute("ref")));
+								osmGraph.getNode(lastWaypoint).connectWithNodeAndWeigth(node,distance);
+								lastWaypoint = childNode.getAttribute("ref");
+							}
+						}
+						// for non naive: check for roundabout
+					}
 				}
 			}
 		}

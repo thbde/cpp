@@ -47,6 +47,8 @@ public class OsmImporterTest {
 	public void testImportOsmUndirected(){
 		OsmImporter testImporter = new OsmImporter();
 		GraphUndirected graph = testImporter.importOsmUndirected("fh_way_no_meta.osm");
-		assertNotEquals("Graph should have Nodes",graph.getNumberOfNodes(),0);
+		assertNotEquals("Graph should have nodes",graph.getNumberOfNodes(),0);
+		assertNotEquals("Graph should have edges",graph.getGetNumberOfEdges(),0);
+		System.out.println(graph.toString());
 	}
 }

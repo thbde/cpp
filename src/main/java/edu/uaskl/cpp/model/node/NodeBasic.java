@@ -17,13 +17,13 @@ import edu.uaskl.cpp.tools.CollectionTools;
  */
 public class NodeBasic<T extends NodeBasic<T, V>, V extends EdgeBasic<T, V>> implements Node<T, V> {
     private final static AtomicInteger counter = new AtomicInteger(0);
-    private final int id = counter.getAndIncrement();
+    protected String nodeId = Integer.toString(counter.getAndIncrement(), 10);
     private String name;
     private List<V> edges = new ArrayList<>();
     private final EdgeCreator<T, V> edgeCreator;
-
+  
     protected NodeBasic(final String name, final EdgeCreator<T, V> edgeCreator) {
-        this.name = name.isEmpty() ? Integer.toString(id, 10) : name;
+        this.name = name.isEmpty() ? nodeId : name;
         this.edgeCreator = edgeCreator;
     }
 
@@ -35,6 +35,10 @@ public class NodeBasic<T extends NodeBasic<T, V>, V extends EdgeBasic<T, V>> imp
     public NodeBasic(final T knoten) {
         this(knoten.getName(), knoten.getEdgeCreator());
         this.setEdges(knoten.getEdges());
+    }
+    
+    public String getNodeId(){
+    	return this.nodeId;
     }
 
     public EdgeCreator<T, V> getEdgeCreator() {
@@ -98,8 +102,8 @@ public class NodeBasic<T extends NodeBasic<T, V>, V extends EdgeBasic<T, V>> imp
         this.name = name;
     }
 
-    public int getId() {
-        return id;
+    public String getId() {
+        return this.nodeId;
     }
 
     /** Constant running time ( Arraylist.size() ) **/
