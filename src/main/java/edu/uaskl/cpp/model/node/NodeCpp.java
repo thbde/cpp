@@ -13,11 +13,18 @@ public class NodeCpp extends NodeBasic<NodeCpp, EdgeCpp> {
     private boolean isAllEdgesVisited = false;
     private NodeCpp nodeForCPP;
     private static final EdgeCreator<NodeCpp, EdgeCpp> edgeCreator = new EdgeCreatorCpp();
-
+    private String id = "";
+    private long lat = 0;
+    private long lon = 0;
     public NodeCpp() {
         super(edgeCreator);
     }
-
+    public NodeCpp(String id, long lat, long lon) {
+        super(edgeCreator);
+        this.id=id;
+        this.lat=lat;
+        this.lon=lon;
+    }
     /** Copy constructor, creates a new node with the same properties */
     public NodeCpp(final NodeCpp otherNode) {
         super(otherNode);
