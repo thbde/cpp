@@ -20,7 +20,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class OsmImporter {
-	protected class OsmNode {
+	public class OsmNode {
 		public long lat=0;
 		public long lon=0;
 		public String id="";
@@ -124,6 +124,13 @@ public class OsmImporter {
 		
 		return osmGraph;
 	};
+	
+	protected GraphUndirected createFiltered(Document osmFile,HashMap<String,OsmNode> osmNodes){
+		GraphUndirected osmGraph = new GraphUndirected();
+		
+		
+		return osmGraph;
+	}
 	
 	GraphUndirected importOsmUndirected(String filename) {
 		Document osmFile = getDomFromFile(filename);
