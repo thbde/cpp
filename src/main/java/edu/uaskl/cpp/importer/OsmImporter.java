@@ -10,16 +10,12 @@ import edu.uaskl.cpp.model.graph.GraphUndirected;
 import edu.uaskl.cpp.model.node.NodeCpp;
 
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.FactoryConfigurationError;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.DocumentBuilder;
 
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 import org.w3c.dom.Document;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 

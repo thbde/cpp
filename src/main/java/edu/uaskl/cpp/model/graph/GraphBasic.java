@@ -84,7 +84,7 @@ public class GraphBasic implements Graph<NodeCpp, EdgeCpp> {
     public String toString() {
         final StringBuilder stringBuilder = new StringBuilder(getStatistics());
         stringBuilder.append("\n");
-        stringBuilder.append(CollectionTools.join("\n", nodes));
+        stringBuilder.append(CollectionTools.join("\n", nodes.values()));
         return stringBuilder.toString();
     }
 }
