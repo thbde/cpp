@@ -86,7 +86,7 @@ public class OsmImporter {
 		Collection<OsmNode> wayPoints = osmNodes.values();
 		for(Iterator<OsmNode> wayPointsIterator = wayPoints.iterator();wayPointsIterator.hasNext();){
 			OsmNode wayPoint = wayPointsIterator.next();
-			NodeCpp newNode = new NodeCpp(wayPoint.id,wayPoint.lat,wayPoint.lon);
+			NodeCpp newNode = new NodeCpp(wayPoint.id);
 			osmGraph.addNode(newNode);
 		}
 		

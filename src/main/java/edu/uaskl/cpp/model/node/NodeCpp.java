@@ -13,23 +13,18 @@ public class NodeCpp extends NodeBasic<NodeCpp, EdgeCpp> {
     private boolean isAllEdgesVisited = false;
     private NodeCpp nodeForCPP;
     private static final EdgeCreator<NodeCpp, EdgeCpp> edgeCreator = new EdgeCreatorCpp();
-    private long lat = 0;
-    private long lon = 0;
+
     public NodeCpp() {
         super(edgeCreator);
     }
-    public NodeCpp(String id, long lat, long lon) {
+    public NodeCpp(String id) {
         super(edgeCreator);
         this.nodeId=id;
-        this.lat=lat;
-        this.lon=lon;
     }
     /** Copy constructor, creates a new node with the same properties */
     public NodeCpp(final NodeCpp otherNode) {
         super(otherNode);
         this.nodeId = otherNode.getNodeId();
-        this.lat = otherNode.lat;
-        this.lon = otherNode.lon;
     }
     /** Copy constructor for cpp algorithm, creates a new node with the same properties but marks it as a cpp node */
     public NodeCpp(final NodeCpp knoten, final boolean isForCpp) { // TODO static fabric method?
