@@ -17,8 +17,8 @@ public class EdgeCreatorCpp implements EdgeCreator<NodeCpp, EdgeCpp> {
         return new EdgeCpp((NodeCpp) node1, (NodeCpp) node2, weight);
     }
 
-	@Override
-	public EdgeCpp createM(Node<NodeCpp, EdgeCpp> node1, Node<NodeCpp, EdgeCpp> node2, int weight,List<OsmNode> metaNodes) {
+	
+	public EdgeCpp create(Node<NodeCpp, EdgeCpp> node1, Node<NodeCpp, EdgeCpp> node2, int weight,List<OsmNode> metaNodes) {
 		return new EdgeCpp((NodeCpp) node1, (NodeCpp) node2, weight,metaNodes);
 	}
 }

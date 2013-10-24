@@ -69,8 +69,8 @@ public class NodeCpp extends NodeBasic<NodeCpp, EdgeCpp> {
     }
     
 
-    public NodeCpp connectWithNodeAndWeigthM(final NodeCpp otherNode, final int weight,List<OsmNode> metaNodes) {
-        addEdge(edgeCreator.createM(this, otherNode, weight,metaNodes));
+    public NodeCpp connectWithNodeAndWeigth(final NodeCpp otherNode, final int weight,List<OsmNode> metaNodes) {
+        addEdge(edgeCreator.create(this, otherNode, weight,metaNodes));
         return this;
     }
 }

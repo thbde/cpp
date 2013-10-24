@@ -12,5 +12,5 @@ import edu.uaskl.cpp.model.node.interfaces.Node;
  */
 public interface EdgeCreator<T extends Node<T, V>, V extends Edge<T, V>> {
     public V create(final Node<T, V> node1, final Node<T, V> node2, final int weight);
-    public V createM(final Node<T, V> node1, final Node<T, V> node2, final int weight,List<OsmNode> metaNodes);
+    public V create(final Node<T, V> node1, final Node<T, V> node2, final int weight,List<OsmNode> metaNodes);
 }
