@@ -197,13 +197,13 @@ public class OsmImporter {
 				List<EdgeCpp> edges = node.getEdges();
 				EdgeCpp edge1 = edges.get(0);
 				EdgeCpp edge2 = edges.get(1);
-				String node1id = edge1.getNode1().getId() == currentNodeId ? edge1.getNode2().getId() : edge1.getNode1().getId(); 
-				String node2id = edge2.getNode1().getId() == currentNodeId ? edge2.getNode2().getId() : edge2.getNode1().getId(); 
+				String node1id = edge1.getNode1().getId().equals(currentNodeId) ? edge1.getNode2().getId() : edge1.getNode1().getId(); 
+				String node2id = edge2.getNode1().getId().equals(currentNodeId) ? edge2.getNode2().getId() : edge2.getNode1().getId(); 
 				//concat the list in the right way
 				List<OsmNode> newMetaNodes = edge1.getMetaNodes(), metaNodes2 = edge2.getMetaNodes();
 				//newMetaNodes = metaNodes1.get(0).id==node1id ? metaNodes1 : Collections.reverse(metaNodes1);
-				if (newMetaNodes.get(0).id!=node1id) {Collections.reverse(newMetaNodes);}
-				if (metaNodes2.get(0).id!=currentNodeId) {Collections.reverse(metaNodes2);}
+				if (newMetaNodes.get(0).id.equals(currentNodeId)) {Collections.reverse(newMetaNodes);}
+				if (!metaNodes2.get(0).id.equals(currentNodeId)) {Collections.reverse(metaNodes2);}
 				newMetaNodes.addAll(metaNodes2);
 				//add a new edge
 				osmGraph.getNode(node1id).connectWithNodeAndWeigth(osmGraph.getNode(node2id), edge1.getWeight()+edge2.getWeight(), newMetaNodes);
@@ -218,7 +218,7 @@ public class OsmImporter {
 		return osmGraph;
 	}
 	
-	GraphUndirected importOsmUndirected(String filename) {
+	public GraphUndirected importOsmUndirected(String filename) {
 		Document osmFile = getDomFromFile(filename);
 		HashMap<String,OsmNode> osmNodes = getOsmNodes(osmFile);
 		GraphUndirected osmGraph = createFiltered(osmFile,osmNodes);
