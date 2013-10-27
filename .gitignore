@@ -8,4 +8,4 @@
 # Eclipse settings
 .classpath
 .project
-.settings/
+/.settings
