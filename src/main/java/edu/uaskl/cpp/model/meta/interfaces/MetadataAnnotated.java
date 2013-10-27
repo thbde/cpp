@@ -1,6 +1,6 @@
 package edu.uaskl.cpp.model.meta.interfaces;
 
-public interface MetadataAnnotated {
-	public Metadata getMetadata();
-	public void setMetadata(Metadata metadata);
+public interface MetadataAnnotated<T extends Metadata> {
+	public T getMetadata();
+	public void setMetadata(T metadata);
 }
