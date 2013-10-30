@@ -4,6 +4,7 @@ package edu.uaskl.cpp.importer;
 
 import java.util.HashMap;
 
+import static org.fest.assertions.api.Assertions.*;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -19,9 +20,9 @@ public class OsmImporterTest {
 	public void testGetDom() {
 		Document dom = getDomFromFile("fh_way_no_meta.osm");
 		NodeList testnodes = dom.getDocumentElement().getElementsByTagName("node");
-		assert(dom != null);
-		assert(testnodes.getLength()!=0);
-		assert(dom.getElementsByTagName("node") != null);
+		assertThat(dom).isNotNull();
+		assertThat(testnodes.getLength()).isNotEqualTo(0);
+		assertThat(dom.getElementsByTagName("node")).isNotNull();
 	}
 	
 	@Test
