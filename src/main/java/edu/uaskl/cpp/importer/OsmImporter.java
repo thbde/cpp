@@ -3,9 +3,13 @@ package edu.uaskl.cpp.importer;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
+import edu.uaskl.cpp.model.edge.EdgeCpp;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
 import edu.uaskl.cpp.model.node.NodeCpp;
 
@@ -20,24 +24,19 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class OsmImporter {
-	protected class OsmNode {
-		public long lat=0;
-		public long lon=0;
-		public String id="";
-		public OsmNode(String id,long lat, long lon){
-			this.id  = id;
-			this.lat = lat;
-			this.lon = lon;
-		};
+	
+	
+	protected static int getDistance(OsmNode a, OsmNode b){
+//		long diffLat = a.lat - b.lat;
+//		long diffLon = a.lon - b.lon;
+//		return (int) Math.sqrt(diffLat*diffLat+diffLon*diffLon);
+		//Spherical Law of Cosines
+		return (int) (Math.acos(Math.sin(a.lat)*Math.sin(b.lat) + 
+                 Math.cos(a.lat)*Math.cos(b.lat) *
+                 Math.cos(b.lon-b.lon)) * 6367500);
 	}
 	
-	protected int getDistance(OsmNode a, OsmNode b){
-		long diffLat = a.lat - b.lat;
-		long diffLon = a.lon - b.lon;
-		return (int) Math.sqrt(diffLat*diffLat+diffLon*diffLon);
-	}
-	
-	protected Document getDomFromFile(String filename) {
+	protected static Document getDomFromFile(String filename) {
 		DocumentBuilderFactory factory =   DocumentBuilderFactory.newInstance();
 		Document document = null;
 		try {
@@ -52,7 +51,7 @@ public class OsmImporter {
 		return document;
 	}
 	
-	protected long get100NanoDegrees(String parsed){
+	protected static long get100NanoDegrees(String parsed){
 		long value = 1;
 		// different amount of decimal places (up to 7)
 		String decimalPlaces = parsed.split("\\.")[1];
@@ -65,7 +64,7 @@ public class OsmImporter {
 		return value;
 	}
 	
-	protected HashMap<String, OsmNode> getOsmNodes(Document dom){
+	protected static HashMap<String, OsmNode> getOsmNodes(Document dom){
 		HashMap<String, OsmNode> osmNodes = new HashMap<String, OsmNode> ();
 		Element documentElement = dom.getDocumentElement();
 		NodeList nodes = documentElement.getElementsByTagName("node");
@@ -86,7 +85,7 @@ public class OsmImporter {
 		Collection<OsmNode> wayPoints = osmNodes.values();
 		for(Iterator<OsmNode> wayPointsIterator = wayPoints.iterator();wayPointsIterator.hasNext();){
 			OsmNode wayPoint = wayPointsIterator.next();
-			NodeCpp newNode = new NodeCpp(wayPoint.id,wayPoint.lat,wayPoint.lon);
+			NodeCpp newNode = new NodeCpp(wayPoint.id);
 			osmGraph.addNode(newNode);
 		}
 		
@@ -125,10 +124,99 @@ public class OsmImporter {
 		return osmGraph;
 	};
 	
-	GraphUndirected importOsmUndirected(String filename) {
+	protected static GraphUndirected createFiltered(Document osmFile,HashMap<String,OsmNode> osmNodes){
+		GraphUndirected osmGraph = new GraphUndirected();
+
+		Element documentElement = osmFile.getDocumentElement();
+		NodeList ways = documentElement.getElementsByTagName("way");
+		for(int i=0;i< ways.getLength();++i){ //for each way
+			NodeList childNodes = ways.item(i).getChildNodes();
+			String lastWaypoint = null;
+			List<String> metaIds = new LinkedList<String>();
+			int distance = 0;
+			String currentWaypoint = null;
+			boolean roundabout = false;
+			for(int j=0;j<childNodes.getLength();++j){ //go through the nodes
+				Node cNode =  childNodes.item(j);
+				if(cNode.getNodeType() == Node.ELEMENT_NODE){
+					Element childNode = (Element) cNode;
+					if(childNode.getNodeName()=="nd"){
+						currentWaypoint = childNode.getAttribute("ref");
+						if(osmNodes.containsKey(currentWaypoint)){
+							if(!(lastWaypoint == null)){
+								distance+=getDistance(osmNodes.get(lastWaypoint),osmNodes.get(currentWaypoint));
+							}
+							lastWaypoint = currentWaypoint;
+							metaIds.add(currentWaypoint);
+							
+						}
+					}
+					else {
+						if(childNode.getNodeName()=="tag"){
+							if(childNode.hasAttribute("k") && childNode.getAttribute("k").equals("junction") && childNode.getAttribute("v").equals("roundabout")){
+								roundabout = true;
+								break;
+							}
+							
+						}
+					}
+					
+				}
+			}
+			if(roundabout){
+				distance = 0;
+			}
+			for(int j =1;j<metaIds.size();++j) {
+				String startNodeId = metaIds.get(j-1);
+				String lastNodeId = metaIds.get(j);
+				if(osmGraph.getNode(startNodeId)==null){
+					NodeCpp newNode = new NodeCpp(startNodeId);
+					osmGraph.addNode(newNode);
+				}
+				if(osmGraph.getNode(lastNodeId)==null){
+					NodeCpp newNode = new NodeCpp(lastNodeId);
+					osmGraph.addNode(newNode);
+				}
+				List<OsmNode> metaNodes = new LinkedList<OsmNode>();
+				metaNodes.add(osmNodes.get(startNodeId));
+				metaNodes.add(osmNodes.get(lastNodeId));
+				osmGraph.getNode(startNodeId).connectWithNodeAndWeigth(osmGraph.getNode(lastNodeId), distance, metaNodes);
+			}
+		}
+		//TODO simplify
+		Iterator<NodeCpp> iteratorNodes = osmGraph.getNodes().values().iterator();
+		while(iteratorNodes.hasNext()){
+			NodeCpp node =iteratorNodes.next();
+			if(node.getDegree()==2){
+				String currentNodeId = node.getId();
+				List<EdgeCpp> edges = node.getEdges();
+				EdgeCpp edge1 = edges.get(0);
+				EdgeCpp edge2 = edges.get(1);
+				String node1id = edge1.getNode1().getId().equals(currentNodeId) ? edge1.getNode2().getId() : edge1.getNode1().getId(); 
+				String node2id = edge2.getNode1().getId().equals(currentNodeId) ? edge2.getNode2().getId() : edge2.getNode1().getId(); 
+				//concat the list in the right way
+				List<OsmNode> newMetaNodes = edge1.getMetaNodes(), metaNodes2 = edge2.getMetaNodes();
+				//newMetaNodes = metaNodes1.get(0).id==node1id ? metaNodes1 : Collections.reverse(metaNodes1);
+				if (newMetaNodes.get(0).id.equals(currentNodeId)) {Collections.reverse(newMetaNodes);}
+				if (!metaNodes2.get(0).id.equals(currentNodeId)) {Collections.reverse(metaNodes2);}
+				newMetaNodes.addAll(metaNodes2);
+				//add a new edge
+				osmGraph.getNode(node1id).connectWithNodeAndWeigth(osmGraph.getNode(node2id), edge1.getWeight()+edge2.getWeight(), newMetaNodes);
+				//remove the old node
+				node.removeAllEdges();
+				iteratorNodes.remove();
+			}
+		}
+		
+		
+		
+		return osmGraph;
+	}
+	
+	public static GraphUndirected importOsmUndirected(String filename) {
 		Document osmFile = getDomFromFile(filename);
 		HashMap<String,OsmNode> osmNodes = getOsmNodes(osmFile);
-		GraphUndirected osmGraph = createNaive(osmFile,osmNodes);
+		GraphUndirected osmGraph = createFiltered(osmFile,osmNodes);
 		
 		/**
 		 * TODO create edges
