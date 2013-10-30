@@ -27,9 +27,13 @@ public class OsmImporter {
 	
 	
 	protected static int getDistance(OsmNode a, OsmNode b){
-		long diffLat = a.lat - b.lat;
-		long diffLon = a.lon - b.lon;
-		return (int) Math.sqrt(diffLat*diffLat+diffLon*diffLon);
+//		long diffLat = a.lat - b.lat;
+//		long diffLon = a.lon - b.lon;
+//		return (int) Math.sqrt(diffLat*diffLat+diffLon*diffLon);
+		//Spherical Law of Cosines
+		return (int) (Math.acos(Math.sin(a.lat)*Math.sin(b.lat) + 
+                 Math.cos(a.lat)*Math.cos(b.lat) *
+                 Math.cos(b.lon-b.lon)) * 6367500);
 	}
 	
 	protected static Document getDomFromFile(String filename) {
