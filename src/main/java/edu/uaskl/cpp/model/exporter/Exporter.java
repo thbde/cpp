@@ -7,17 +7,17 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import edu.uaskl.cpp.importer.OsmImporter.OsmNode;
+import edu.uaskl.cpp.importer.OsmNode;
 import edu.uaskl.cpp.model.edge.EdgeCpp;
 import edu.uaskl.cpp.model.node.NodeCpp;
 import edu.uaskl.cpp.model.path.PathCpp;;
 
 public class Exporter {
-	private String nanoDegreeToString(long nanoDeg){
+	private static String nanoDegreeToString(long nanoDeg){
 		return nanoDeg/10000000 +"."+nanoDeg%10000000;
 	}
 	
-	private String createSegment(List<OsmNode>metaNodes,int id){
+	private static String createSegment(List<OsmNode>metaNodes,int id){
 		List<String> colors = new LinkedList<String>();
 		colors.add("b1563f");
 		colors.add("b4693f");
@@ -55,7 +55,7 @@ public class Exporter {
 	}
 	
 	
-	public void exportPathToHTML(PathCpp path){
+	public static void exportPathToHTML(PathCpp path){
 		List<NodeCpp> nodes = path.getNodes();
 		NodeCpp previousNode = nodes.get(0);
 		NodeCpp currentNode;

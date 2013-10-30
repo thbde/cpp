@@ -5,7 +5,7 @@ import java.util.List;
 import edu.uaskl.cpp.model.edge.interfaces.EdgeCreator;
 import edu.uaskl.cpp.model.node.NodeCpp;
 import edu.uaskl.cpp.model.node.interfaces.Node;
-import edu.uaskl.cpp.importer.OsmImporter.OsmNode;
+import edu.uaskl.cpp.importer.OsmNode;
 
 /**
  * @author tbach

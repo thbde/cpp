@@ -2,7 +2,7 @@ package edu.uaskl.cpp.model.edge;
 
 import java.util.List;
 
-import edu.uaskl.cpp.importer.OsmImporter.OsmNode;
+import edu.uaskl.cpp.importer.OsmNode;
 import edu.uaskl.cpp.model.edge.interfaces.EdgeWeighted;
 import edu.uaskl.cpp.model.node.NodeCpp;
 
@@ -17,6 +17,7 @@ public class EdgeCpp extends EdgeBasic<NodeCpp, EdgeCpp> implements EdgeWeighted
     /** Copy constructor. Creates a new edge with the same properties (nodes + weight) */
     public EdgeCpp(final EdgeCpp edge) {
         this(edge.getNode1(), edge.getNode2(), edge.getWeight());
+        this.metaNodes = edge.getMetaNodes();
     }
 
     public EdgeCpp(final NodeCpp node1, final NodeCpp node2) {

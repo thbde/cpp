@@ -2,7 +2,7 @@ package edu.uaskl.cpp.model.node;
 
 import java.util.List;
 
-import edu.uaskl.cpp.importer.OsmImporter.OsmNode;
+import edu.uaskl.cpp.importer.OsmNode;
 import edu.uaskl.cpp.model.edge.EdgeCpp;
 import edu.uaskl.cpp.model.edge.EdgeCreatorCpp;
 import edu.uaskl.cpp.model.edge.interfaces.EdgeCreator;

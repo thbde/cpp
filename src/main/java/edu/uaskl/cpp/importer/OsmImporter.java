@@ -24,24 +24,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class OsmImporter {
-	public class OsmNode {
-		public long lat=0;
-		public long lon=0;
-		public String id="";
-		public OsmNode(String id,long lat, long lon){
-			this.id  = id;
-			this.lat = lat;
-			this.lon = lon;
-		};
-	}
 	
-	protected int getDistance(OsmNode a, OsmNode b){
+	
+	protected static int getDistance(OsmNode a, OsmNode b){
 		long diffLat = a.lat - b.lat;
 		long diffLon = a.lon - b.lon;
 		return (int) Math.sqrt(diffLat*diffLat+diffLon*diffLon);
 	}
 	
-	protected Document getDomFromFile(String filename) {
+	protected static Document getDomFromFile(String filename) {
 		DocumentBuilderFactory factory =   DocumentBuilderFactory.newInstance();
 		Document document = null;
 		try {
@@ -56,7 +47,7 @@ public class OsmImporter {
 		return document;
 	}
 	
-	protected long get100NanoDegrees(String parsed){
+	protected static long get100NanoDegrees(String parsed){
 		long value = 1;
 		// different amount of decimal places (up to 7)
 		String decimalPlaces = parsed.split("\\.")[1];
@@ -69,7 +60,7 @@ public class OsmImporter {
 		return value;
 	}
 	
-	protected HashMap<String, OsmNode> getOsmNodes(Document dom){
+	protected static HashMap<String, OsmNode> getOsmNodes(Document dom){
 		HashMap<String, OsmNode> osmNodes = new HashMap<String, OsmNode> ();
 		Element documentElement = dom.getDocumentElement();
 		NodeList nodes = documentElement.getElementsByTagName("node");
@@ -129,7 +120,7 @@ public class OsmImporter {
 		return osmGraph;
 	};
 	
-	protected GraphUndirected createFiltered(Document osmFile,HashMap<String,OsmNode> osmNodes){
+	protected static GraphUndirected createFiltered(Document osmFile,HashMap<String,OsmNode> osmNodes){
 		GraphUndirected osmGraph = new GraphUndirected();
 
 		Element documentElement = osmFile.getDocumentElement();
@@ -218,7 +209,7 @@ public class OsmImporter {
 		return osmGraph;
 	}
 	
-	public GraphUndirected importOsmUndirected(String filename) {
+	public static GraphUndirected importOsmUndirected(String filename) {
 		Document osmFile = getDomFromFile(filename);
 		HashMap<String,OsmNode> osmNodes = getOsmNodes(osmFile);
 		GraphUndirected osmGraph = createFiltered(osmFile,osmNodes);
