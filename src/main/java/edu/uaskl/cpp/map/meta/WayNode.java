@@ -30,4 +30,8 @@ public class WayNode implements Metadata {
 					Math.cos(lat1) * Math.cos(lat2) *
 					Math.cos(lon2 - lon1)) * earthRadiusKm;
 	}
+	
+	public static double getDistanceKm(WayNode first, WayNode second) {
+		return first.getDistanceKm(second);
+	}
 }
