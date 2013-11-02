@@ -4,6 +4,7 @@ import java.util.SortedSet;
 
 import edu.uaskl.cpp.algorithmen.Algorithms;
 import edu.uaskl.cpp.model.edge.interfaces.Edge;
+import edu.uaskl.cpp.model.edge.interfaces.EdgeCreator;
 import edu.uaskl.cpp.model.node.interfaces.Node;
 
 /**
@@ -27,4 +28,6 @@ public interface Graph<T extends Node<T, V>, V extends Edge<T, V>> {
     public int getGetNumberOfEdges();
 
     public Algorithms getAlgorithms();
+    
+    public EdgeCreator<T, V> getEdgeCreator();
 }

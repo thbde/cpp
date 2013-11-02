@@ -5,23 +5,32 @@ import java.util.TreeSet;
 
 import edu.uaskl.cpp.algorithmen.Algorithms;
 import edu.uaskl.cpp.model.edge.EdgeCpp;
+import edu.uaskl.cpp.model.edge.EdgeCreatorCpp;
 import edu.uaskl.cpp.model.graph.interfaces.Graph;
+import edu.uaskl.cpp.model.meta.MetadataCreatorCpp;
+import edu.uaskl.cpp.model.meta.interfaces.Metadata;
 import edu.uaskl.cpp.model.node.NodeCpp;
 import edu.uaskl.cpp.tools.CollectionTools;
 
 /**
  * @author tbach
  */
-public class GraphBasic implements Graph<NodeCpp, EdgeCpp> {
+public class GraphBasic<M extends Metadata> implements Graph<NodeCpp<M>, EdgeCpp<M>> {
     private final String name;
-    protected SortedSet<NodeCpp> nodes = new TreeSet<>();
+    private final EdgeCreatorCpp<M> edgeCreator;
+    protected SortedSet<NodeCpp<M>> nodes = new TreeSet<>();
 
     public GraphBasic() {
         this("Default Basisgraph");
     }
 
     protected GraphBasic(final String name) {
-        this.name = name;
+        this(name, new MetadataCreatorCpp<M>());
+    }
+
+    protected GraphBasic(final String name, MetadataCreatorCpp<M> metadataCreator) {
+    	this.name = name;
+    	this.edgeCreator = new EdgeCreatorCpp<M>(metadataCreator);
     }
 
     /** BasicGraph has no algorithms, therefore returns null */
@@ -36,16 +45,16 @@ public class GraphBasic implements Graph<NodeCpp, EdgeCpp> {
     }
 
     @Override
-    public SortedSet<NodeCpp> getNodes() {
+    public SortedSet<NodeCpp<M>> getNodes() {
         return nodes;
     }
 
-    public void setNodes(final SortedSet<NodeCpp> newNodes) {
+    public void setNodes(final SortedSet<NodeCpp<M>> newNodes) {
         this.nodes = newNodes;
     }
 
     @Override
-    public GraphBasic addNode(final NodeCpp newNode) {
+    public GraphBasic<M> addNode(final NodeCpp<M> newNode) {
         this.nodes.add(newNode);
         return this;
     }
@@ -58,14 +67,14 @@ public class GraphBasic implements Graph<NodeCpp, EdgeCpp> {
     @Override
     public int getGetNumberOfEdges() {
         int result = 0;
-        for (final NodeCpp nodesItem : nodes)
+        for (final NodeCpp<M> nodesItem : nodes)
             result += nodesItem.getEdges().size();
         return result;
     }
 
     /** Resets the state of all nodes. This includes states like visited and similar. */
     public void resetStates() {
-        for (final NodeCpp nodesItem : nodes)
+        for (final NodeCpp<M> nodesItem : nodes)
             nodesItem.resetStates();
     }
 
@@ -82,5 +91,10 @@ public class GraphBasic implements Graph<NodeCpp, EdgeCpp> {
         stringBuilder.append("\n");
         stringBuilder.append(CollectionTools.join("\n", nodes));
         return stringBuilder.toString();
+    }
+    
+    @Override
+    public EdgeCreatorCpp<M> getEdgeCreator() {
+    	return edgeCreator;
     }
 }

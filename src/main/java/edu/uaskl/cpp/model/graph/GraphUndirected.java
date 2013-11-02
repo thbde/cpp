@@ -1,12 +1,14 @@
 package edu.uaskl.cpp.model.graph;
 
 import edu.uaskl.cpp.algorithmen.AlgorithmsUndirected;
+import edu.uaskl.cpp.model.meta.MetadataCreatorCpp;
+import edu.uaskl.cpp.model.meta.interfaces.Metadata;
 import edu.uaskl.cpp.model.node.NodeCpp;
 
 /**
  * @author tbach
  */
-public class GraphUndirected extends GraphBasic {
+public class GraphUndirected<M extends Metadata> extends GraphBasic<M> {
     private final AlgorithmsUndirected algorithms = new AlgorithmsUndirected(this);
 
     public GraphUndirected() {
@@ -15,6 +17,10 @@ public class GraphUndirected extends GraphBasic {
 
     protected GraphUndirected(final String string) {
         super(string);
+    }
+
+    protected GraphUndirected(String name, MetadataCreatorCpp<M> metadataCreator) {
+    	super(name, metadataCreator);
     }
 
     @Override
@@ -28,7 +34,7 @@ public class GraphUndirected extends GraphBasic {
     }
 
     /** Running time: O(log(|nodes| + |edgesFromGivenNode|*|edgesFromRelatedNode|)) */
-    public boolean entferneKnoten(final NodeCpp nodeToRemove) {
+    public boolean entferneKnoten(final NodeCpp<M> nodeToRemove) {
         final boolean successful = this.nodes.remove(nodeToRemove);
         if (!successful)
             return false;
