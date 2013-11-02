@@ -2,6 +2,7 @@ package edu.uaskl.cpp.model.path.interfaces;
 
 import java.util.List;
 
+import edu.uaskl.cpp.model.meta.interfaces.Metadata;
 import edu.uaskl.cpp.model.node.NodeCpp;
 
 /**
@@ -15,5 +16,5 @@ public interface Path {
 
     public int getLength();
 
-    public List<NodeCpp> getNodes();
+    public List<NodeCpp<? extends Metadata>> getNodes();
 }

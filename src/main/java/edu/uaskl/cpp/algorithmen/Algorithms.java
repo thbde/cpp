@@ -1,6 +1,7 @@
 package edu.uaskl.cpp.algorithmen;
 
 import edu.uaskl.cpp.model.graph.GraphBasic;
+import edu.uaskl.cpp.model.meta.interfaces.Metadata;
 
 /**
  * This interface models a relation between algorithms and graph. Each algorithms instance is responsible for a specific type of graph.<br>
@@ -10,5 +11,5 @@ import edu.uaskl.cpp.model.graph.GraphBasic;
  * @author tbach
  */
 public interface Algorithms {
-    public GraphBasic getGraph();
+    public GraphBasic<? extends Metadata> getGraph();
 }

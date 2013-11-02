@@ -3,6 +3,7 @@ package edu.uaskl.cpp.model.path;
 import java.util.Collections;
 import java.util.List;
 
+import edu.uaskl.cpp.model.meta.interfaces.Metadata;
 import edu.uaskl.cpp.model.node.NodeCpp;
 import edu.uaskl.cpp.model.path.interfaces.Path;
 import edu.uaskl.cpp.tools.CollectionTools;
@@ -12,15 +13,15 @@ import edu.uaskl.cpp.tools.CollectionTools;
  */
 public class PathCpp implements Path {
     /** Empty path without a start node */
-    public static final PathCpp emptyPath = new PathCpp(Collections.<NodeCpp> emptyList());
-    private final List<NodeCpp> nodes;
+    public static final PathCpp emptyPath = new PathCpp(Collections.<NodeCpp<? extends Metadata>> emptyList());
+    private final List<NodeCpp<? extends Metadata>> nodes;
     private int distance;
 
-    public PathCpp(final List<NodeCpp> knoten) {
+    public PathCpp(final List<NodeCpp<? extends Metadata>> knoten) {
         this.nodes = knoten;
     }
 
-    public PathCpp(final List<NodeCpp> nodes, final int distance) {
+    public PathCpp(final List<NodeCpp<? extends Metadata>> nodes, final int distance) {
         this.nodes = nodes;
         this.distance = distance;
     }
@@ -36,7 +37,7 @@ public class PathCpp implements Path {
     }
 
     @Override
-    public List<NodeCpp> getNodes() {
+    public List<NodeCpp<? extends Metadata>> getNodes() {
         return nodes;
     }
 
