@@ -28,7 +28,7 @@ public class AlgorithmsUndirected implements Algorithms {
 		
 		if(graph.getNodes().size()==0) return true;
 		
-		NodeCpp start = graph.getNodes().get(0);
+		NodeCpp start = graph.getNodes().iterator().next();
 				
 		visitAllEdgesFromStartNode(start);
 		
@@ -192,7 +192,7 @@ public class AlgorithmsUndirected implements Algorithms {
 	
 	public ArrayList getEulerianCircle()
 	{
-		NodeCpp node = graph.getNodes().get(3);
+		NodeCpp node = graph.getNodes().iterator().next();
 		NodeCpp temp;
 		
 		ArrayList eulerianList = new ArrayList(getCircle(node));
