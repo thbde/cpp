@@ -1,8 +1,6 @@
 package edu.uaskl.cpp.model.graph;
 
 import java.util.Map;
-import java.util.SortedSet;
-
 import edu.uaskl.cpp.model.edge.EdgeCpp;
 import edu.uaskl.cpp.model.node.NodeCpp;
 
@@ -19,7 +17,7 @@ public class GraphComplete extends GraphUndirected {
     }
 
     @Override
-    public void setNodes(final Map<String,NodeCpp> nodes) {
+    public void setNodes(final Map<String, NodeCpp> nodes) {
         throw new IllegalStateException("It is not allowed to change nodes of a complete graph");
     }
 
@@ -32,12 +30,12 @@ public class GraphComplete extends GraphUndirected {
         for (int i = 0; i < numberOfNodes; i++) {
             final NodeCpp newNode = new NodeCpp();
             connectNodeWithAllOthers(newNode);
-            getNodes().put(newNode.getId(),newNode);
+            getNodesMap().put(newNode.getId(), newNode);
         }
     }
 
     private void connectNodeWithAllOthers(final NodeCpp neuerKnoten) {
-        for (final NodeCpp nodesItem : getNodes().values())
+        for (final NodeCpp nodesItem : getNodes())
             neuerKnoten.addEdge(new EdgeCpp(neuerKnoten, nodesItem));
     }
 }

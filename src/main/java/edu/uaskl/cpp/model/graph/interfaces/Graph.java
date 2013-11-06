@@ -1,7 +1,6 @@
 package edu.uaskl.cpp.model.graph.interfaces;
 
-import java.util.Map;
-
+import java.util.Collection;
 import edu.uaskl.cpp.algorithmen.Algorithms;
 import edu.uaskl.cpp.model.edge.interfaces.Edge;
 import edu.uaskl.cpp.model.node.interfaces.Node;
@@ -18,7 +17,7 @@ import edu.uaskl.cpp.model.node.interfaces.Node;
 public interface Graph<T extends Node<T, V>, V extends Edge<T, V>> {
     public String getName();
 
-    public Map<String,T> getNodes();
+    public Collection<T> getNodes();
 
     public Graph<T, V> addNode(T node);
 
