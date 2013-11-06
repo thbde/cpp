@@ -1,5 +1,8 @@
 package edu.uaskl.cpp.model.node;
 
+import java.util.List;
+
+import edu.uaskl.cpp.importer.OsmNode;
 import edu.uaskl.cpp.model.edge.EdgeCpp;
 import edu.uaskl.cpp.model.edge.EdgeCreatorCpp;
 import edu.uaskl.cpp.model.edge.interfaces.EdgeCreator;
@@ -13,23 +16,18 @@ public class NodeCpp extends NodeBasic<NodeCpp, EdgeCpp> {
     private boolean isAllEdgesVisited = false;
     private NodeCpp nodeForCPP;
     private static final EdgeCreator<NodeCpp, EdgeCpp> edgeCreator = new EdgeCreatorCpp();
-    private long lat = 0;
-    private long lon = 0;
+
     public NodeCpp() {
         super(edgeCreator);
     }
-    public NodeCpp(String id, long lat, long lon) {
+    public NodeCpp(String id) {
         super(edgeCreator);
         this.nodeId=id;
-        this.lat=lat;
-        this.lon=lon;
     }
     /** Copy constructor, creates a new node with the same properties */
     public NodeCpp(final NodeCpp otherNode) {
         super(otherNode);
         this.nodeId = otherNode.getNodeId();
-        this.lat = otherNode.lat;
-        this.lon = otherNode.lon;
     }
     /** Copy constructor for cpp algorithm, creates a new node with the same properties but marks it as a cpp node */
     public NodeCpp(final NodeCpp knoten, final boolean isForCpp) { // TODO static fabric method?
@@ -68,5 +66,11 @@ public class NodeCpp extends NodeBasic<NodeCpp, EdgeCpp> {
     public void resetStates() {
         resetVisitedState();
         resetAllEdgesVisitedStates();
+    }
+    
+
+    public NodeCpp connectWithNodeAndWeigth(final NodeCpp otherNode, final int weight,List<OsmNode> metaNodes) {
+        addEdge(edgeCreator.create(this, otherNode, weight,metaNodes));
+        return this;
     }
 }

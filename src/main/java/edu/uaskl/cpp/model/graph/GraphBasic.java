@@ -1,5 +1,6 @@
 package edu.uaskl.cpp.model.graph;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ import edu.uaskl.cpp.tools.CollectionTools;
  */
 public class GraphBasic implements Graph<NodeCpp, EdgeCpp> {
     private final String name;
-    protected Map<String,NodeCpp> nodes = new HashMap<String,NodeCpp>();
+    protected Map<String, NodeCpp> nodes = new HashMap<>();
 
     public GraphBasic() {
         this("Default Basisgraph");
@@ -36,17 +37,22 @@ public class GraphBasic implements Graph<NodeCpp, EdgeCpp> {
     }
 
     @Override
-    public Map<String,NodeCpp> getNodes() {
+    public Collection<NodeCpp> getNodes() {
+        return nodes.values();
+    }
+
+    public Map<String, NodeCpp> getNodesMap() // TODO should be in a GraphCPP class -tbach
+    {
         return nodes;
     }
 
-    public void setNodes(final Map<String,NodeCpp> newNodes) {
+    public void setNodes(final Map<String, NodeCpp> newNodes) {
         this.nodes = newNodes;
     }
 
     @Override
     public GraphBasic addNode(final NodeCpp newNode) {
-        this.nodes.put(newNode.getId(),newNode);
+        this.nodes.put(newNode.getId(), newNode);
         return this;
     }
 
@@ -76,10 +82,10 @@ public class GraphBasic implements Graph<NodeCpp, EdgeCpp> {
         return stringBuilder.toString();
     }
 
-    public NodeCpp getNode(String id){
-    	return nodes.get(id);
+    public NodeCpp getNode(final String id) {
+        return nodes.get(id);
     }
-    
+
     @Override
     public String toString() {
         final StringBuilder stringBuilder = new StringBuilder(getStatistics());
