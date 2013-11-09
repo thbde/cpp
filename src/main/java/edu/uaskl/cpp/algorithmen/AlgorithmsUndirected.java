@@ -2,22 +2,22 @@ package edu.uaskl.cpp.algorithmen;
 
 import java.util.ArrayList;
 
-import edu.uaskl.cpp.model.edge.EdgeCpp;
+import edu.uaskl.cpp.model.edge.EdgeExtended;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
-import edu.uaskl.cpp.model.node.NodeCpp;
+import edu.uaskl.cpp.model.node.NodeExtended;
 
 // Example, can be changed
 
-public class AlgorithmsUndirected implements Algorithms {
+public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeExtended<T, V>> implements Algorithms<T, V> {
 
-    private final GraphUndirected graph;
+    private final GraphUndirected<T, V> graph;
 
-    public AlgorithmsUndirected(final GraphUndirected graph) {
+    public AlgorithmsUndirected(final GraphUndirected<T, V> graph) {
         this.graph = graph;
     }
 
     @Override
-    public GraphUndirected getGraph() {
+    public GraphUndirected<T, V> getGraph() {
         return graph;
     }
 
@@ -28,12 +28,12 @@ public class AlgorithmsUndirected implements Algorithms {
         if (graph.getNodes().size() == 0)
             return true;
 
-        final NodeCpp start = graph.getNodes().iterator().next();
+        final T start = graph.getNodes().iterator().next();
 
         visitAllEdgesFromStartNode(start);
 
-        for (final NodeCpp nodeItem : graph.getNodes())
-            for (final EdgeCpp edgeItem : nodeItem.getEdges())
+        for (final T nodeItem : graph.getNodes())
+            for (final V edgeItem : nodeItem.getEdges())
                 if (edgeItem.isVisited() == false)
                     return false;
 
@@ -41,9 +41,9 @@ public class AlgorithmsUndirected implements Algorithms {
 
     }
 
-    private void visitAllEdgesFromStartNode(final NodeCpp node) {
+    private void visitAllEdgesFromStartNode(final T node) {
 
-        for (final EdgeCpp edgeItem : node.getEdges()) {
+        for (final V edgeItem : node.getEdges()) {
 
             if (edgeItem.isVisited() == true)
                 return;
@@ -53,17 +53,17 @@ public class AlgorithmsUndirected implements Algorithms {
     }
 
     public boolean hasEulerCircle() {
-        for (final NodeCpp nodesItem : graph.getNodes())
+        for (final T nodesItem : graph.getNodes())
             if (nodesItem.isDegreeOdd())
                 return false;
         return true;
     }
 
-    public GraphUndirected matchGraph(GraphUndirected graph) {
-        NodeCpp node1 = null, node2 = null;
-        ArrayList<NodeCpp> pathList = new ArrayList<>();
+    public GraphUndirected<T, V> matchGraph(GraphUndirected<T, V> graph) {
+        T node1 = null, node2 = null;
+        ArrayList<T> pathList = new ArrayList<>();
 
-        for (final NodeCpp nodeItem : graph.getNodes()) {
+        for (final T nodeItem : graph.getNodes()) {
             if ((node1 == null) && nodeItem.isDegreeOdd()) {
                 node1 = nodeItem;
                 continue;
@@ -81,10 +81,10 @@ public class AlgorithmsUndirected implements Algorithms {
         return graph;
     }
 
-    private GraphUndirected matchBetweenNodes(final GraphUndirected graph, final ArrayList<NodeCpp> pathList) {
+    private GraphUndirected<T, V> matchBetweenNodes(final GraphUndirected<T, V> graph, final ArrayList<T> pathList) {
         for (int i = 0; i < (pathList.size() - 1); i++) {
-            final NodeCpp node1 = pathList.get(i);
-            final NodeCpp node2 = pathList.get(i + 1);
+            final T node1 = pathList.get(i);
+            final T node2 = pathList.get(i + 1);
 
             node1.connectWithNode(node2);
         }
@@ -92,8 +92,8 @@ public class AlgorithmsUndirected implements Algorithms {
         return graph;
     }
 
-    public ArrayList<NodeCpp> getPathBetween(final NodeCpp start, final NodeCpp destination) {
-        final ArrayList<NodeCpp> pathList = new ArrayList<>();
+    public ArrayList<T> getPathBetween(final T start, final T destination) {
+        final ArrayList<T> pathList = new ArrayList<>();
 
         graph.resetStates();
         pathList.add(start);
@@ -103,7 +103,7 @@ public class AlgorithmsUndirected implements Algorithms {
 
     }
 
-    private void searchForPathBetweenNodesWithArrayList(final NodeCpp actual, final NodeCpp destination, final ArrayList<NodeCpp> pathList) {
+    private void searchForPathBetweenNodesWithArrayList(final T actual, final T destination, final ArrayList<T> pathList) {
 
         for (int i = 0; i < actual.getEdges().size(); i++)
             for (int j = 0; j < destination.getEdges().size(); j++)
@@ -124,15 +124,15 @@ public class AlgorithmsUndirected implements Algorithms {
                     }
     }
 
-    public ArrayList<NodeCpp> connectCircles(final ArrayList<NodeCpp> big, final ArrayList<NodeCpp> little) {
-        // kleine wird zur großen hinzugefügt
-        final ArrayList<NodeCpp> list = new ArrayList<>();
+    public ArrayList<T> connectCircles(final ArrayList<T> big, final ArrayList<T> little) {
+        // kleine wird zur groï¿½en hinzugefï¿½gt
+        final ArrayList<T> list = new ArrayList<>();
 
         for (int i = 0; i < big.size(); i++) {
             list.add(big.get(i));
 
             if (big.get(i).equals(little.get(0))) {
-                list.remove(i); // damit doppeltes(aufgeschobenes) element gelöscht wird
+                list.remove(i); // damit doppeltes(aufgeschobenes) element gelï¿½scht wird
 
                 for (int j = 0; j < little.size(); j++)
                     list.add(little.get(j));
@@ -144,11 +144,11 @@ public class AlgorithmsUndirected implements Algorithms {
 
     }
 
-    public ArrayList<NodeCpp> getEulerianCircle() {
-        final NodeCpp node = graph.getNodes().iterator().next();
-        NodeCpp temp;
+    public ArrayList<T> getEulerianCircle() {
+        final T node = graph.getNodes().iterator().next();
+        T temp;
 
-        ArrayList<NodeCpp> eulerianList = new ArrayList<>(getCircle(node));
+        ArrayList<T> eulerianList = new ArrayList<>(getCircle(node));
 
         for (int i = 0; i < eulerianList.size(); i++) // gehe jedes element der Liste durch
         {
@@ -157,7 +157,7 @@ public class AlgorithmsUndirected implements Algorithms {
             for (int j = 0; j < temp.getEdges().size(); j++)
                 if (!temp.getEdges().get(j).isVisited()) // wenn eine kante noch nicht besucht wurde...
                 {
-                    final ArrayList<NodeCpp> underGraph = new ArrayList<>(getCircle(temp));
+                    final ArrayList<T> underGraph = new ArrayList<>(getCircle(temp));
 
                     eulerianList = connectCircles(eulerianList, underGraph);
 
@@ -170,11 +170,11 @@ public class AlgorithmsUndirected implements Algorithms {
         return eulerianList;
     }
 
-    private ArrayList<NodeCpp> getCircle(final NodeCpp node) {
-        NodeCpp node1 = node;
+    private ArrayList<T> getCircle(final T node) {
+        T node1 = node;
         int i = 0;
 
-        final ArrayList<NodeCpp> pathList = new ArrayList<>();
+        final ArrayList<T> pathList = new ArrayList<>();
 
         for (int j = 0; j < node.getEdges().size(); j++)
             if (!node.getEdges().get(j).isVisited()) {

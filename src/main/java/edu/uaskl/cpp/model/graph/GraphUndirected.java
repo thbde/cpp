@@ -1,12 +1,13 @@
 package edu.uaskl.cpp.model.graph;
 
 import edu.uaskl.cpp.algorithmen.AlgorithmsUndirected;
-import edu.uaskl.cpp.model.node.NodeCpp;
+import edu.uaskl.cpp.model.edge.EdgeExtended;
+import edu.uaskl.cpp.model.node.NodeExtended;
 
 /**
  * @author tbach
  */
-public class GraphUndirected extends GraphBasic {
+public class GraphUndirected<T extends NodeExtended<T, V>, V extends EdgeExtended<T, V>> extends GraphBasic<T, V> {
     private final AlgorithmsUndirected algorithms = new AlgorithmsUndirected(this);
 
     public GraphUndirected() {
@@ -29,7 +30,7 @@ public class GraphUndirected extends GraphBasic {
 
     /** Running time: O(log(|nodes| + |edgesFromGivenNode|*|edgesFromRelatedNode|)) */
     public boolean removeNode(final String id) {
-    	NodeCpp nodeToRemove = this.nodes.remove(id);
+    	T nodeToRemove = this.nodes.remove(id);
         if (nodeToRemove == null)
             return false;
         nodeToRemove.removeAllEdges();

@@ -9,7 +9,7 @@ import edu.uaskl.cpp.model.node.NodeCpp;
  * 
  * @author tbach
  */
-public class GraphComplete extends GraphUndirected {
+public class GraphComplete extends GraphUndirected<NodeCpp, EdgeCpp> {
 
     public GraphComplete(final int numberOfNodes) {
         super("Complete Graph of size: " + numberOfNodes);
@@ -22,7 +22,7 @@ public class GraphComplete extends GraphUndirected {
     }
 
     @Override
-    public GraphBasic addNode(final NodeCpp newNode) {
+    public GraphBasic<NodeCpp, EdgeCpp> addNode(final NodeCpp newNode) {
         throw new IllegalStateException("It is not allowed to change nodes of a complete graph");
     }
 
