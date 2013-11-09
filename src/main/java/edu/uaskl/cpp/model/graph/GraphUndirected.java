@@ -1,15 +1,14 @@
 package edu.uaskl.cpp.model.graph;
 
 import edu.uaskl.cpp.algorithmen.AlgorithmsUndirected;
-import edu.uaskl.cpp.model.meta.MetadataCreatorCpp;
-import edu.uaskl.cpp.model.meta.interfaces.Metadata;
-import edu.uaskl.cpp.model.node.NodeCpp;
+import edu.uaskl.cpp.model.edge.EdgeExtended;
+import edu.uaskl.cpp.model.node.NodeExtended;
 
 /**
  * @author tbach
  */
-public class GraphUndirected<M extends Metadata> extends GraphBasic<M> {
-    private final AlgorithmsUndirected algorithms = new AlgorithmsUndirected(this);
+public class GraphUndirected<T extends NodeExtended<T, V>, V extends EdgeExtended<T, V>> extends GraphBasic<T, V> {
+    private final AlgorithmsUndirected<T, V> algorithms = new AlgorithmsUndirected<T, V>(this);
 
     public GraphUndirected() {
         super("Undirected Graph");
@@ -19,12 +18,8 @@ public class GraphUndirected<M extends Metadata> extends GraphBasic<M> {
         super(string);
     }
 
-    protected GraphUndirected(String name, MetadataCreatorCpp<M> metadataCreator) {
-    	super(name, metadataCreator);
-    }
-
     @Override
-    public AlgorithmsUndirected getAlgorithms() {
+    public AlgorithmsUndirected<T, V> getAlgorithms() {
         return algorithms;
     }
 
@@ -34,9 +29,9 @@ public class GraphUndirected<M extends Metadata> extends GraphBasic<M> {
     }
 
     /** Running time: O(log(|nodes| + |edgesFromGivenNode|*|edgesFromRelatedNode|)) */
-    public boolean entferneKnoten(final NodeCpp<M> nodeToRemove) {
-        final boolean successful = this.nodes.remove(nodeToRemove);
-        if (!successful)
+    public boolean removeNode(final String id) {
+    	T nodeToRemove = this.nodes.remove(id);
+        if (nodeToRemove == null)
             return false;
         nodeToRemove.removeAllEdges();
         return true;

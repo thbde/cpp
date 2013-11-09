@@ -14,17 +14,17 @@ public interface Node<T extends Node<T, V>, V extends Edge<T, V>> extends Compar
     /** Gets the edge between this node and the given node */
     public V getEdgeToNode(T otherNode);
 
-    public List<? extends Edge<T, V>> getEdges();
+    public List<? extends V> getEdges();
 
     /** Adds the edge in a consistent way. E.g. for both corresponding nodes */
     public Node<T, V> addEdge(V newEdge);
 
     public Node<T, V> addEdgeOnlyForThisNode(V newEdge);
 
-    public Node<T, V> connectWithNode(Node<T, V> otherNode);
+    public Node<T, V> connectWithNode(T otherNode);
 
     /** Only for weighted graphs */
-    public Node<T, V> connectWithNodeAndWeigth(Node<T, V> otherNode, int weight);
+    public Node<T, V> connectWithNodeAndWeigth(T otherNode, int weight);
 
     /** Gets an optional name representation */
     public String getName();

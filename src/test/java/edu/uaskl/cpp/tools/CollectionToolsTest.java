@@ -235,15 +235,10 @@ public class CollectionToolsTest {
         final List<Integer> indicesToRemove = new ArrayList<>(Arrays.asList(3, 7, 1, 5));
         CollectionTools.removeIndices(list, indicesToRemove);
 
-        assertThat(list.contains(1)).isFalse();
-        assertThat(list.contains(2)).isTrue();
-        assertThat(list.contains(3)).isFalse();
-        assertThat(list.contains(5)).isFalse();
-        assertThat(list.contains(7)).isFalse();
-        assertThat(list.contains(9)).isTrue();
-        assertThat(list.contains(10)).isTrue();
-        assertThat(list.get(0)).isEqualTo(0);
-        assertThat(list.get(list.size() - 1)).isEqualTo(10);
+        assertThat(list).contains(2, 9, 10);
+        assertThat(list).doesNotContain(1, 3, 5, 7);
+        assertThat(list).startsWith(0);
+        assertThat(list).endsWith(10);
     }
 
     @Test
@@ -251,7 +246,7 @@ public class CollectionToolsTest {
         final int start = 2;
         final int end = 5;
         final List<Integer> list = CollectionTools.getListFromToInclusive(start, end);
-        assertThat(list.size()).isEqualTo((end + 1) - start); // end inclusive (tbach)
+        assertThat(list).hasSize((end + 1) - start); // end inclusive (tbach)
         for (int i = 0; i < list.size(); i++)
             assertThat(list.get(i)).isEqualTo(i + start);
     }

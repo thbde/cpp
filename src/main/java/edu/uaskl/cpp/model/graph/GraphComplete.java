@@ -1,9 +1,7 @@
 package edu.uaskl.cpp.model.graph;
 
-import java.util.SortedSet;
-
+import java.util.Map;
 import edu.uaskl.cpp.model.edge.EdgeCpp;
-import edu.uaskl.cpp.model.meta.interfaces.Metadata;
 import edu.uaskl.cpp.model.node.NodeCpp;
 
 /**
@@ -11,32 +9,33 @@ import edu.uaskl.cpp.model.node.NodeCpp;
  * 
  * @author tbach
  */
-public class GraphComplete<M extends Metadata> extends GraphUndirected<M> {
+public class GraphComplete extends GraphUndirected<NodeCpp, EdgeCpp> {
+
     public GraphComplete(final int numberOfNodes) {
         super("Complete Graph of size: " + numberOfNodes);
         createNodes(numberOfNodes);
     }
 
     @Override
-    public void setNodes(final SortedSet<NodeCpp<M>> nodes) {
+    public void setNodes(final Map<String, NodeCpp> nodes) {
         throw new IllegalStateException("It is not allowed to change nodes of a complete graph");
     }
 
     @Override
-    public GraphBasic<M> addNode(final NodeCpp<M> newNode) {
+    public GraphBasic<NodeCpp, EdgeCpp> addNode(final NodeCpp newNode) {
         throw new IllegalStateException("It is not allowed to change nodes of a complete graph");
     }
 
     private void createNodes(final int numberOfNodes) {
         for (int i = 0; i < numberOfNodes; i++) {
-            final NodeCpp<M> newNode = new NodeCpp<M>(this.getEdgeCreator());
+            final NodeCpp newNode = new NodeCpp();
             connectNodeWithAllOthers(newNode);
-            getNodes().add(newNode);
+            getNodesMap().put(newNode.getId(), newNode);
         }
     }
 
-    private void connectNodeWithAllOthers(final NodeCpp<M> neuerKnoten) {
-        for (final NodeCpp<M> nodesItem : getNodes())
-            neuerKnoten.addEdge(new EdgeCpp<M>(neuerKnoten, nodesItem));
+    private void connectNodeWithAllOthers(final NodeCpp neuerKnoten) {
+        for (final NodeCpp nodesItem : getNodes())
+            neuerKnoten.addEdge(new EdgeCpp(neuerKnoten, nodesItem));
     }
 }

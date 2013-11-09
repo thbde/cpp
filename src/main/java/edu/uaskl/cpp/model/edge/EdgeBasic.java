@@ -15,7 +15,7 @@ public class EdgeBasic<K extends Node<K, V>, V extends Edge<K, V>> implements Ed
     private K node2;
 
     /** Copy constructor. Create a new basic edge with the same properties (nodes) */
-    public EdgeBasic(final Edge<K, V> kante) {
+    public EdgeBasic(final V kante) {
         this(kante.getNode1(), kante.getNode2());
     }
 

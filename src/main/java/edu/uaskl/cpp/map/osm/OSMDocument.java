@@ -23,7 +23,7 @@ import edu.uaskl.cpp.model.edge.*;
 import edu.uaskl.cpp.model.node.*;
 import edu.uaskl.cpp.map.meta.*;
 
-public class OSMDocument implements GraphCreator<NodeCpp<Way>, EdgeCpp<Way>> {
+public class OSMDocument implements GraphCreator<NodeOSM, EdgeOSM> {
 	private HashMap<Long, WayNodeOSM> nodesById = new HashMap<Long, WayNodeOSM>();
 	private ArrayList<Way> ways = new ArrayList<Way>();
 
@@ -119,7 +119,7 @@ public class OSMDocument implements GraphCreator<NodeCpp<Way>, EdgeCpp<Way>> {
 
 	@Override
 	// TODO: Actually create the graph.
-	public GraphUndirected<Way> create() {return null;}
+	public GraphUndirected<NodeOSM, EdgeOSM> create() {return null;}
 	
 	public void parse() throws IOException {
 		try {
