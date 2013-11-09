@@ -18,7 +18,7 @@ public class OsmImporterTest {
 
 	@Test
 	public void testGetDom() {
-		Document dom = getDomFromFile("fh_way_no_meta.osm");
+		Document dom = getDomFromFile(getClass().getResource("../fh_way_no_meta.osm").toString());
 		NodeList testnodes = dom.getDocumentElement().getElementsByTagName("node");
 		assertThat(dom).isNotNull();
 		assertThat(testnodes.getLength()).isNotEqualTo(0);
@@ -35,7 +35,7 @@ public class OsmImporterTest {
 	
 	@Test
 	public void testGetOsmNodes(){
-		Document dom = getDomFromFile("fh_way_no_meta.osm");
+		Document dom = getDomFromFile(getClass().getResource("../fh_way_no_meta.osm").toString());
 		HashMap<String, OsmNode> map = getOsmNodes(dom);
 		assertFalse("Node map should not be empty",map.isEmpty());
 	}
@@ -43,7 +43,7 @@ public class OsmImporterTest {
 	@Test
 	public void testImportOsmUndirected(){
 		//GraphUndirected graph = testImporter.importOsmUndirected("zweibruecken_way_no_meta.osm");
-		GraphUndirected graph = importOsmUndirected("fh_way_no_meta.osm");
+		GraphUndirected graph = importOsmUndirected(getClass().getResource("../fh_way_no_meta.osm").toString());
 		assertNotEquals("Graph should have nodes",graph.getNumberOfNodes(),0);
 		assertNotEquals("Graph should have edges",graph.getGetNumberOfEdges(),0);
 		//System.out.println(graph.toString());

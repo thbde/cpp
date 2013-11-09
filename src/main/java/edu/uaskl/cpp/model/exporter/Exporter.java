@@ -1,5 +1,6 @@
 package edu.uaskl.cpp.model.exporter;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -55,13 +56,13 @@ public class Exporter {
 	}
 	
 	
-	public static void exportPathToHTML(PathCpp path){
+	public static void exportPathToHTML(PathCpp path, File folder){
 		List<NodeCpp> nodes = path.getNodes();
 		NodeCpp previousNode = nodes.get(0);
 		NodeCpp currentNode;
 		Writer fw = null;
 		try {
-			fw = new FileWriter( "overlay.js" );
+			fw = new FileWriter( folder.toString() + "overlay.js" );
 		
 			for(int index = 1;index<nodes.size();++index){
 				currentNode = nodes.get(index);
