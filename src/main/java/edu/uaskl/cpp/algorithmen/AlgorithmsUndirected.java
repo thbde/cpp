@@ -141,7 +141,7 @@ public class AlgorithmsUndirected implements Algorithms {
 
 	public ArrayList<NodeCpp> connectCircles(final ArrayList<NodeCpp> big,
 			final ArrayList<NodeCpp> little) {
-		// kleine wird zur großen hinzugefügt
+		// kleine wird zur groÃŸen hinzugefÃ¼gt
 		final ArrayList<NodeCpp> list = new ArrayList<>();
 
 		for (int i = 0; i < big.size(); i++) {
@@ -149,7 +149,7 @@ public class AlgorithmsUndirected implements Algorithms {
 
 			if (big.get(i).equals(little.get(0))) {
 				list.remove(i); // damit doppeltes(aufgeschobenes) element
-								// gelöscht wird
+								// gelÃ¶scht wird
 
 				for (int j = 0; j < little.size(); j++)
 					list.add(little.get(j));
