@@ -23,7 +23,10 @@ import edu.uaskl.cpp.model.edge.*;
 import edu.uaskl.cpp.model.node.*;
 import edu.uaskl.cpp.map.meta.*;
 
-public class OSMDocument implements GraphCreator<NodeCpp, EdgeCpp> {
+public class OSMDocument implements GraphCreator<NodeCpp<Way>, EdgeCpp<Way>> {
+	private HashMap<Long, WayNodeOSM> nodesById = new HashMap<Long, WayNodeOSM>();
+	private ArrayList<Way> ways = new ArrayList<Way>();
+
 	private class OSMHandler extends DefaultHandler {
 		private Way currWay = null;
 
@@ -32,25 +35,45 @@ public class OSMDocument implements GraphCreator<NodeCpp, EdgeCpp> {
 		public void startElement(String uri, String localName, String qName,
 		                          Attributes attributes) throws SAXException {
 			WayNodeOSM node;
-			switch(localName) {
-				// FIXME: Parse this correctly.
-				case "node":
-					node = new WayNodeOSM(
-						Double.parseDouble(attributes.getValue(uri, "longitude")),
-						Double.parseDouble(attributes.getValue(uri, "latitude")),
-						Long.parseLong(attributes.getValue(uri, "id")),
-						new Date(),
-						Long.parseLong(attributes.getValue(uri, "changeset")));
-					nodesById.put(node.getId(), node);
-					break;
-				case "way":
-					currWay = new Way(
-						);
+			try {
+				switch(localName) {
+					// FIXME: Parse this correctly.
+					case "node":
+						node = new WayNodeOSM(
+							Double.parseDouble(attributes.getValue(uri, "longitude")),
+							Double.parseDouble(attributes.getValue(uri, "latitude")),
+							Long.parseLong(attributes.getValue(uri, "id")),
+							new Date(),
+							Long.parseLong(attributes.getValue(uri, "changeset")));
+						nodesById.put(node.getId(), node);
+						break;
+					case "way":
+						currWay = new Way();
 						ways.add(currWay);
-					break;
-				case "nd":
-					node = nodesById.get(Long.parseLong(attributes.getValue(uri, "id")));
-					currWay.getNodes().add(node);
+						break;
+					case "nd":
+						if(currWay == null)
+							throw new RuntimeException("Node reference outside of way in OSM document.");
+						else {
+							node = nodesById.get(
+								Long.parseLong(attributes.getValue(uri, "id")));
+							currWay.getNodes().add(node);
+						}
+						break;
+				}
+			// TODO: Be more specific about these exceptions.
+			} catch(NullPointerException e) {
+		    	throw new RuntimeException("Required attribute not found in OSM node or way.", e);
+		    } catch(NumberFormatException e) {
+		    	throw new RuntimeException("Invalid number format in OSM node.", e);
+		    }
+		}
+
+		@Override
+		public void endElement(String uri, String localName, String qName) throws SAXException {
+			switch(localName) {
+				case "way":
+					currWay = null;
 					break;
 			}
 		}
@@ -60,8 +83,6 @@ public class OSMDocument implements GraphCreator<NodeCpp, EdgeCpp> {
 
 	private static SAXParser parser = null;
 
-	private HashMap<Long, WayNodeOSM> nodesById = new HashMap<Long, WayNodeOSM>();
-	private ArrayList<Way> ways = new ArrayList<Way>();
 	private String uri;
 	
 	private void configureParser() {
@@ -98,13 +119,13 @@ public class OSMDocument implements GraphCreator<NodeCpp, EdgeCpp> {
 
 	@Override
 	// TODO: Actually create the graph.
-	public GraphUndirected create() {return null;}
+	public GraphUndirected<Way> create() {return null;}
 	
 	public void parse() throws IOException {
 		try {
 			parser.parse(uri, new OSMHandler());
 		} catch(IOException e) {
-			throw new IOException("IO error parsing OSM document.", e);
+			throw new IOException("I/O error parsing OSM document.", e);
 		} catch(SAXException e) {
 			throw new RuntimeException("Error parsing OSM document.", e);
 		}
