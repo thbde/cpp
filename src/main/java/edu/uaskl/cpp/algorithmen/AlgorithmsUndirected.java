@@ -141,7 +141,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 
 	public ArrayList<T> connectCircles(final ArrayList<T> big,
 			final ArrayList<T> little) {
-		// kleine wird zur gro�en hinzugef�gt
+		// kleine wird zur großen hinzugefügt
 		final ArrayList<T> list = new ArrayList<>();
 
 		for (int i = 0; i < big.size(); i++) {
@@ -149,7 +149,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 
 			if (big.get(i).equals(little.get(0))) {
 				list.remove(i); // damit doppeltes(aufgeschobenes) element
-								// gel�scht wird
+								// gelöscht wird
 
 				for (int j = 0; j < little.size(); j++)
 					list.add(little.get(j));
