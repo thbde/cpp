@@ -5,6 +5,7 @@ package edu.uaskl.cpp.importer;
 import java.util.HashMap;
 
 import static org.fest.assertions.api.Assertions.*;
+
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -12,7 +13,9 @@ import org.w3c.dom.NodeList;
 import edu.uaskl.cpp.importer.OsmNode;
 import static edu.uaskl.cpp.importer.OsmImporter.*;
 import static org.junit.Assert.*;
+import edu.uaskl.cpp.model.edge.EdgeOSM;
 import edu.uaskl.cpp.model.graph.*;
+import edu.uaskl.cpp.model.node.NodeOSM;
 
 public class OsmImporterTest {
 
@@ -43,7 +46,7 @@ public class OsmImporterTest {
 	@Test
 	public void testImportOsmUndirected(){
 		//GraphUndirected graph = testImporter.importOsmUndirected("zweibruecken_way_no_meta.osm");
-		GraphUndirected graph = importOsmUndirected("fh_way_no_meta.osm");
+		GraphUndirected<NodeOSM, EdgeOSM> graph = importOsmUndirected("fh_way_no_meta.osm");
 		assertNotEquals("Graph should have nodes",graph.getNumberOfNodes(),0);
 		assertNotEquals("Graph should have edges",graph.getGetNumberOfEdges(),0);
 		//System.out.println(graph.toString());

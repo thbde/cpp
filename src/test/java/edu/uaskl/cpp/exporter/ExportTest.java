@@ -9,24 +9,25 @@ import org.junit.Test;
 
 import static edu.uaskl.cpp.importer.OsmImporter.*;
 import static edu.uaskl.cpp.model.exporter.Exporter.*;
+import edu.uaskl.cpp.model.edge.EdgeOSM;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
-import edu.uaskl.cpp.model.node.NodeCpp;
-import edu.uaskl.cpp.model.path.PathCpp;
+import edu.uaskl.cpp.model.node.NodeOSM;
+import edu.uaskl.cpp.model.path.PathExtended;
 
 public class ExportTest {
 
 	@Test
 	public void test() {
-		GraphUndirected graph = importOsmUndirected("zweibruecken_way_no_meta.osm");
-		List<NodeCpp> nodes = new LinkedList<NodeCpp>();
+		GraphUndirected<NodeOSM, EdgeOSM> graph = importOsmUndirected("zweibruecken_way_no_meta.osm");
+		List<NodeOSM> nodes = new LinkedList<NodeOSM>();
 		nodes.add(graph.getNode("279266215"));
 		nodes.add(graph.getNode("279266248"));
 		nodes.add(graph.getNode("279266252"));
 		nodes.add(graph.getNode("279266215"));
 		
-		PathCpp path = new PathCpp(nodes);
+		PathExtended<NodeOSM, EdgeOSM> path = new PathExtended<NodeOSM, EdgeOSM>(nodes);
 		exportPathToHTML(path);
-		assert(true);
+		assertTrue(true);
 	}
 
 

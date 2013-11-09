@@ -1,8 +1,5 @@
 package edu.uaskl.cpp.model.edge.interfaces;
 
-import java.util.List;
-
-import edu.uaskl.cpp.importer.OsmNode;
 import edu.uaskl.cpp.model.node.interfaces.Node;
 
 /**
@@ -11,6 +8,5 @@ import edu.uaskl.cpp.model.node.interfaces.Node;
  * @author tbach
  */
 public interface EdgeCreator<T extends Node<T, V>, V extends Edge<T, V>> {
-    public V create(final Node<T, V> node1, final Node<T, V> node2, final int weight);
-    public V create(final Node<T, V> node1, final Node<T, V> node2, final int weight,List<OsmNode> metaNodes);
-}
+    public V create(final T node1, final T node2, final int weight);
+ }

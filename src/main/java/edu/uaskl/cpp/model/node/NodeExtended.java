@@ -1,8 +1,5 @@
 package edu.uaskl.cpp.model.node;
 
-import java.util.List;
-
-import edu.uaskl.cpp.importer.OsmNode;
 import edu.uaskl.cpp.model.edge.EdgeExtended;
 import edu.uaskl.cpp.model.edge.interfaces.EdgeCreator;
 
@@ -61,9 +58,8 @@ public class NodeExtended<T extends NodeExtended<T, V>, V extends EdgeExtended<T
         resetAllEdgesVisitedStates();
     }
     
-
-    public NodeExtended<T, V> connectWithNodeAndWeigth(final T otherNode, final int weight,List<OsmNode> metaNodes) {
-        addEdge(getEdgeCreator().create(this, otherNode, weight,metaNodes));
+    public NodeExtended<T, V> connectWithNodeAndWeigth(final T otherNode, final int weight) {
+        addEdge(getEdgeCreator().create((T)this, otherNode, weight));
         return this;
     }
 }

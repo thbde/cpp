@@ -8,9 +8,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import edu.uaskl.cpp.importer.OsmNode;
-import edu.uaskl.cpp.model.edge.EdgeCpp;
-import edu.uaskl.cpp.model.node.NodeCpp;
-import edu.uaskl.cpp.model.path.PathCpp;;
+import edu.uaskl.cpp.model.edge.EdgeOSM;
+import edu.uaskl.cpp.model.node.NodeOSM;
+import edu.uaskl.cpp.model.path.PathExtended;;
 
 public class Exporter {
 	private static String nanoDegreeToString(long nanoDeg){
@@ -55,17 +55,17 @@ public class Exporter {
 	}
 	
 	
-	public static void exportPathToHTML(PathCpp path){
-		List<NodeCpp> nodes = path.getNodes();
-		NodeCpp previousNode = nodes.get(0);
-		NodeCpp currentNode;
+	public static void exportPathToHTML(PathExtended<NodeOSM, EdgeOSM> path){
+		List<NodeOSM> nodes = path.getNodes();
+		NodeOSM previousNode = nodes.get(0);
+		NodeOSM currentNode;
 		Writer fw = null;
 		try {
 			fw = new FileWriter( "overlay.js" );
 		
 			for(int index = 1;index<nodes.size();++index){
 				currentNode = nodes.get(index);
-				EdgeCpp edge = previousNode.getEdgeToNode(currentNode);
+				EdgeOSM edge = previousNode.getEdgeToNode(currentNode);
 				List<OsmNode> metaNodes = edge.getMetaNodes();
 				if (metaNodes.get(0).id.equals(currentNode.getId())){
 					Collections.reverse(metaNodes);
