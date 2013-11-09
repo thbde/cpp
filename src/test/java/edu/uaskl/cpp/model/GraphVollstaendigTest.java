@@ -9,6 +9,7 @@ import org.junit.Test;
 import edu.uaskl.cpp.model.graph.GraphComplete;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
 import edu.uaskl.cpp.model.node.NodeCpp;
+import edu.uaskl.cpp.model.edge.EdgeCpp;
 
 public class GraphVollstaendigTest {
 
@@ -44,7 +45,7 @@ public class GraphVollstaendigTest {
 
     @Test
     public void isConnectedFalse() {
-        final GraphUndirected graph = new GraphUndirected();
+        final GraphUndirected<NodeCpp, EdgeCpp> graph = new GraphUndirected<NodeCpp, EdgeCpp>();
         final NodeCpp node1 = new NodeCpp();
         final NodeCpp node2 = new NodeCpp();
         final NodeCpp node3 = new NodeCpp();
@@ -63,7 +64,7 @@ public class GraphVollstaendigTest {
 
     @Test
     public void matchingTest() {
-        final GraphUndirected graph = new GraphUndirected();
+        final GraphUndirected<NodeCpp, EdgeCpp> graph = new GraphUndirected<NodeCpp, EdgeCpp>();
         final NodeCpp node1 = new NodeCpp();
         final NodeCpp node2 = new NodeCpp();
         final NodeCpp node3 = new NodeCpp();
@@ -97,7 +98,7 @@ public class GraphVollstaendigTest {
 
     @Test
     public void getPathBetweenTest() {
-        final GraphUndirected graph = new GraphUndirected();
+        final GraphUndirected<NodeCpp, EdgeCpp> graph = new GraphUndirected<NodeCpp, EdgeCpp>();
 
         final NodeCpp node0 = new NodeCpp();
         final NodeCpp node1 = new NodeCpp();
@@ -126,14 +127,14 @@ public class GraphVollstaendigTest {
 
         graph.addNode(node0).addNode(node1).addNode(node2).addNode(node3).addNode(node4).addNode(node5).addNode(node6).addNode(node7).addNode(node8);
 
-        final ArrayList pathList = graph.getAlgorithms().getPathBetween(node0, node8);
+        final ArrayList<NodeCpp> pathList = graph.getAlgorithms().getPathBetween(node0, node8);
 
         assertThat(pathList.get(0).equals(node0) && pathList.get(pathList.size() - 1).equals(node8)).isFalse();
     }
 
     @Test
     public void connectCirclesTest() {
-        final GraphUndirected graph = new GraphUndirected();
+        final GraphUndirected<NodeCpp, EdgeCpp> graph = new GraphUndirected<NodeCpp, EdgeCpp>();
 
         final NodeCpp node0 = new NodeCpp();
         final NodeCpp node1 = new NodeCpp();
@@ -151,8 +152,8 @@ public class GraphVollstaendigTest {
 
         graph.addNode(node0).addNode(node1).addNode(node2).addNode(node3).addNode(node4);
 
-        final ArrayList little = new ArrayList();
-        final ArrayList big = new ArrayList();
+        final ArrayList<NodeCpp> little = new ArrayList<NodeCpp>();
+        final ArrayList<NodeCpp> big = new ArrayList<NodeCpp>();
 
         big.add(node0);
         big.add(node1);
@@ -165,14 +166,14 @@ public class GraphVollstaendigTest {
         little.add(node2);
         little.add(node1);
 
-        final ArrayList list = new ArrayList(graph.getAlgorithms().connectCircles(big, little));
+        final ArrayList<NodeCpp> list = new ArrayList<NodeCpp>(graph.getAlgorithms().connectCircles(big, little));
 
         assertThat(list.get(0).equals(list.get(list.size() - 1))).isTrue();
     }
 
     @Test
     public void getEulerianCircleTEST() {
-        final GraphUndirected graph = new GraphUndirected();
+        final GraphUndirected<NodeCpp, EdgeCpp> graph = new GraphUndirected<NodeCpp, EdgeCpp>();
 
         final NodeCpp node0 = new NodeCpp();
         final NodeCpp node1 = new NodeCpp();
@@ -190,7 +191,7 @@ public class GraphVollstaendigTest {
 
         graph.addNode(node0).addNode(node1).addNode(node2).addNode(node3).addNode(node4);
 
-        final ArrayList eulerianList = new ArrayList(graph.getAlgorithms().getEulerianCircle());
+        final ArrayList<NodeCpp> eulerianList = new ArrayList<NodeCpp>(graph.getAlgorithms().getEulerianCircle());
 
         boolean odd = false;
 

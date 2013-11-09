@@ -93,7 +93,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     }
 
     public ArrayList<T> getPathBetween(final T start, final T destination) {
-        final ArrayList<T> pathList = new ArrayList<>();
+        final ArrayList<T> pathList = new ArrayList<T>();
 
         graph.resetStates();
         pathList.add(start);

@@ -1,8 +1,8 @@
 package edu.uaskl.cpp.algorithmen;
 
-import edu.uaskl.cpp.model.edge.EdgeExtended;
-import edu.uaskl.cpp.model.graph.GraphBasic;
-import edu.uaskl.cpp.model.node.NodeExtended;
+import edu.uaskl.cpp.model.edge.interfaces.Edge;
+import edu.uaskl.cpp.model.graph.interfaces.Graph;
+import edu.uaskl.cpp.model.node.interfaces.Node;
 
 /**
  * This interface models a relation between algorithms and graph. Each algorithms instance is responsible for a specific type of graph.<br>
@@ -11,6 +11,6 @@ import edu.uaskl.cpp.model.node.NodeExtended;
  * 
  * @author tbach
  */
-public interface Algorithms<T extends NodeExtended<T, V>, V extends EdgeExtended<T, V>> {
-    public GraphBasic<T, V> getGraph();
+public interface Algorithms<T extends Node<T, V>, V extends Edge<T, V>> {
+    public Graph<T, V> getGraph();
 }

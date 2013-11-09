@@ -25,5 +25,5 @@ public interface Graph<T extends Node<T, V>, V extends Edge<T, V>> {
 
     public int getGetNumberOfEdges();
 
-    public Algorithms getAlgorithms();
+    public Algorithms<T, V> getAlgorithms();
 }
