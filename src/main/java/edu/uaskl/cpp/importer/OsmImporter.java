@@ -1,6 +1,5 @@
 package edu.uaskl.cpp.importer;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
@@ -38,7 +37,7 @@ public class OsmImporter {
         Document document = null;
         try {
             final DocumentBuilder builder = factory.newDocumentBuilder();
-            document = builder.parse(new File(filename));
+            document = builder.parse(filename);
             document.getDocumentElement().normalize();
         } catch (ParserConfigurationException | SAXException | IOException e) {
             System.out.println("could not open the file");
