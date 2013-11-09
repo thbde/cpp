@@ -83,12 +83,12 @@ public class NodeBasic<T extends NodeBasic<T, V>, V extends EdgeBasic<T, V>> imp
     }
 
     @Override
-    public NodeBasic<T, V> connectWithNode(final Node<T, V> otherNode) {
+    public NodeBasic<T, V> connectWithNode(final T otherNode) {
         return connectWithNodeAndWeigth(otherNode, 0);
     }
 
     @Override
-    public NodeBasic<T, V> connectWithNodeAndWeigth(final Node<T, V> otherNode, final int weight) {
+    public NodeBasic<T, V> connectWithNodeAndWeigth(final T otherNode, final int weight) {
         addEdge(edgeCreator.create(this, otherNode, weight));
         return this;
     }
