@@ -10,195 +10,216 @@ import edu.uaskl.cpp.model.node.NodeExtended;
 
 public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeExtended<T, V>> implements Algorithms<T, V> {
 
-    private final GraphUndirected<T, V> graph;
+	private final GraphUndirected<T, V> graph;
 
-    public AlgorithmsUndirected(final GraphUndirected<T, V> graph) {
-        this.graph = graph;
-    }
+	public AlgorithmsUndirected(final GraphUndirected<T, V> graph) {
+		this.graph = graph;
+	}
 
-    @Override
-    public GraphUndirected<T, V> getGraph() {
-        return graph;
-    }
+	@Override
+	public GraphUndirected<T, V> getGraph() {
+		return graph;
+	}
 
-    public boolean isConnected() {
+	public boolean isConnected() {
 
-        graph.resetStates();
+		graph.resetStates();
 
-        if (graph.getNodes().size() == 0)
-            return true;
+		if (graph.getNodes().size() == 0)
+			return true;
 
-        final T start = graph.getNodes().iterator().next();
+		final T start = graph.getNodes().iterator().next();
+		visitAllEdgesFromStartNode(start);
 
-        visitAllEdgesFromStartNode(start);
+		return allNodesVisited();
+	}
 
-        for (final T nodeItem : graph.getNodes())
-            for (final V edgeItem : nodeItem.getEdges())
-                if (edgeItem.isVisited() == false)
-                    return false;
+	private boolean allNodesVisited() {
+		for (final T nodeItem : graph.getNodes()) {
+			if (!nodeItem.isVisited())
+				return false;
+		}
 
-        return true;
+		return true;
+	}
 
-    }
+	private void visitAllEdgesFromStartNode(final T node) {
+		node.setVisited();
 
-    private void visitAllEdgesFromStartNode(final T node) {
+		for (final V edgeItem : node.getEdges()) {
+			if (!edgeItem.getRelatedNode(node).isVisited() == true) {
+				visitAllEdgesFromStartNode(edgeItem.getRelatedNode(node));
+			}
+		}
+	}
 
-        for (final V edgeItem : node.getEdges()) {
+	public boolean hasEulerCircle() {
+		for (final T nodesItem : graph.getNodes())
+			if (nodesItem.isDegreeOdd())
+				return false;
+		return true;
+	}
 
-            if (edgeItem.isVisited() == true)
-                return;
-            edgeItem.setVisited();
-            visitAllEdgesFromStartNode(edgeItem.getNode2());
-        }
-    }
+	public GraphUndirected<T, V> matchGraph(GraphUndirected<T, V> graph) {
+		T node1 = null, node2 = null;
+		ArrayList<T> pathList = new ArrayList<>();
 
-    public boolean hasEulerCircle() {
-        for (final T nodesItem : graph.getNodes())
-            if (nodesItem.isDegreeOdd())
-                return false;
-        return true;
-    }
+		for (final T nodeItem : graph.getNodes()) {
+			if ((node1 == null) && nodeItem.isDegreeOdd()) {
+				node1 = nodeItem;
+				continue;
+			}
+			if (nodeItem.isDegreeOdd()) {
+				node2 = nodeItem;
 
-    public GraphUndirected<T, V> matchGraph(GraphUndirected<T, V> graph) {
-        T node1 = null, node2 = null;
-        ArrayList<T> pathList = new ArrayList<>();
+				pathList = getPathBetween(node1, node2);
+				graph = matchBetweenNodes(graph, pathList);
+				node1 = null;
+				node2 = null;
+			}
+		}
 
-        for (final T nodeItem : graph.getNodes()) {
-            if ((node1 == null) && nodeItem.isDegreeOdd()) {
-                node1 = nodeItem;
-                continue;
-            }
-            if (nodeItem.isDegreeOdd()) {
-                node2 = nodeItem;
+		return graph;
+	}
 
-                pathList = getPathBetween(node1, node2);
-                graph = matchBetweenNodes(graph, pathList);
-                node1 = null;
-                node2 = null;
-            }
-        }
+	private GraphUndirected<T, V> matchBetweenNodes(final GraphUndirected<T, V> graph,
+			final ArrayList<T> pathList) {
+		for (int i = 0; i < (pathList.size() - 1); i++) {
+			final T node1 = pathList.get(i);
+			final T node2 = pathList.get(i + 1);
 
-        return graph;
-    }
+			node1.connectWithNode(node2);
+		}
 
-    private GraphUndirected<T, V> matchBetweenNodes(final GraphUndirected<T, V> graph, final ArrayList<T> pathList) {
-        for (int i = 0; i < (pathList.size() - 1); i++) {
-            final T node1 = pathList.get(i);
-            final T node2 = pathList.get(i + 1);
+		return graph;
+	}
 
-            node1.connectWithNode(node2);
-        }
+	public ArrayList<T> getPathBetween(final T start,
+			final T destination) {
+		final ArrayList<T> pathList = new ArrayList<>();
 
-        return graph;
-    }
+		graph.resetStates();
+		searchForPathBetweenNodesWithArrayList(start, destination, pathList);
 
-    public ArrayList<T> getPathBetween(final T start, final T destination) {
-        final ArrayList<T> pathList = new ArrayList<T>();
 
-        graph.resetStates();
-        pathList.add(start);
-        searchForPathBetweenNodesWithArrayList(start, destination, pathList);
+		return pathList;
 
-        return pathList;
+	}
 
-    }
+	private void searchForPathBetweenNodesWithArrayList(final T actual, final T destination, final ArrayList<T> pathList)
+	{
+			if (actual.equals(destination))
+			{		
+				pathList.add(actual);
+				return;
+			}
+				
+			pathList.add(actual);
+			
+			for (int i = 0; i < actual.getEdges().size(); i++)
+			{
+				if (!actual.getEdges().get(i).isVisited())
+				{
+						
+						actual.getEdges().get(i).setVisited();
+						searchForPathBetweenNodesWithArrayList(actual.getEdges().get(i).getRelatedNode(actual),destination, pathList);
+						return;
+				}
+				else if( i == actual.getEdges().size() - 1 )			
+				{
+					
+					pathList.remove(pathList.size() - 1);
+					T temp = pathList.get(pathList.size() - 1);
+					pathList.remove(pathList.size() - 1);
+					searchForPathBetweenNodesWithArrayList(temp, destination, pathList);
+					return;
+				}
+			}
+		
+		
+	}
 
-    private void searchForPathBetweenNodesWithArrayList(final T actual, final T destination, final ArrayList<T> pathList) {
+	public ArrayList<T> connectCircles(final ArrayList<T> big,
+			final ArrayList<T> little) {
+		// kleine wird zur gro�en hinzugef�gt
+		final ArrayList<T> list = new ArrayList<>();
 
-        for (int i = 0; i < actual.getEdges().size(); i++)
-            for (int j = 0; j < destination.getEdges().size(); j++)
-                if (!actual.getEdges().get(i).isVisited())
-                    if (actual.getEdges().get(i).getRelatedNode(actual).equals(destination.getEdges().get(j).getRelatedNode(destination))) {
-                        pathList.add(actual.getEdges().get(i).getRelatedNode(actual));
-                        pathList.add(destination);
-                        return;
-                    } else if (pathList.contains(actual.getEdges().get(i).getRelatedNode(actual))) {
-                        actual.getEdges().get(i).setVisited();
-                        searchForPathBetweenNodesWithArrayList(actual.getEdges().get(i).getRelatedNode(actual), destination, pathList);
-                        return;
-                    } else {
-                        pathList.add(actual.getEdges().get(i).getRelatedNode(actual));
-                        actual.getEdges().get(i).setVisited();
-                        searchForPathBetweenNodesWithArrayList(actual.getEdges().get(i).getRelatedNode(actual), destination, pathList);
-                        return;
-                    }
-    }
+		for (int i = 0; i < big.size(); i++) {
+			list.add(big.get(i));
 
-    public ArrayList<T> connectCircles(final ArrayList<T> big, final ArrayList<T> little) {
-        // kleine wird zur gro�en hinzugef�gt
-        final ArrayList<T> list = new ArrayList<>();
+			if (big.get(i).equals(little.get(0))) {
+				list.remove(i); // damit doppeltes(aufgeschobenes) element
+								// gel�scht wird
 
-        for (int i = 0; i < big.size(); i++) {
-            list.add(big.get(i));
+				for (int j = 0; j < little.size(); j++)
+					list.add(little.get(j));
+			}
 
-            if (big.get(i).equals(little.get(0))) {
-                list.remove(i); // damit doppeltes(aufgeschobenes) element gel�scht wird
+		}
 
-                for (int j = 0; j < little.size(); j++)
-                    list.add(little.get(j));
-            }
+		return list;
 
-        }
+	}
 
-        return list;
+	public ArrayList<T> getEulerianCircle(T start) {
+		final T node = start;
+		T temp;
 
-    }
+		ArrayList<T> eulerianList = new ArrayList<>(getCircle(node));
 
-    public ArrayList<T> getEulerianCircle() {
-        final T node = graph.getNodes().iterator().next();
-        T temp;
+		for (int i = 0; i < eulerianList.size(); i++) // gehe jedes element der
+														// Liste durch
+		{
+			temp = eulerianList.get(i);
 
-        ArrayList<T> eulerianList = new ArrayList<>(getCircle(node));
+			for (int j = 0; j < temp.getEdges().size(); j++)
+				if (!temp.getEdges().get(j).isVisited()) // wenn eine kante noch
+															// nicht besucht
+															// wurde...
+				{
+					final ArrayList<T> underGraph = new ArrayList<>(
+							getCircle(temp));
 
-        for (int i = 0; i < eulerianList.size(); i++) // gehe jedes element der Liste durch
-        {
-            temp = eulerianList.get(i);
+					eulerianList = connectCircles(eulerianList, underGraph);
 
-            for (int j = 0; j < temp.getEdges().size(); j++)
-                if (!temp.getEdges().get(j).isVisited()) // wenn eine kante noch nicht besucht wurde...
-                {
-                    final ArrayList<T> underGraph = new ArrayList<>(getCircle(temp));
+					i = 0; // beginne nochmal von vorn zu suchen
 
-                    eulerianList = connectCircles(eulerianList, underGraph);
+				}
 
-                    i = 0; // beginne nochmal von vorn zu suchen
+		}
 
-                }
+		return eulerianList;
+	}
 
-        }
+	private ArrayList<T> getCircle(final T node) {
+		T node1 = node;
+		int i = 0;
 
-        return eulerianList;
-    }
+		final ArrayList<T> pathList = new ArrayList<>();
 
-    private ArrayList<T> getCircle(final T node) {
-        T node1 = node;
-        int i = 0;
+		for (int j = 0; j < node.getEdges().size(); j++)
+			if (!node.getEdges().get(j).isVisited()) {
+				node1.getEdges().get(j).setVisited();
+				pathList.add(node1);
+				node1 = node1.getEdges().get(j).getRelatedNode(node1);
 
-        final ArrayList<T> pathList = new ArrayList<>();
+				break;
+			}
 
-        for (int j = 0; j < node.getEdges().size(); j++)
-            if (!node.getEdges().get(j).isVisited()) {
-                node1.getEdges().get(j).setVisited();
-                pathList.add(node1);
-                node1 = node1.getEdges().get(j).getRelatedNode(node1);
+		do
+			if (!node1.getEdges().get(i).isVisited()) {
+				node1.getEdges().get(i).setVisited();
+				pathList.add(node1);
+				node1 = node1.getEdges().get(i).getRelatedNode(node1);
+				i = 0;
+			} else
+				i++;
+		while (!node1.equals(node));
 
-                break;
-            }
+		pathList.add(node1);
 
-        do
-            if (!node1.getEdges().get(i).isVisited()) {
-                node1.getEdges().get(i).setVisited();
-                pathList.add(node1);
-                node1 = node1.getEdges().get(i).getRelatedNode(node1);
-                i = 0;
-            } else
-                i++;
-        while (!node1.equals(node));
+		return pathList;
 
-        pathList.add(node1);
-
-        return pathList;
-
-    }
+	}
 
 }

@@ -14,11 +14,6 @@ import edu.uaskl.cpp.model.edge.EdgeCpp;
 public class GraphVollstaendigTest {
 
     @Test
-    public void hasEulercircleTrue() {
-        assertThat(new GraphComplete(19).getAlgorithms().hasEulerCircle()).isTrue();
-    }
-
-    @Test
     public void hasEulerCircleTrue() {
         assertThat(new GraphComplete(19).getAlgorithms().hasEulerCircle()).isTrue();
     }
@@ -31,6 +26,21 @@ public class GraphVollstaendigTest {
     @Test
     public void isConnected4True() {
         assertThat(new GraphComplete(4).getAlgorithms().isConnected()).isTrue();
+    }
+    
+    @Test
+    public void isConnected7True() {
+        assertThat(new GraphComplete(7).getAlgorithms().isConnected()).isTrue();
+    }
+    
+    @Test
+    public void isConnected10True() {
+        assertThat(new GraphComplete(10).getAlgorithms().isConnected()).isTrue();
+    }
+    
+    @Test
+    public void isConnected15True() {
+        assertThat(new GraphComplete(15).getAlgorithms().isConnected()).isTrue();
     }
 
     @Test
@@ -126,10 +136,11 @@ public class GraphVollstaendigTest {
         node7.connectWithNode(node8);
 
         graph.addNode(node0).addNode(node1).addNode(node2).addNode(node3).addNode(node4).addNode(node5).addNode(node6).addNode(node7).addNode(node8);
-
+        
         final ArrayList<NodeCpp> pathList = graph.getAlgorithms().getPathBetween(node0, node8);
 
-        assertThat(pathList.get(0).equals(node0) && pathList.get(pathList.size() - 1).equals(node8)).isFalse();
+        assertThat(pathList).startsWith(node0);
+        assertThat(pathList).endsWith(node8);
     }
 
     @Test
@@ -168,7 +179,8 @@ public class GraphVollstaendigTest {
 
         final ArrayList<NodeCpp> list = new ArrayList<NodeCpp>(graph.getAlgorithms().connectCircles(big, little));
 
-        assertThat(list.get(0).equals(list.get(list.size() - 1))).isTrue();
+        assertThat(list).startsWith(big.get(0));
+        assertThat(list).endsWith(big.get(0));
     }
 
     @Test
@@ -191,12 +203,13 @@ public class GraphVollstaendigTest {
 
         graph.addNode(node0).addNode(node1).addNode(node2).addNode(node3).addNode(node4);
 
-        final ArrayList<NodeCpp> eulerianList = new ArrayList<NodeCpp>(graph.getAlgorithms().getEulerianCircle());
+        final ArrayList<NodeCpp> eulerianList = new ArrayList<NodeCpp>(graph.getAlgorithms().getEulerianCircle(node0));
 
         boolean odd = false;
 
         for (final NodeCpp nodeItem : graph.getNodes())
-            if (nodeItem.isDegreeOdd()) {
+            if (nodeItem.isDegreeOdd()) 
+            {
                 odd = true;
                 break;
             }
