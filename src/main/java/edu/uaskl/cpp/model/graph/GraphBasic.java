@@ -27,7 +27,7 @@ public class GraphBasic<T extends NodeExtended<T, V>, V extends EdgeExtended<T, 
 
     /** BasicGraph has no algorithms, therefore returns null */
     @Override
-    public Algorithms getAlgorithms() {
+    public Algorithms<T, V> getAlgorithms() {
         return null;
     }
 

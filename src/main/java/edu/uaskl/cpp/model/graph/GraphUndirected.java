@@ -8,7 +8,7 @@ import edu.uaskl.cpp.model.node.NodeExtended;
  * @author tbach
  */
 public class GraphUndirected<T extends NodeExtended<T, V>, V extends EdgeExtended<T, V>> extends GraphBasic<T, V> {
-    private final AlgorithmsUndirected algorithms = new AlgorithmsUndirected(this);
+    private final AlgorithmsUndirected<T, V> algorithms = new AlgorithmsUndirected<T, V>(this);
 
     public GraphUndirected() {
         super("Undirected Graph");
@@ -19,7 +19,7 @@ public class GraphUndirected<T extends NodeExtended<T, V>, V extends EdgeExtende
     }
 
     @Override
-    public AlgorithmsUndirected getAlgorithms() {
+    public AlgorithmsUndirected<T, V> getAlgorithms() {
         return algorithms;
     }
 
