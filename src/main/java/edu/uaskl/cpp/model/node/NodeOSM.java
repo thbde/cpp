@@ -1,12 +1,16 @@
 package edu.uaskl.cpp.model.node;
 
+import edu.uaskl.cpp.map.meta.BasicMetadata;
 import edu.uaskl.cpp.map.meta.WayOSM;
 import edu.uaskl.cpp.model.edge.EdgeCreatorOSM;
 import edu.uaskl.cpp.model.edge.EdgeOSM;
 import edu.uaskl.cpp.model.edge.interfaces.EdgeCreator;
+import edu.uaskl.cpp.model.meta.interfaces.MetadataAnnotated;
 
-public class NodeOSM extends NodeExtended<NodeOSM, EdgeOSM> {
+public class NodeOSM extends NodeExtended<NodeOSM, EdgeOSM> implements MetadataAnnotated<BasicMetadata> {
     private static final EdgeCreator<NodeOSM, EdgeOSM> edgeCreator = new EdgeCreatorOSM();
+
+    private BasicMetadata metadata = null;
 
     public NodeOSM() {
         super(edgeCreator);
@@ -27,4 +31,13 @@ public class NodeOSM extends NodeExtended<NodeOSM, EdgeOSM> {
         addEdge(((EdgeCreatorOSM)getEdgeCreator()).create(this, otherNode, weight, metadata));
         return this;
     }
+	@Override
+	public BasicMetadata getMetadata() {
+		return metadata;
+	}
+	@Override
+	public void setMetadata(BasicMetadata metadata) {
+		this.metadata = metadata;
+	}
+    
 }
