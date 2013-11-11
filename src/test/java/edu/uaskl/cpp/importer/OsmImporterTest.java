@@ -45,11 +45,30 @@ public class OsmImporterTest {
 
 	@Test
 	public void testImportOsmUndirected(){
-		//GraphUndirected graph = testImporter.importOsmUndirected("zweibruecken_way_no_meta.osm");
-		GraphUndirected<NodeOSM, EdgeOSM> graph = importOsmUndirected(getClass().getResource("../fh_way_no_meta.osm").toString());
+		GraphUndirected<NodeOSM, EdgeOSM> graph = importOsmUndirected(getClass().getResource("../zweibruecken_way_no_meta.osm").toString());
+		//GraphUndirected<NodeOSM, EdgeOSM> graph = importOsmUndirected(getClass().getResource("../fh_way_no_meta.osm").toString());
 		assertNotEquals("Graph should have nodes",graph.getNumberOfNodes(),0);
 		assertNotEquals("Graph should have edges",graph.getGetNumberOfEdges(),0);
 		//System.out.println(graph.toString());
 		//System.out.println(graph.getStatistics());
+	}
+	
+	@Test
+	public void testImportLine(){
+		//GraphUndirected graph = testImporter.importOsmUndirected("zweibruecken_way_no_meta.osm");
+		GraphUndirected<NodeOSM, EdgeOSM> graph = importOsmUndirected(getClass().getResource("../testLine.osm").toString());
+		assertEquals("Graph should have 2 nodes",2,graph.getNumberOfNodes());
+		assertEquals("Graph should have 1 edge",1,graph.getGetNumberOfEdges());
+		NodeOSM node1 = graph.getNode(260070555l);
+		EdgeOSM edge1 = node1.getEdges().get(0);
+		assertEquals("there should be 6 meta nodes",6,edge1.getMetaNodes().size());
+	}
+	
+	@Test
+	public void testImportCircle(){
+		//GraphUndirected graph = testImporter.importOsmUndirected("zweibruecken_way_no_meta.osm");
+		GraphUndirected<NodeOSM, EdgeOSM> graph = importOsmUndirected(getClass().getResource("../testCircle.osm").toString());
+		assertEquals("Graph should have 1 nodes",1,graph.getNumberOfNodes());
+		assertEquals("Graph should have 1 edge",1,graph.getGetNumberOfEdges());
 	}
 }
