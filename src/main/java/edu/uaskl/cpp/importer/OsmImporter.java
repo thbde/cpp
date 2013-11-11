@@ -188,6 +188,10 @@ public class OsmImporter {
                 final EdgeCppOSM edge2 = edges.get(1);
                 final Long node1id = edge1.getNode1().getId() == (currentNodeId) ? edge1.getNode2().getId() : edge1.getNode1().getId();
                 final Long node2id = edge2.getNode1().getId() == (currentNodeId) ? edge2.getNode2().getId() : edge2.getNode1().getId();
+                if(currentNodeId == node1id){
+                	//we are in a loop and do not erase ourself
+                	continue;
+                }
                 // concat the list in the right way
                 final List<WayNodeOSM> newMetaNodes = edge1.getMetadata().getNodes(), metaNodes2 = edge2.getMetadata().getNodes();
                 // newMetaNodes = metaNodes1.get(0).id==node1id ? metaNodes1 : Collections.reverse(metaNodes1);
