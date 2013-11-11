@@ -26,8 +26,8 @@ import edu.uci.ics.jung.graph.SparseMultigraph;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.control.DefaultModalGraphMouse;
 import edu.uci.ics.jung.visualization.decorators.EdgeShape;
-import edu.uaskl.cpp.model.edge.EdgeOSM;
-import edu.uaskl.cpp.model.node.NodeOSM;
+import edu.uaskl.cpp.model.edge.EdgeCppOSM;
+import edu.uaskl.cpp.model.node.NodeCppOSM;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
 import edu.uaskl.cpp.importer.OsmImporter;
 
@@ -58,23 +58,23 @@ public class ControlBox extends Box {
     private SparseMultigraph<Integer, Integer> createOSMGraph() {
         SparseMultigraph<Integer, Integer> graph = new SparseMultigraph<>();
 
-        GraphUndirected<NodeOSM, EdgeOSM> osmGraph;
+        GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph;
         osmGraph = OsmImporter
                 .importOsmUndirected("src/test/resources/edu/uaskl/cpp/fh_way_no_meta.osm");
 
-        Collection<NodeOSM> nodes = osmGraph.getNodes();
-        Iterator<NodeOSM> iterator = nodes.iterator();
+        Collection<NodeCppOSM> nodes = osmGraph.getNodes();
+        Iterator<NodeCppOSM> iterator = nodes.iterator();
 
         int edgeNumber = 0;
         List<Integer> processedNodes = new ArrayList<>();
 
         while (iterator.hasNext()) {
-            NodeOSM node = iterator.next();
+            NodeCppOSM node = iterator.next();
             graph.addVertex(node.hashCode());
 
-            List<EdgeOSM> edges = node.getEdges();
+            List<EdgeCppOSM> edges = node.getEdges();
 
-            for (EdgeOSM edge : edges) {
+            for (EdgeCppOSM edge : edges) {
                 if (!processedNodes.contains(edge.getNode1().hashCode())
                         && !processedNodes.contains(edge.getNode2().hashCode())) {
                     graph.addEdge(edgeNumber, edge.getNode1().hashCode(), edge

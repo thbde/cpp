@@ -11,9 +11,9 @@ import org.junit.rules.TemporaryFolder;
 
 import static edu.uaskl.cpp.importer.OsmImporter.*;
 import static edu.uaskl.cpp.model.exporter.Exporter.*;
-import edu.uaskl.cpp.model.edge.EdgeOSM;
+import edu.uaskl.cpp.model.edge.EdgeCppOSM;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
-import edu.uaskl.cpp.model.node.NodeOSM;
+import edu.uaskl.cpp.model.node.NodeCppOSM;
 import edu.uaskl.cpp.model.path.PathExtended;
 
 public class ExportTest {
@@ -22,14 +22,14 @@ public class ExportTest {
 
 	@Test
 	public void test() {
-		GraphUndirected<NodeOSM, EdgeOSM> graph = importOsmUndirected(getClass().getResource("../fh_way_no_meta.osm").toString());
-		List<NodeOSM> nodes = new LinkedList<NodeOSM>();
+		GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(getClass().getResource("../fh_way_no_meta.osm").toString());
+		List<NodeCppOSM> nodes = new LinkedList<NodeCppOSM>();
 		nodes.add(graph.getNode(279266215l));
 		nodes.add(graph.getNode(279266248l));
 		nodes.add(graph.getNode(279266252l));
 		nodes.add(graph.getNode(279266215l));
 		
-		PathExtended<NodeOSM, EdgeOSM> path = new PathExtended<NodeOSM, EdgeOSM>(nodes);
+		PathExtended<NodeCppOSM, EdgeCppOSM> path = new PathExtended<NodeCppOSM, EdgeCppOSM>(nodes);
 		exportPathToHTML(path, folder.getRoot());
 		assertTrue(true);
 	}
