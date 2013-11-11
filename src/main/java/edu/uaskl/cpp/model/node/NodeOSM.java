@@ -13,7 +13,7 @@ public class NodeOSM extends NodeExtended<NodeOSM, EdgeOSM> {
     public NodeOSM() {
         super(edgeCreator);
     }
-    public NodeOSM(String id) {
+    public NodeOSM(Long id) {
         super(id, edgeCreator);
     }
     /** Copy constructor, creates a new node with the same properties */

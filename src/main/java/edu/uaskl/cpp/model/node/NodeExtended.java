@@ -10,14 +10,14 @@ public class NodeExtended<T extends NodeExtended<T, V>, V extends EdgeExtended<T
     public NodeExtended(EdgeCreator<T, V> edgeCreator) {
         super(edgeCreator);
     }
-    public NodeExtended(String id, EdgeCreator<T, V> edgeCreator) {
+    public NodeExtended(Long id, EdgeCreator<T, V> edgeCreator) {
         super(edgeCreator);
         this.nodeId=id;
     }
     /** Copy constructor, creates a new node with the same properties */
     public NodeExtended(final T otherNode) {
         super(otherNode);
-        this.nodeId = otherNode.getNodeId();
+        this.nodeId = otherNode.getId();
     }
     /** Copy constructor for cpp algorithm, creates a new node with the same properties but marks it as a cpp node */
     public NodeExtended(final T knoten, final boolean isForCpp) { // TODO static fabric method?

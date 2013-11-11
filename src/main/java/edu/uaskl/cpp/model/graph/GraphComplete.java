@@ -17,7 +17,7 @@ public class GraphComplete extends GraphUndirected<NodeCpp, EdgeCpp> {
     }
 
     @Override
-    public void setNodes(final Map<String, NodeCpp> nodes) {
+    public void setNodes(final Map<Long, NodeCpp> nodes) {
         throw new IllegalStateException("It is not allowed to change nodes of a complete graph");
     }
 

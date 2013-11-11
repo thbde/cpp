@@ -15,7 +15,7 @@ import edu.uaskl.cpp.tools.CollectionTools;
  */
 public class GraphBasic<T extends NodeExtended<T, V>, V extends EdgeExtended<T, V>> implements Graph<T, V> {
     private final String name;
-    protected Map<String, T> nodes = new HashMap<>();
+    protected Map<Long, T> nodes = new HashMap<>();
 
     public GraphBasic() {
         this("Default Basisgraph");
@@ -41,12 +41,12 @@ public class GraphBasic<T extends NodeExtended<T, V>, V extends EdgeExtended<T, 
         return nodes.values();
     }
 
-    public Map<String, T> getNodesMap() // TODO should be in a GraphCPP class -tbach
+    public Map<Long, T> getNodesMap() // TODO should be in a GraphCPP class -tbach
     {
         return nodes;
     }
 
-    public void setNodes(final Map<String, T> newNodes) {
+    public void setNodes(final Map<Long, T> newNodes) {
         this.nodes = newNodes;
     }
 
@@ -82,8 +82,8 @@ public class GraphBasic<T extends NodeExtended<T, V>, V extends EdgeExtended<T, 
         return stringBuilder.toString();
     }
 
-    public T getNode(final String id) {
-        return nodes.get(id);
+    public T getNode(final Long startNodeId) {
+        return nodes.get(startNodeId);
     }
 
     @Override

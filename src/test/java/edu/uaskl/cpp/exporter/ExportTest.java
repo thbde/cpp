@@ -22,12 +22,12 @@ public class ExportTest {
 
 	@Test
 	public void test() {
-		GraphUndirected<NodeOSM, EdgeOSM> graph = importOsmUndirected(getClass().getResource("../zweibruecken_way_no_meta.osm").toString());
+		GraphUndirected<NodeOSM, EdgeOSM> graph = importOsmUndirected(getClass().getResource("../fh_way_no_meta.osm").toString());
 		List<NodeOSM> nodes = new LinkedList<NodeOSM>();
-		nodes.add(graph.getNode("279266215"));
-		nodes.add(graph.getNode("279266248"));
-		nodes.add(graph.getNode("279266252"));
-		nodes.add(graph.getNode("279266215"));
+		nodes.add(graph.getNode(279266215l));
+		nodes.add(graph.getNode(279266248l));
+		nodes.add(graph.getNode(279266252l));
+		nodes.add(graph.getNode(279266215l));
 		
 		PathExtended<NodeOSM, EdgeOSM> path = new PathExtended<NodeOSM, EdgeOSM>(nodes);
 		exportPathToHTML(path, folder.getRoot());

@@ -15,7 +15,7 @@ public class NodeCpp extends NodeExtended<NodeCpp, EdgeCpp> {
     public NodeCpp() {
         super(edgeCreator);
     }
-    public NodeCpp(String id) {
+    public NodeCpp(Long id) {
         super(id, edgeCreator);
     }
     /** Copy constructor, creates a new node with the same properties */

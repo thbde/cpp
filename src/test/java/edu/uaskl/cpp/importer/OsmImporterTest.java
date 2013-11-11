@@ -39,7 +39,7 @@ public class OsmImporterTest {
 	@Test
 	public void testGetOsmNodes(){
 		Document dom = getDomFromFile(getClass().getResource("../fh_way_no_meta.osm").toString());
-		HashMap<String, OsmNode> map = getOsmNodes(dom);
+		HashMap<Long, OsmNode> map = getOsmNodes(dom);
 		assertFalse("Node map should not be empty",map.isEmpty());
 	}
 
