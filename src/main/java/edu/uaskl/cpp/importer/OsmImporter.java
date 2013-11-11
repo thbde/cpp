@@ -32,7 +32,7 @@ public class OsmImporter {
         // long diffLon = a.lon - b.lon;
         // return (int) Math.sqrt(diffLat*diffLat+diffLon*diffLon);
         // Spherical Law of Cosines
-        return (int) (Math.acos((Math.sin(a.getLatitude()) * Math.sin(b.getLatitude())) + (Math.cos(a.getLatitude()) * Math.cos(b.getLatitude()) * Math.cos(b.getLongitude() - b.getLongitude()))) * 6367500);
+        return (int) (Math.acos((Math.sin(a.getLatitude()) * Math.sin(b.getLatitude())) + (Math.cos(a.getLatitude()) * Math.cos(b.getLatitude()) * Math.cos(b.getLongitude() - a.getLongitude()))) * 6367500);
     }
 
     protected static Document getDomFromFile(final String filename) {
