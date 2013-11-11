@@ -8,7 +8,7 @@ import edu.uaskl.cpp.model.node.NodeExtended;
 
 // Example, can be changed
 
-public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeExtended<T, V>> implements Algorithms<T, V> {
+public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeExtended<T, V>> implements Algorithms<T,V> {
 
 	private final GraphUndirected<T, V> graph;
 
@@ -35,7 +35,8 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 	}
 
 	private boolean allNodesVisited() {
-		for (final T nodeItem : graph.getNodes()) {
+		for (final T node : graph.getNodes()) {
+			T nodeItem = node;
 			if (!nodeItem.isVisited())
 				return false;
 		}
@@ -54,9 +55,11 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 	}
 
 	public boolean hasEulerCircle() {
-		for (final T nodesItem : graph.getNodes())
-			if (nodesItem.isDegreeOdd())
+		for (final T nodeItem : graph.getNodes()){
+			T node = nodeItem;
+			if (node.isDegreeOdd())
 				return false;
+		}
 		return true;
 	}
 
@@ -64,7 +67,8 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 		T node1 = null, node2 = null;
 		ArrayList<T> pathList = new ArrayList<>();
 
-		for (final T nodeItem : graph.getNodes()) {
+		for (final T node : graph.getNodes()) {
+			T nodeItem = node;
 			if ((node1 == null) && nodeItem.isDegreeOdd()) {
 				node1 = nodeItem;
 				continue;
@@ -93,10 +97,68 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 
 		return graph;
 	}
+	
+	public ArrayList<T> getPathBetween(final T node, T destination) {
+		T node1 = node;
+		int i = 0;
+		
 
-	public ArrayList<T> getPathBetween(final T start,
-			final T destination) {
+		
+		
 		final ArrayList<T> pathList = new ArrayList<>();
+		
+		for (int j = 0; j < node.getEdges().size(); j++)
+		{
+			if (!node.getEdges().get(j).isVisited()) 
+			{
+				node1.getEdges().get(j).setVisited();
+				pathList.add(node1);
+				node1 = node1.getEdges().get(j).getRelatedNode(node1);
+				j=node.getEdges().size();
+				//break;
+				
+			}
+		}
+		
+		
+		if(node1.equals(destination))
+		{
+			return pathList;
+		}
+		
+		do
+		{
+			if (!node1.getEdges().get(i).isVisited()) 
+			{
+				node1.getEdges().get(i).setVisited();
+				pathList.add(node1);
+				node1 = node1.getEdges().get(i).getRelatedNode(node1);
+				i = 0;
+			} else
+			{
+				i++;
+				if(i==node1.getEdges().size())
+				{
+					T temp = pathList.get(pathList.size()-2);
+					pathList.remove(pathList.size()-1);
+					pathList.remove(pathList.size()-1);
+					node1 = temp;
+
+					i=0;
+				}
+				
+			}
+		}while (!node1.equals(destination));
+
+		pathList.add(node1);
+
+		return pathList;
+
+	}
+
+/*
+	public ArrayList<NodeOSM> getPathBetween(final NodeOSM start, final NodeOSM destination) {
+		final ArrayList<NodeOSM> pathList = new ArrayList<>();
 
 		graph.resetStates();
 		searchForPathBetweenNodesWithArrayList(start, destination, pathList);
@@ -106,7 +168,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 
 	}
 
-	private void searchForPathBetweenNodesWithArrayList(final T actual, final T destination, final ArrayList<T> pathList)
+	private void searchForPathBetweenNodesWithArrayList(final NodeOSM actual, final NodeOSM destination, final ArrayList<NodeOSM> pathList)
 	{
 			if (actual.equals(destination))
 			{		
@@ -129,7 +191,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 				{
 					
 					pathList.remove(pathList.size() - 1);
-					T temp = pathList.get(pathList.size() - 1);
+					NodeOSM temp = pathList.get(pathList.size() - 1);
 					pathList.remove(pathList.size() - 1);
 					searchForPathBetweenNodesWithArrayList(temp, destination, pathList);
 					return;
@@ -138,7 +200,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 		
 		
 	}
-
+*/
 	public ArrayList<T> connectCircles(final ArrayList<T> big,
 			final ArrayList<T> little) {
 		// kleine wird zur großen hinzugefügt

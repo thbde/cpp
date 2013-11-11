@@ -19,7 +19,7 @@ public class GraphUndirected<T extends NodeExtended<T, V>, V extends EdgeExtende
     }
 
     @Override
-    public AlgorithmsUndirected<T, V> getAlgorithms() {
+    public AlgorithmsUndirected<T,V> getAlgorithms() {
         return algorithms;
     }
 

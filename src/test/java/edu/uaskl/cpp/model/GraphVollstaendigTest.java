@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import edu.uaskl.cpp.model.edge.EdgeCpp;
 import edu.uaskl.cpp.model.graph.GraphComplete;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
 import edu.uaskl.cpp.model.node.NodeCpp;
-import edu.uaskl.cpp.model.edge.EdgeCpp;
 
 public class GraphVollstaendigTest {
 
@@ -52,6 +52,7 @@ public class GraphVollstaendigTest {
     public void isConnected1000True() {
         assertThat(new GraphComplete(1000).getAlgorithms().isConnected()).isTrue();
     }
+  
 
     @Test
     public void isConnectedFalse() {
@@ -97,12 +98,14 @@ public class GraphVollstaendigTest {
 
         boolean odd = false;
 
-        for (final NodeCpp nodeItem : graph.getNodes())
-            if (nodeItem.isDegreeOdd()) {
+        for (final Object nodeItem : graph.getNodes())
+        {
+        	NodeCpp node = (NodeCpp)nodeItem;
+            if (node.isDegreeOdd()) {
                 odd = true;
                 break;
             }
-
+        }
         assertThat(odd).isFalse();
     }
 
@@ -207,15 +210,56 @@ public class GraphVollstaendigTest {
 
         boolean odd = false;
 
-        for (final NodeCpp nodeItem : graph.getNodes())
-            if (nodeItem.isDegreeOdd()) 
+        for (final Object nodeItem : graph.getNodes()){
+        	NodeCpp node = (NodeCpp)nodeItem;
+            if (node.isDegreeOdd()) 
             {
                 odd = true;
                 break;
             }
-
+        }
         assertThat(odd).isFalse();
         assertThat(eulerianList.get(0).equals(eulerianList.get(eulerianList.size() - 1))).isTrue();
     }
+ 
+    @Test
+    public void getPathBetweenIterativBig() {
 
+        final GraphUndirected<NodeCpp, EdgeCpp> graph = new GraphUndirected<NodeCpp, EdgeCpp>();
+
+        final NodeCpp node0 = new NodeCpp();
+        final NodeCpp node1 = new NodeCpp();
+        final NodeCpp node2 = new NodeCpp();
+        final NodeCpp node3 = new NodeCpp();
+        final NodeCpp node4 = new NodeCpp();
+        final NodeCpp node5 = new NodeCpp();
+        final NodeCpp node6 = new NodeCpp();
+        final NodeCpp node7 = new NodeCpp();
+        final NodeCpp node8 = new NodeCpp();
+
+        node0.connectWithNode(node1);
+        node1.connectWithNode(node2);
+        node1.connectWithNode(node5);
+        node2.connectWithNode(node3);
+        node2.connectWithNode(node5);
+        node2.connectWithNode(node6);
+        node3.connectWithNode(node6);
+        node3.connectWithNode(node7);
+        node3.connectWithNode(node4);
+        node4.connectWithNode(node7);
+        node4.connectWithNode(node8);
+        node5.connectWithNode(node6);
+        node6.connectWithNode(node7);
+        node7.connectWithNode(node8);
+
+        graph.addNode(node0).addNode(node1).addNode(node2).addNode(node3).addNode(node4).addNode(node5).addNode(node6).addNode(node7).addNode(node8);
+        
+        
+        final ArrayList<NodeCpp> pathList = graph.getAlgorithms().getPathBetween(node0, node8);
+
+        assertThat(pathList).startsWith(node0);
+        assertThat(pathList).endsWith(node8);
+
+    }
+    
 }
