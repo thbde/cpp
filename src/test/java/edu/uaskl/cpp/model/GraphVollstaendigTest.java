@@ -8,8 +8,8 @@ import org.junit.Test;
 
 import edu.uaskl.cpp.model.graph.GraphComplete;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
-import edu.uaskl.cpp.model.node.NodeCpp;
-import edu.uaskl.cpp.model.edge.EdgeCpp;
+import edu.uaskl.cpp.model.node.NodeOSM;
+import edu.uaskl.cpp.model.node.NodeOSM;
 
 public class GraphVollstaendigTest {
 
@@ -52,16 +52,17 @@ public class GraphVollstaendigTest {
     public void isConnected1000True() {
         assertThat(new GraphComplete(1000).getAlgorithms().isConnected()).isTrue();
     }
+  
 
     @Test
     public void isConnectedFalse() {
-        final GraphUndirected<NodeCpp, EdgeCpp> graph = new GraphUndirected<NodeCpp, EdgeCpp>();
-        final NodeCpp node1 = new NodeCpp();
-        final NodeCpp node2 = new NodeCpp();
-        final NodeCpp node3 = new NodeCpp();
-        final NodeCpp node4 = new NodeCpp();
-        final NodeCpp node5 = new NodeCpp();
-        final NodeCpp node6 = new NodeCpp();
+        final GraphUndirected graph = new GraphUndirected();
+        final NodeOSM node1 = new NodeOSM();
+        final NodeOSM node2 = new NodeOSM();
+        final NodeOSM node3 = new NodeOSM();
+        final NodeOSM node4 = new NodeOSM();
+        final NodeOSM node5 = new NodeOSM();
+        final NodeOSM node6 = new NodeOSM();
         node1.connectWithNode(node2);
         node3.connectWithNode(node3);
         node4.connectWithNode(node5);
@@ -74,13 +75,13 @@ public class GraphVollstaendigTest {
 
     @Test
     public void matchingTest() {
-        final GraphUndirected<NodeCpp, EdgeCpp> graph = new GraphUndirected<NodeCpp, EdgeCpp>();
-        final NodeCpp node1 = new NodeCpp();
-        final NodeCpp node2 = new NodeCpp();
-        final NodeCpp node3 = new NodeCpp();
-        final NodeCpp node4 = new NodeCpp();
-        final NodeCpp node5 = new NodeCpp();
-        final NodeCpp node6 = new NodeCpp();
+        final GraphUndirected graph = new GraphUndirected();
+        final NodeOSM node1 = new NodeOSM();
+        final NodeOSM node2 = new NodeOSM();
+        final NodeOSM node3 = new NodeOSM();
+        final NodeOSM node4 = new NodeOSM();
+        final NodeOSM node5 = new NodeOSM();
+        final NodeOSM node6 = new NodeOSM();
 
         node1.connectWithNode(node2);
         node2.connectWithNode(node3);
@@ -97,28 +98,30 @@ public class GraphVollstaendigTest {
 
         boolean odd = false;
 
-        for (final NodeCpp nodeItem : graph.getNodes())
-            if (nodeItem.isDegreeOdd()) {
+        for (final Object nodeItem : graph.getNodes())
+        {
+        	NodeOSM node = (NodeOSM)nodeItem;
+            if (node.isDegreeOdd()) {
                 odd = true;
                 break;
             }
-
+        }
         assertThat(odd).isFalse();
     }
 
     @Test
     public void getPathBetweenTest() {
-        final GraphUndirected<NodeCpp, EdgeCpp> graph = new GraphUndirected<NodeCpp, EdgeCpp>();
+        final GraphUndirected graph = new GraphUndirected();
 
-        final NodeCpp node0 = new NodeCpp();
-        final NodeCpp node1 = new NodeCpp();
-        final NodeCpp node2 = new NodeCpp();
-        final NodeCpp node3 = new NodeCpp();
-        final NodeCpp node4 = new NodeCpp();
-        final NodeCpp node5 = new NodeCpp();
-        final NodeCpp node6 = new NodeCpp();
-        final NodeCpp node7 = new NodeCpp();
-        final NodeCpp node8 = new NodeCpp();
+        final NodeOSM node0 = new NodeOSM();
+        final NodeOSM node1 = new NodeOSM();
+        final NodeOSM node2 = new NodeOSM();
+        final NodeOSM node3 = new NodeOSM();
+        final NodeOSM node4 = new NodeOSM();
+        final NodeOSM node5 = new NodeOSM();
+        final NodeOSM node6 = new NodeOSM();
+        final NodeOSM node7 = new NodeOSM();
+        final NodeOSM node8 = new NodeOSM();
 
         node0.connectWithNode(node1);
         node1.connectWithNode(node2);
@@ -137,7 +140,7 @@ public class GraphVollstaendigTest {
 
         graph.addNode(node0).addNode(node1).addNode(node2).addNode(node3).addNode(node4).addNode(node5).addNode(node6).addNode(node7).addNode(node8);
         
-        final ArrayList<NodeCpp> pathList = graph.getAlgorithms().getPathBetween(node0, node8);
+        final ArrayList pathList = graph.getAlgorithms().getPathBetween(node0, node8);
 
         assertThat(pathList).startsWith(node0);
         assertThat(pathList).endsWith(node8);
@@ -145,13 +148,13 @@ public class GraphVollstaendigTest {
 
     @Test
     public void connectCirclesTest() {
-        final GraphUndirected<NodeCpp, EdgeCpp> graph = new GraphUndirected<NodeCpp, EdgeCpp>();
+        final GraphUndirected graph = new GraphUndirected();
 
-        final NodeCpp node0 = new NodeCpp();
-        final NodeCpp node1 = new NodeCpp();
-        final NodeCpp node2 = new NodeCpp();
-        final NodeCpp node3 = new NodeCpp();
-        final NodeCpp node4 = new NodeCpp();
+        final NodeOSM node0 = new NodeOSM();
+        final NodeOSM node1 = new NodeOSM();
+        final NodeOSM node2 = new NodeOSM();
+        final NodeOSM node3 = new NodeOSM();
+        final NodeOSM node4 = new NodeOSM();
 
         node0.connectWithNode(node1);
         node1.connectWithNode(node2);
@@ -163,8 +166,8 @@ public class GraphVollstaendigTest {
 
         graph.addNode(node0).addNode(node1).addNode(node2).addNode(node3).addNode(node4);
 
-        final ArrayList<NodeCpp> little = new ArrayList<NodeCpp>();
-        final ArrayList<NodeCpp> big = new ArrayList<NodeCpp>();
+        final ArrayList little = new ArrayList();
+        final ArrayList big = new ArrayList();
 
         big.add(node0);
         big.add(node1);
@@ -177,7 +180,7 @@ public class GraphVollstaendigTest {
         little.add(node2);
         little.add(node1);
 
-        final ArrayList<NodeCpp> list = new ArrayList<NodeCpp>(graph.getAlgorithms().connectCircles(big, little));
+        final ArrayList list = new ArrayList(graph.getAlgorithms().connectCircles(big, little));
 
         assertThat(list).startsWith(big.get(0));
         assertThat(list).endsWith(big.get(0));
@@ -185,13 +188,13 @@ public class GraphVollstaendigTest {
 
     @Test
     public void getEulerianCircleTEST() {
-        final GraphUndirected<NodeCpp, EdgeCpp> graph = new GraphUndirected<NodeCpp, EdgeCpp>();
+        final GraphUndirected graph = new GraphUndirected();
 
-        final NodeCpp node0 = new NodeCpp();
-        final NodeCpp node1 = new NodeCpp();
-        final NodeCpp node2 = new NodeCpp();
-        final NodeCpp node3 = new NodeCpp();
-        final NodeCpp node4 = new NodeCpp();
+        final NodeOSM node0 = new NodeOSM();
+        final NodeOSM node1 = new NodeOSM();
+        final NodeOSM node2 = new NodeOSM();
+        final NodeOSM node3 = new NodeOSM();
+        final NodeOSM node4 = new NodeOSM();
 
         node0.connectWithNode(node1);
         node1.connectWithNode(node2);
@@ -203,19 +206,60 @@ public class GraphVollstaendigTest {
 
         graph.addNode(node0).addNode(node1).addNode(node2).addNode(node3).addNode(node4);
 
-        final ArrayList<NodeCpp> eulerianList = new ArrayList<NodeCpp>(graph.getAlgorithms().getEulerianCircle(node0));
+        final ArrayList eulerianList = new ArrayList(graph.getAlgorithms().getEulerianCircle(node0));
 
         boolean odd = false;
 
-        for (final NodeCpp nodeItem : graph.getNodes())
-            if (nodeItem.isDegreeOdd()) 
+        for (final Object nodeItem : graph.getNodes()){
+        	NodeOSM node = (NodeOSM)nodeItem;
+            if (node.isDegreeOdd()) 
             {
                 odd = true;
                 break;
             }
-
+        }
         assertThat(odd).isFalse();
         assertThat(eulerianList.get(0).equals(eulerianList.get(eulerianList.size() - 1))).isTrue();
     }
+ 
+    @Test
+    public void getPathBetweenIterativBig() {
 
+        final GraphUndirected graph = new GraphUndirected();
+
+        final NodeOSM node0 = new NodeOSM();
+        final NodeOSM node1 = new NodeOSM();
+        final NodeOSM node2 = new NodeOSM();
+        final NodeOSM node3 = new NodeOSM();
+        final NodeOSM node4 = new NodeOSM();
+        final NodeOSM node5 = new NodeOSM();
+        final NodeOSM node6 = new NodeOSM();
+        final NodeOSM node7 = new NodeOSM();
+        final NodeOSM node8 = new NodeOSM();
+
+        node0.connectWithNode(node1);
+        node1.connectWithNode(node2);
+        node1.connectWithNode(node5);
+        node2.connectWithNode(node3);
+        node2.connectWithNode(node5);
+        node2.connectWithNode(node6);
+        node3.connectWithNode(node6);
+        node3.connectWithNode(node7);
+        node3.connectWithNode(node4);
+        node4.connectWithNode(node7);
+        node4.connectWithNode(node8);
+        node5.connectWithNode(node6);
+        node6.connectWithNode(node7);
+        node7.connectWithNode(node8);
+
+        graph.addNode(node0).addNode(node1).addNode(node2).addNode(node3).addNode(node4).addNode(node5).addNode(node6).addNode(node7).addNode(node8);
+        
+        
+        final ArrayList<NodeOSM> pathList = graph.getAlgorithms().getPathBetween(node0, node8);
+
+        assertThat(pathList).startsWith(node0);
+        assertThat(pathList).endsWith(node8);
+
+    }
+    
 }

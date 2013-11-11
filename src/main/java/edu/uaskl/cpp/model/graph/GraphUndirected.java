@@ -2,7 +2,9 @@ package edu.uaskl.cpp.model.graph;
 
 import edu.uaskl.cpp.algorithmen.AlgorithmsUndirected;
 import edu.uaskl.cpp.model.edge.EdgeExtended;
+import edu.uaskl.cpp.model.edge.interfaces.Edge;
 import edu.uaskl.cpp.model.node.NodeExtended;
+import edu.uaskl.cpp.model.node.interfaces.Node;
 
 /**
  * @author tbach
@@ -19,7 +21,7 @@ public class GraphUndirected<T extends NodeExtended<T, V>, V extends EdgeExtende
     }
 
     @Override
-    public AlgorithmsUndirected<T, V> getAlgorithms() {
+    public AlgorithmsUndirected<T,V> getAlgorithms() {
         return algorithms;
     }
 
