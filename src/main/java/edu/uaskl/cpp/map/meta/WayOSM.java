@@ -1,6 +1,5 @@
 package edu.uaskl.cpp.map.meta;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.uaskl.cpp.model.meta.interfaces.Metadata;
