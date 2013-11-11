@@ -125,6 +125,7 @@ public class OsmImporter {
             int distance = 0;
             String currentWaypoint = null;
             boolean roundabout = false;
+            String name = "";
             for (int j = 0; j < childNodes.getLength(); ++j) { // go through the nodes
                 final Node cNode = childNodes.item(j);
                 if (cNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -141,13 +142,21 @@ public class OsmImporter {
                     } else if (childNode.getNodeName() == "tag")
                         if (childNode.hasAttribute("k") && childNode.getAttribute("k").equals("junction") && childNode.getAttribute("v").equals("roundabout")) {
                             roundabout = true;
-                            break;
+                        }
+                        else {
+                        	if (childNode.hasAttribute("k") && childNode.getAttribute("k").equals("name")) {
+                                name = childNode.getAttribute("v");
+                            }
                         }
 
                 }
             }
+            
+            
             if (roundabout)
                 distance = 0;
+            
+            //TODO add name
             for (int j = 1; j < metaIds.size(); ++j) {
                 final String startNodeId = metaIds.get(j - 1);
                 final String lastNodeId = metaIds.get(j);
