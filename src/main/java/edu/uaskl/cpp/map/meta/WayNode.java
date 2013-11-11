@@ -1,11 +1,9 @@
 package edu.uaskl.cpp.map.meta;
 
-import edu.uaskl.cpp.model.meta.interfaces.Metadata;
-
-public class WayNode implements Metadata {
+public class WayNode {
 	private static final double earthRadiusKm = 6371.0;
 
-	private double latitude, longitude;
+	private final double latitude, longitude;
 
 	public WayNode(double latitude, double longitude) {
 		this.latitude = latitude;
@@ -19,7 +17,8 @@ public class WayNode implements Metadata {
 	public double getLongitude() {
 		return longitude;
 	}
-	
+
+	// FIXME: Untested.
 	public double getDistanceKm(WayNode other) {
 		double lon1 = longitude,
 				lon2 = other.getLongitude(),
