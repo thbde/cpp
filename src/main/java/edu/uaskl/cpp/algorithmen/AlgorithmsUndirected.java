@@ -2,14 +2,9 @@ package edu.uaskl.cpp.algorithmen;
 
 import java.util.ArrayList;
 
-import edu.uaskl.cpp.model.edge.EdgeCpp;
 import edu.uaskl.cpp.model.edge.EdgeExtended;
-import edu.uaskl.cpp.model.edge.EdgeOSM;
-import edu.uaskl.cpp.model.edge.interfaces.Edge;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
 import edu.uaskl.cpp.model.node.NodeExtended;
-import edu.uaskl.cpp.model.node.NodeOSM;
-import edu.uaskl.cpp.model.node.interfaces.Node;
 
 // Example, can be changed
 
@@ -33,15 +28,15 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 		if (graph.getNodes().size() == 0)
 			return true;
 
-		final NodeOSM start = (NodeOSM) graph.getNodes().iterator().next();
+		final T start = graph.getNodes().iterator().next();
 		visitAllEdgesFromStartNode(start);
 
 		return allNodesVisited();
 	}
 
 	private boolean allNodesVisited() {
-		for (final Object node : graph.getNodes()) {
-			NodeOSM nodeItem = (NodeOSM)node;
+		for (final T node : graph.getNodes()) {
+			T nodeItem = node;
 			if (!nodeItem.isVisited())
 				return false;
 		}
@@ -49,10 +44,10 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 		return true;
 	}
 
-	private void visitAllEdgesFromStartNode(final NodeOSM node) {
+	private void visitAllEdgesFromStartNode(final T node) {
 		node.setVisited();
 
-		for (final EdgeOSM edgeItem : node.getEdges()) {
+		for (final V edgeItem : node.getEdges()) {
 			if (!edgeItem.getRelatedNode(node).isVisited() == true) {
 				visitAllEdgesFromStartNode(edgeItem.getRelatedNode(node));
 			}
@@ -60,20 +55,20 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 	}
 
 	public boolean hasEulerCircle() {
-		for (final Object nodeItem : graph.getNodes()){
-			NodeOSM node = (NodeOSM)nodeItem;
+		for (final T nodeItem : graph.getNodes()){
+			T node = nodeItem;
 			if (node.isDegreeOdd())
 				return false;
 		}
 		return true;
 	}
 
-	public GraphUndirected<?, ?> matchGraph(GraphUndirected<?, ?> graph) {
-		NodeOSM node1 = null, node2 = null;
-		ArrayList<NodeOSM> pathList = new ArrayList<>();
+	public GraphUndirected<T, V> matchGraph(GraphUndirected<T, V> graph) {
+		T node1 = null, node2 = null;
+		ArrayList<T> pathList = new ArrayList<>();
 
-		for (final Object node : graph.getNodes()) {
-			NodeOSM nodeItem = (NodeOSM)node;
+		for (final T node : graph.getNodes()) {
+			T nodeItem = node;
 			if ((node1 == null) && nodeItem.isDegreeOdd()) {
 				node1 = nodeItem;
 				continue;
@@ -91,11 +86,11 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 		return graph;
 	}
 
-	private GraphUndirected<?, ?> matchBetweenNodes(final GraphUndirected<?, ?> graph,
-			final ArrayList<NodeOSM> pathList) {
+	private GraphUndirected<T, V> matchBetweenNodes(final GraphUndirected<T, V> graph,
+			final ArrayList<T> pathList) {
 		for (int i = 0; i < (pathList.size() - 1); i++) {
-			final NodeOSM node1 = pathList.get(i);
-			final NodeOSM node2 = pathList.get(i + 1);
+			final T node1 = pathList.get(i);
+			final T node2 = pathList.get(i + 1);
 
 			node1.connectWithNode(node2);
 		}
@@ -103,14 +98,14 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 		return graph;
 	}
 	
-	public ArrayList<NodeOSM> getPathBetween(final NodeOSM node, NodeOSM destination) {
-		NodeOSM node1 = node;
+	public ArrayList<T> getPathBetween(final T node, T destination) {
+		T node1 = node;
 		int i = 0;
 		
 
 		
 		
-		final ArrayList<NodeOSM> pathList = new ArrayList<>();
+		final ArrayList<T> pathList = new ArrayList<>();
 		
 		for (int j = 0; j < node.getEdges().size(); j++)
 		{
@@ -144,7 +139,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 				i++;
 				if(i==node1.getEdges().size())
 				{
-					NodeOSM temp = pathList.get(pathList.size()-2);
+					T temp = pathList.get(pathList.size()-2);
 					pathList.remove(pathList.size()-1);
 					pathList.remove(pathList.size()-1);
 					node1 = temp;
@@ -206,17 +201,17 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 		
 	}
 */
-	public ArrayList<NodeOSM> connectCircles(final ArrayList<NodeOSM> big,
-			final ArrayList<NodeOSM> little) {
-		// kleine wird zur gro�en hinzugef�gt
-		final ArrayList<NodeOSM> list = new ArrayList<>();
+	public ArrayList<T> connectCircles(final ArrayList<T> big,
+			final ArrayList<T> little) {
+		// kleine wird zur großen hinzugefügt
+		final ArrayList<T> list = new ArrayList<>();
 
 		for (int i = 0; i < big.size(); i++) {
 			list.add(big.get(i));
 
 			if (big.get(i).equals(little.get(0))) {
 				list.remove(i); // damit doppeltes(aufgeschobenes) element
-								// gel�scht wird
+								// gelöscht wird
 
 				for (int j = 0; j < little.size(); j++)
 					list.add(little.get(j));
@@ -228,11 +223,11 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 
 	}
 
-	public ArrayList<NodeOSM> getEulerianCircle(NodeOSM start) {
-		final NodeOSM node = start;
-		NodeOSM temp;
+	public ArrayList<T> getEulerianCircle(T start) {
+		final T node = start;
+		T temp;
 
-		ArrayList<NodeOSM> eulerianList = new ArrayList<>(getCircle(node));
+		ArrayList<T> eulerianList = new ArrayList<>(getCircle(node));
 
 		for (int i = 0; i < eulerianList.size(); i++) // gehe jedes element der
 														// Liste durch
@@ -244,7 +239,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 															// nicht besucht
 															// wurde...
 				{
-					final ArrayList<NodeOSM> underGraph = new ArrayList<>(
+					final ArrayList<T> underGraph = new ArrayList<>(
 							getCircle(temp));
 
 					eulerianList = connectCircles(eulerianList, underGraph);
@@ -258,11 +253,11 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 		return eulerianList;
 	}
 
-	private ArrayList<NodeOSM> getCircle(final NodeOSM node) {
-		NodeOSM node1 = node;
+	private ArrayList<T> getCircle(final T node) {
+		T node1 = node;
 		int i = 0;
 
-		final ArrayList<NodeOSM> pathList = new ArrayList<>();
+		final ArrayList<T> pathList = new ArrayList<>();
 
 		for (int j = 0; j < node.getEdges().size(); j++)
 			if (!node.getEdges().get(j).isVisited()) {
