@@ -188,10 +188,13 @@ public class OsmImporter {
                 // concat the list in the right way
                 final List<OsmNode> newMetaNodes = edge1.getMetaNodes(), metaNodes2 = edge2.getMetaNodes();
                 // newMetaNodes = metaNodes1.get(0).id==node1id ? metaNodes1 : Collections.reverse(metaNodes1);
-                if (newMetaNodes.get(0).id.equals(currentNodeId))
+                if (newMetaNodes.get(0).id.equals(currentNodeId)){
                     Collections.reverse(newMetaNodes);
-                if (!metaNodes2.get(0).id.equals(currentNodeId))
+                }
+                newMetaNodes.remove(newMetaNodes.size()-1);
+                if (!metaNodes2.get(0).id.equals(currentNodeId)) {
                     Collections.reverse(metaNodes2);
+                }
                 newMetaNodes.addAll(metaNodes2);
                 // add a new edge
                 osmGraph.getNode(node1id).connectWithNodeWeigthAndMeta(osmGraph.getNode(node2id), edge1.getWeight() + edge2.getWeight(), newMetaNodes);
