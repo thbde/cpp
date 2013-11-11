@@ -36,8 +36,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 
 	private boolean allNodesVisited() {
 		for (final T node : graph.getNodes()) {
-			T nodeItem = node;
-			if (!nodeItem.isVisited())
+			if (!node.isVisited())
 				return false;
 		}
 
@@ -55,10 +54,10 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 	}
 
 	public boolean hasEulerCircle() {
-		for (final T nodeItem : graph.getNodes()){
-			T node = nodeItem;
-			if (node.isDegreeOdd())
+		for (final T node : graph.getNodes()){
+			if (node.isDegreeOdd()){
 				return false;
+			}
 		}
 		return true;
 	}
@@ -67,8 +66,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 		T node1 = null, node2 = null;
 		ArrayList<T> pathList = new ArrayList<>();
 
-		for (final T node : graph.getNodes()) {
-			T nodeItem = node;
+		for (final T nodeItem : graph.getNodes()) {
 			if ((node1 == null) && nodeItem.isDegreeOdd()) {
 				node1 = nodeItem;
 				continue;
@@ -101,10 +99,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 	public ArrayList<T> getPathBetween(final T node, T destination) {
 		T node1 = node;
 		int i = 0;
-		
-
-		
-		
+		graph.resetStates();
 		final ArrayList<T> pathList = new ArrayList<>();
 		
 		for (int j = 0; j < node.getEdges().size(); j++)
@@ -116,10 +111,8 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 				node1 = node1.getEdges().get(j).getRelatedNode(node1);
 				j=node.getEdges().size();
 				//break;
-				
 			}
 		}
-		
 		
 		if(node1.equals(destination))
 		{

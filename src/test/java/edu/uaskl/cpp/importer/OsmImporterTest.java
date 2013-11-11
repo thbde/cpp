@@ -46,7 +46,6 @@ public class OsmImporterTest {
 	@Test
 	public void testImportOsmUndirected(){
 		GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(getClass().getResource("../zweibruecken_way_no_meta.osm").toString());
-		//GraphUndirected<NodeOSM, EdgeOSM> graph = importOsmUndirected(getClass().getResource("../fh_way_no_meta.osm").toString());
 		assertNotEquals("Graph should have nodes",graph.getNumberOfNodes(),0);
 		assertNotEquals("Graph should have edges",graph.getGetNumberOfEdges(),0);
 		//System.out.println(graph.toString());
