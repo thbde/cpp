@@ -1,8 +1,6 @@
 package edu.uaskl.cpp.model.node;
 
-import java.util.List;
-
-import edu.uaskl.cpp.importer.OsmNode;
+import edu.uaskl.cpp.map.meta.WayOSM;
 import edu.uaskl.cpp.model.edge.EdgeCreatorOSM;
 import edu.uaskl.cpp.model.edge.EdgeOSM;
 import edu.uaskl.cpp.model.edge.interfaces.EdgeCreator;
@@ -25,8 +23,8 @@ public class NodeOSM extends NodeExtended<NodeOSM, EdgeOSM> {
         super(knoten, isForCpp);
     }
     
-    public NodeOSM connectWithNodeWeigthAndMeta(final NodeOSM otherNode, final int weight, List<OsmNode> metaNodes) {
-        addEdge(((EdgeCreatorOSM)getEdgeCreator()).create(this, otherNode, weight, metaNodes));
+    public NodeOSM connectWithNodeWeigthAndMeta(final NodeOSM otherNode, final int weight, WayOSM metadata) {
+        addEdge(((EdgeCreatorOSM)getEdgeCreator()).create(this, otherNode, weight, metadata));
         return this;
     }
 }

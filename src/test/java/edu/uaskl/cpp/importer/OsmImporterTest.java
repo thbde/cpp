@@ -10,9 +10,9 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import edu.uaskl.cpp.importer.OsmNode;
 import static edu.uaskl.cpp.importer.OsmImporter.*;
 import static org.junit.Assert.*;
+import edu.uaskl.cpp.map.meta.WayNodeOSM;
 import edu.uaskl.cpp.model.edge.EdgeOSM;
 import edu.uaskl.cpp.model.graph.*;
 import edu.uaskl.cpp.model.node.NodeOSM;
@@ -39,7 +39,7 @@ public class OsmImporterTest {
 	@Test
 	public void testGetOsmNodes(){
 		Document dom = getDomFromFile(getClass().getResource("../fh_way_no_meta.osm").toString());
-		HashMap<Long, OsmNode> map = getOsmNodes(dom);
+		HashMap<Long, WayNodeOSM> map = getOsmNodes(dom);
 		assertFalse("Node map should not be empty",map.isEmpty());
 	}
 
@@ -61,7 +61,7 @@ public class OsmImporterTest {
 		assertEquals("Graph should have 1 edge",1,graph.getGetNumberOfEdges());
 		NodeOSM node1 = graph.getNode(260070555l);
 		EdgeOSM edge1 = node1.getEdges().get(0);
-		assertEquals("there should be 6 meta nodes",6,edge1.getMetaNodes().size());
+		assertEquals("there should be 6 meta nodes",6,edge1.getMetadata().getNodes().size());
 	}
 	
 	@Test

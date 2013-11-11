@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import edu.uaskl.cpp.map.meta.WayNodeOSM;
+import edu.uaskl.cpp.map.meta.WayOSM;
 import edu.uaskl.cpp.model.edge.EdgeOSM;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
 import edu.uaskl.cpp.model.node.NodeOSM;
@@ -24,12 +26,13 @@ import org.w3c.dom.NodeList;
 
 public class OsmImporter {
 
-    protected static int getDistance(final OsmNode a, final OsmNode b) {
+	// FIXME: Redundant?
+    protected static int getDistance(final WayNodeOSM a, final WayNodeOSM b) {
         // long diffLat = a.lat - b.lat;
         // long diffLon = a.lon - b.lon;
         // return (int) Math.sqrt(diffLat*diffLat+diffLon*diffLon);
         // Spherical Law of Cosines
-        return (int) (Math.acos((Math.sin(a.lat) * Math.sin(b.lat)) + (Math.cos(a.lat) * Math.cos(b.lat) * Math.cos(b.lon - b.lon))) * 6367500);
+        return (int) (Math.acos((Math.sin(a.getLatitude()) * Math.sin(b.getLatitude())) + (Math.cos(a.getLatitude()) * Math.cos(b.getLatitude()) * Math.cos(b.getLongitude() - b.getLongitude()))) * 6367500);
     }
 
     protected static Document getDomFromFile(final String filename) {
@@ -58,8 +61,8 @@ public class OsmImporter {
         return value;
     }
 
-    protected static HashMap<Long, OsmNode> getOsmNodes(final Document dom) {
-        final HashMap<Long, OsmNode> osmNodes = new HashMap<>();
+    protected static HashMap<Long, WayNodeOSM> getOsmNodes(final Document dom) {
+        final HashMap<Long, WayNodeOSM> osmNodes = new HashMap<>();
         final Element documentElement = dom.getDocumentElement();
         final NodeList nodes = documentElement.getElementsByTagName("node");
         for (int i = 0; i < nodes.getLength(); ++i) {
@@ -67,18 +70,18 @@ public class OsmImporter {
             final Long id = Long.parseLong(node.getAttribute("id"),10);
             final long lat = get100NanoDegrees(node.getAttribute("lat"));
             final long lon = get100NanoDegrees(node.getAttribute("lon"));
-            final OsmNode osmNode = new OsmNode(id, lat, lon);
+            final WayNodeOSM osmNode = new WayNodeOSM(lat, lon, id);
             osmNodes.put(id, osmNode);
         }
         return osmNodes;
     }
 
-    protected GraphUndirected<NodeOSM, EdgeOSM> createNaive(final Document osmFile, final HashMap<String, OsmNode> osmNodes) {
+    protected GraphUndirected<NodeOSM, EdgeOSM> createNaive(final Document osmFile, final HashMap<String, WayNodeOSM> osmNodes) {
         // add all waypoints to the graph
         final GraphUndirected<NodeOSM, EdgeOSM> osmGraph = new GraphUndirected<NodeOSM, EdgeOSM>();
-        final Collection<OsmNode> wayPoints = osmNodes.values();
-        for (final OsmNode wayPoint : wayPoints) {
-            final NodeOSM newNode = new NodeOSM(wayPoint.id);
+        final Collection<WayNodeOSM> wayPoints = osmNodes.values();
+        for (final WayNodeOSM wayPoint : wayPoints) {
+            final NodeOSM newNode = new NodeOSM(wayPoint.getID());
             osmGraph.addNode(newNode);
         }
 
@@ -113,7 +116,7 @@ public class OsmImporter {
         return osmGraph;
     }
 
-    protected static GraphUndirected<NodeOSM, EdgeOSM> createFiltered(final Document osmFile, final HashMap<Long, OsmNode> osmNodes) {
+    protected static GraphUndirected<NodeOSM, EdgeOSM> createFiltered(final Document osmFile, final HashMap<Long, WayNodeOSM> osmNodes) {
         final GraphUndirected<NodeOSM, EdgeOSM> osmGraph = new GraphUndirected<NodeOSM, EdgeOSM>();
 
         final Element documentElement = osmFile.getDocumentElement();
@@ -156,7 +159,6 @@ public class OsmImporter {
             if (roundabout)
                 distance = 0;
             
-            //TODO add name
             for (int j = 1; j < metaIds.size(); ++j) {
                 final Long startNodeId = metaIds.get(j - 1);
                 final Long lastNodeId = metaIds.get(j);
@@ -168,10 +170,11 @@ public class OsmImporter {
                     final NodeOSM newNode = new NodeOSM(lastNodeId);
                     osmGraph.addNode(newNode);
                 }
-                final List<OsmNode> metaNodes = new LinkedList<>();
+                final List<WayNodeOSM> metaNodes = new LinkedList<>();
                 metaNodes.add(osmNodes.get(startNodeId));
                 metaNodes.add(osmNodes.get(lastNodeId));
-                osmGraph.getNode(startNodeId).connectWithNodeWeigthAndMeta(osmGraph.getNode(lastNodeId), distance, metaNodes);
+                // TODO: Handle way properly.
+                osmGraph.getNode(startNodeId).connectWithNodeWeigthAndMeta(osmGraph.getNode(lastNodeId), distance, new WayOSM(0, WayOSM.WayType.UNSPECIFIED, name, metaNodes));
             }
         }
         // TODO simplify
@@ -186,18 +189,19 @@ public class OsmImporter {
                 final Long node1id = edge1.getNode1().getId() == (currentNodeId) ? edge1.getNode2().getId() : edge1.getNode1().getId();
                 final Long node2id = edge2.getNode1().getId() == (currentNodeId) ? edge2.getNode2().getId() : edge2.getNode1().getId();
                 // concat the list in the right way
-                final List<OsmNode> newMetaNodes = edge1.getMetaNodes(), metaNodes2 = edge2.getMetaNodes();
+                final List<WayNodeOSM> newMetaNodes = edge1.getMetadata().getNodes(), metaNodes2 = edge2.getMetadata().getNodes();
                 // newMetaNodes = metaNodes1.get(0).id==node1id ? metaNodes1 : Collections.reverse(metaNodes1);
-                if (newMetaNodes.get(0).id.equals(currentNodeId)){
+                if (((Long)newMetaNodes.get(0).getID()).equals(currentNodeId)){
                     Collections.reverse(newMetaNodes);
                 }
                 newMetaNodes.remove(newMetaNodes.size()-1);
-                if (!metaNodes2.get(0).id.equals(currentNodeId)) {
+                if (!((Long)metaNodes2.get(0).getID()).equals(currentNodeId)) {
                     Collections.reverse(metaNodes2);
                 }
                 newMetaNodes.addAll(metaNodes2);
                 // add a new edge
-                osmGraph.getNode(node1id).connectWithNodeWeigthAndMeta(osmGraph.getNode(node2id), edge1.getWeight() + edge2.getWeight(), newMetaNodes);
+                // TODO: Handle way properly - what would name be in this context?
+                osmGraph.getNode(node1id).connectWithNodeWeigthAndMeta(osmGraph.getNode(node2id), edge1.getWeight() + edge2.getWeight(), new WayOSM(0, WayOSM.WayType.UNSPECIFIED, "unknown", newMetaNodes));
                 // remove the old node
                 node.removeAllEdges();
                 iteratorNodes.remove();
@@ -209,7 +213,7 @@ public class OsmImporter {
 
     public static GraphUndirected<NodeOSM, EdgeOSM> importOsmUndirected(final String filename) {
         final Document osmFile = getDomFromFile(filename);
-        final HashMap<Long, OsmNode> osmNodes = getOsmNodes(osmFile);
+        final HashMap<Long, WayNodeOSM> osmNodes = getOsmNodes(osmFile);
         final GraphUndirected<NodeOSM, EdgeOSM> osmGraph = createFiltered(osmFile, osmNodes);
 
         /**

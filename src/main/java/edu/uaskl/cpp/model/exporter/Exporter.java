@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import edu.uaskl.cpp.importer.OsmNode;
+import edu.uaskl.cpp.map.meta.WayNodeOSM;
 import edu.uaskl.cpp.model.edge.EdgeOSM;
 import edu.uaskl.cpp.model.node.NodeOSM;
 import edu.uaskl.cpp.model.path.PathExtended;;
@@ -18,7 +18,7 @@ public class Exporter {
 		return nanoDeg/10000000 +"."+nanoDeg%10000000;
 	}
 	
-	private static String createSegment(List<OsmNode>metaNodes,int id){
+	private static String createSegment(List<WayNodeOSM>metaNodes,int id){
 		List<String> colors = new LinkedList<String>();
 		colors.add("b1563f");
 		colors.add("b4693f");
@@ -34,15 +34,15 @@ public class Exporter {
 		output.append("var line");
 		output.append(id);
 		output.append(" = L.polyline([[");
-		output.append(nanoDegreeToString(metaNodes.get(0).lat));
+		output.append(nanoDegreeToString((long)metaNodes.get(0).getLatitude()));
 		output.append(",");
-		output.append(nanoDegreeToString(metaNodes.get(0).lon));
+		output.append(nanoDegreeToString((long)metaNodes.get(0).getLongitude()));
 		output.append("]");
 		for(int i=1;i<metaNodes.size();++i){
 			output.append(",[");
-			output.append(nanoDegreeToString(metaNodes.get(i).lat));
+			output.append(nanoDegreeToString((long)metaNodes.get(i).getLatitude()));
 			output.append(",");
-			output.append(nanoDegreeToString(metaNodes.get(i).lon));
+			output.append(nanoDegreeToString((long)metaNodes.get(i).getLongitude()));
 			output.append("]");
 		}
 		output.append("], {weight: 3,opacity: 1,color:'#");
@@ -67,8 +67,8 @@ public class Exporter {
 			for(int index = 1;index<nodes.size();++index){
 				currentNode = nodes.get(index);
 				EdgeOSM edge = previousNode.getEdgeToNode(currentNode);
-				List<OsmNode> metaNodes = edge.getMetaNodes();
-				if (metaNodes.get(0).id.equals(currentNode.getId())){
+				List<WayNodeOSM> metaNodes = edge.getMetadata().getNodes();
+				if (((Long)metaNodes.get(0).getID()).equals(currentNode.getId())){
 					Collections.reverse(metaNodes);
 				}
 				fw.write(createSegment(metaNodes,index));

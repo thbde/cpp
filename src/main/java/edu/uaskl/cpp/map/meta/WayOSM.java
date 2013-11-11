@@ -24,10 +24,14 @@ public class WayOSM implements Metadata {
 	}
 
 	public WayOSM(long id, WayType type, String name) {
-		nodes = new ArrayList<WayNodeOSM>();
+		this(id, type, name, null);
+	}
+
+	public WayOSM(long id, WayType type, String name, List<WayNodeOSM> nodes) {
 		this.id = id;
 		this.type = type;
 		this.name = name;
+		this.nodes = nodes;
 	}
 
 	public long getID() {

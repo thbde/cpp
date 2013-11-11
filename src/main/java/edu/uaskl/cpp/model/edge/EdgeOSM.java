@@ -1,12 +1,11 @@
 package edu.uaskl.cpp.model.edge;
 
-import java.util.List;
-
-import edu.uaskl.cpp.importer.OsmNode;
+import edu.uaskl.cpp.map.meta.WayOSM;
+import edu.uaskl.cpp.model.meta.interfaces.MetadataAnnotated;
 import edu.uaskl.cpp.model.node.NodeOSM;
 
-public class EdgeOSM extends EdgeExtended<NodeOSM, EdgeOSM> {
-	private List<OsmNode> metaNodes;
+public class EdgeOSM extends EdgeExtended<NodeOSM, EdgeOSM> implements MetadataAnnotated<WayOSM> {
+	private WayOSM metadata;
 
     public EdgeOSM(final EdgeOSM edge) {
         super(edge);
@@ -21,12 +20,18 @@ public class EdgeOSM extends EdgeExtended<NodeOSM, EdgeOSM> {
     }
 
     public EdgeOSM(NodeOSM node1, NodeOSM node2, int weight,
-			List<OsmNode> metaNodes) {
+			WayOSM metadata) {
     	super(node1, node2, weight);
-        this.metaNodes=metaNodes;
+        this.metadata=metadata;
 	}
-	
-	public List<OsmNode> getMetaNodes() {
-		return metaNodes;
+
+	@Override
+	public WayOSM getMetadata() {
+		return metadata;
+	}
+
+	@Override
+	public void setMetadata(WayOSM metadata) {
+		this.metadata = metadata;
 	}
 }
