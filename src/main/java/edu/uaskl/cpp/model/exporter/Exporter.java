@@ -9,8 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import edu.uaskl.cpp.map.meta.WayNodeOSM;
-import edu.uaskl.cpp.model.edge.EdgeOSM;
-import edu.uaskl.cpp.model.node.NodeOSM;
+import edu.uaskl.cpp.model.edge.EdgeCppOSM;
+import edu.uaskl.cpp.model.node.NodeCppOSM;
 import edu.uaskl.cpp.model.path.PathExtended;;
 
 public class Exporter {
@@ -56,17 +56,17 @@ public class Exporter {
 	}
 	
 	
-	public static void exportPathToHTML(PathExtended<NodeOSM, EdgeOSM> path, File folder){
-		List<NodeOSM> nodes = path.getNodes();
-		NodeOSM previousNode = nodes.get(0);
-		NodeOSM currentNode;
+	public static void exportPathToHTML(PathExtended<NodeCppOSM, EdgeCppOSM> path, File folder){
+		List<NodeCppOSM> nodes = path.getNodes();
+		NodeCppOSM previousNode = nodes.get(0);
+		NodeCppOSM currentNode;
 		Writer fw = null;
 		try {
 			fw = new FileWriter( folder.toString() + "overlay.js" );
 		
 			for(int index = 1;index<nodes.size();++index){
 				currentNode = nodes.get(index);
-				EdgeOSM edge = previousNode.getEdgeToNode(currentNode);
+				EdgeCppOSM edge = previousNode.getEdgeToNode(currentNode);
 				List<WayNodeOSM> metaNodes = edge.getMetadata().getNodes();
 				if (((Long)metaNodes.get(0).getID()).equals(currentNode.getId())){
 					Collections.reverse(metaNodes);

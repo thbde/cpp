@@ -10,9 +10,9 @@ import java.util.List;
 
 import edu.uaskl.cpp.map.meta.WayNodeOSM;
 import edu.uaskl.cpp.map.meta.WayOSM;
-import edu.uaskl.cpp.model.edge.EdgeOSM;
+import edu.uaskl.cpp.model.edge.EdgeCppOSM;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
-import edu.uaskl.cpp.model.node.NodeOSM;
+import edu.uaskl.cpp.model.node.NodeCppOSM;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -76,12 +76,12 @@ public class OsmImporter {
         return osmNodes;
     }
 
-    protected GraphUndirected<NodeOSM, EdgeOSM> createNaive(final Document osmFile, final HashMap<String, WayNodeOSM> osmNodes) {
+    protected GraphUndirected<NodeCppOSM, EdgeCppOSM> createNaive(final Document osmFile, final HashMap<String, WayNodeOSM> osmNodes) {
         // add all waypoints to the graph
-        final GraphUndirected<NodeOSM, EdgeOSM> osmGraph = new GraphUndirected<NodeOSM, EdgeOSM>();
+        final GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph = new GraphUndirected<NodeCppOSM, EdgeCppOSM>();
         final Collection<WayNodeOSM> wayPoints = osmNodes.values();
         for (final WayNodeOSM wayPoint : wayPoints) {
-            final NodeOSM newNode = new NodeOSM(wayPoint.getID());
+            final NodeCppOSM newNode = new NodeCppOSM(wayPoint.getID());
             osmGraph.addNode(newNode);
         }
 
@@ -101,7 +101,7 @@ public class OsmImporter {
                             lastWaypoint = null;
                     } else if (childNode.getNodeName() == "nd") {
                         final Long nodeId = Long.parseLong(childNode.getAttribute("ref"),10);
-                        final NodeOSM node = osmGraph.getNode(nodeId);
+                        final NodeCppOSM node = osmGraph.getNode(nodeId);
                         if (!(node == null)) {
                             final int distance = getDistance(osmNodes.get(lastWaypoint), osmNodes.get(childNode.getAttribute("ref")));
                             osmGraph.getNode(lastWaypoint).connectWithNodeAndWeigth(node, distance);
@@ -116,8 +116,8 @@ public class OsmImporter {
         return osmGraph;
     }
 
-    protected static GraphUndirected<NodeOSM, EdgeOSM> createFiltered(final Document osmFile, final HashMap<Long, WayNodeOSM> osmNodes) {
-        final GraphUndirected<NodeOSM, EdgeOSM> osmGraph = new GraphUndirected<NodeOSM, EdgeOSM>();
+    protected static GraphUndirected<NodeCppOSM, EdgeCppOSM> createFiltered(final Document osmFile, final HashMap<Long, WayNodeOSM> osmNodes) {
+        final GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph = new GraphUndirected<NodeCppOSM, EdgeCppOSM>();
 
         final Element documentElement = osmFile.getDocumentElement();
         final NodeList ways = documentElement.getElementsByTagName("way");
@@ -163,11 +163,11 @@ public class OsmImporter {
                 final Long startNodeId = metaIds.get(j - 1);
                 final Long lastNodeId = metaIds.get(j);
                 if (osmGraph.getNode(startNodeId) == null) {
-                    final NodeOSM newNode = new NodeOSM(startNodeId);
+                    final NodeCppOSM newNode = new NodeCppOSM(startNodeId);
                     osmGraph.addNode(newNode);
                 }
                 if (osmGraph.getNode(lastNodeId) == null) {
-                    final NodeOSM newNode = new NodeOSM(lastNodeId);
+                    final NodeCppOSM newNode = new NodeCppOSM(lastNodeId);
                     osmGraph.addNode(newNode);
                 }
                 final List<WayNodeOSM> metaNodes = new LinkedList<>();
@@ -178,14 +178,14 @@ public class OsmImporter {
             }
         }
         // TODO simplify
-        final Iterator<NodeOSM> iteratorNodes = osmGraph.getNodes().iterator();
+        final Iterator<NodeCppOSM> iteratorNodes = osmGraph.getNodes().iterator();
         while (iteratorNodes.hasNext()) {
-            final NodeOSM node = iteratorNodes.next();
+            final NodeCppOSM node = iteratorNodes.next();
             if (node.getDegree() == 2) {
                 final Long currentNodeId = node.getId();
-                final List<EdgeOSM> edges = node.getEdges();
-                final EdgeOSM edge1 = edges.get(0);
-                final EdgeOSM edge2 = edges.get(1);
+                final List<EdgeCppOSM> edges = node.getEdges();
+                final EdgeCppOSM edge1 = edges.get(0);
+                final EdgeCppOSM edge2 = edges.get(1);
                 final Long node1id = edge1.getNode1().getId() == (currentNodeId) ? edge1.getNode2().getId() : edge1.getNode1().getId();
                 final Long node2id = edge2.getNode1().getId() == (currentNodeId) ? edge2.getNode2().getId() : edge2.getNode1().getId();
                 // concat the list in the right way
@@ -211,10 +211,10 @@ public class OsmImporter {
         return osmGraph;
     }
 
-    public static GraphUndirected<NodeOSM, EdgeOSM> importOsmUndirected(final String filename) {
+    public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importOsmUndirected(final String filename) {
         final Document osmFile = getDomFromFile(filename);
         final HashMap<Long, WayNodeOSM> osmNodes = getOsmNodes(osmFile);
-        final GraphUndirected<NodeOSM, EdgeOSM> osmGraph = createFiltered(osmFile, osmNodes);
+        final GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph = createFiltered(osmFile, osmNodes);
 
         /**
          * TODO create edges
