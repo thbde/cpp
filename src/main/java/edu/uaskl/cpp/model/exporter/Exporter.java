@@ -34,15 +34,15 @@ public class Exporter {
 		output.append("var line");
 		output.append(id);
 		output.append(" = L.polyline([[");
-		output.append(nanoDegreeToString((long)metaNodes.get(0).getLatitude()));
+		output.append(metaNodes.get(0).getLatitude());
 		output.append(",");
-		output.append(nanoDegreeToString((long)metaNodes.get(0).getLongitude()));
+		output.append(metaNodes.get(0).getLongitude());
 		output.append("]");
 		for(int i=1;i<metaNodes.size();++i){
 			output.append(",[");
-			output.append(nanoDegreeToString((long)metaNodes.get(i).getLatitude()));
+			output.append(metaNodes.get(i).getLatitude());
 			output.append(",");
-			output.append(nanoDegreeToString((long)metaNodes.get(i).getLongitude()));
+			output.append(metaNodes.get(i).getLongitude());
 			output.append("]");
 		}
 		output.append("], {weight: 3,opacity: 1,color:'#");

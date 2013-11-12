@@ -68,8 +68,8 @@ public class OsmImporter {
         for (int i = 0; i < nodes.getLength(); ++i) {
             final Element node = (Element) nodes.item(i);
             final Long id = Long.parseLong(node.getAttribute("id"),10);
-            final long lat = get100NanoDegrees(node.getAttribute("lat"));
-            final long lon = get100NanoDegrees(node.getAttribute("lon"));
+            final double lat = Double.parseDouble(node.getAttribute("lat"));
+            final double lon = Double.parseDouble(node.getAttribute("lon"));
             final WayNodeOSM osmNode = new WayNodeOSM(lat, lon, id);
             osmNodes.put(id, osmNode);
         }
@@ -177,7 +177,7 @@ public class OsmImporter {
                 osmGraph.getNode(startNodeId).connectWithNodeWeigthAndMeta(osmGraph.getNode(lastNodeId), distance, new WayOSM(0, WayOSM.WayType.UNSPECIFIED, name, metaNodes));
             }
         }
-        // TODO simplify
+
         final Iterator<NodeCppOSM> iteratorNodes = osmGraph.getNodes().iterator();
         while (iteratorNodes.hasNext()) {
             final NodeCppOSM node = iteratorNodes.next();
@@ -219,15 +219,6 @@ public class OsmImporter {
         final Document osmFile = getDomFromFile(filename);
         final HashMap<Long, WayNodeOSM> osmNodes = getOsmNodes(osmFile);
         final GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph = createFiltered(osmFile, osmNodes);
-
-        /**
-         * TODO create edges
-         * for each way-element:
-         * create the nodes and connect them but not for roundabout
-         * for each way which is a roundabout:
-         * find the existing nodes and connect them
-         */
-
         return osmGraph;
     }
 
