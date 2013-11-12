@@ -27,9 +27,9 @@ import org.w3c.dom.NodeList;
 public class OsmImporter {
 
     // FIXME: Redundant?
-    protected static int getDistance(final WayNodeOSM a, final WayNodeOSM b) { // TODO is int the right return type?
+    protected static double getDistance(final WayNodeOSM a, final WayNodeOSM b) { // TODO is int the right return type?
         // Spherical Law of Cosines
-        return (int) (Math.acos((Math.sin(a.getLatitude()) * Math.sin(b.getLatitude())) + (Math.cos(a.getLatitude()) * Math.cos(b.getLatitude()) * Math.cos(b.getLongitude() - a.getLongitude()))) * 6367500);
+        return (Math.acos((Math.sin(a.getLatitude()) * Math.sin(b.getLatitude())) + (Math.cos(a.getLatitude()) * Math.cos(b.getLatitude()) * Math.cos(b.getLongitude() - a.getLongitude()))) * 6367500);
     }
 
     protected static Document getDomFromFile(final String filename) {
@@ -91,7 +91,7 @@ public class OsmImporter {
                         final Long nodeId = Long.parseLong(childNode.getAttribute("ref"), 10);
                         final NodeCppOSM node = osmGraph.getNode(nodeId);
                         if (!(node == null)) {
-                            final int distance = getDistance(osmNodes.get(lastWaypoint), osmNodes.get(childNode.getAttribute("ref")));
+                            final double distance = getDistance(osmNodes.get(lastWaypoint), osmNodes.get(childNode.getAttribute("ref")));
                             osmGraph.getNode(lastWaypoint).connectWithNodeAndWeigth(node, distance);
                             lastWaypoint = Long.parseLong(childNode.getAttribute("ref"), 10);
                         }

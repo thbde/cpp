@@ -9,7 +9,7 @@ import edu.uaskl.cpp.model.node.NodeCpp;
 public class EdgeCreatorCpp implements EdgeCreator<NodeCpp, EdgeCpp> {
 
     @Override
-    public EdgeCpp create(final NodeCpp node1, final NodeCpp node2, final int weight) {
+    public EdgeCpp create(final NodeCpp node1, final NodeCpp node2, final double weight) {
         return new EdgeCpp(node1, node2, weight);
     }
 }

@@ -3,7 +3,9 @@ package edu.uaskl.cpp.algorithmen;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
+import edu.uaskl.cpp.model.edge.EdgeCppOSM;
 import edu.uaskl.cpp.model.edge.EdgeExtended;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
 import edu.uaskl.cpp.model.node.NodeExtended;
@@ -16,8 +18,8 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     private final GraphUndirected<T, V> graph;
     private double[][] dist;
     private Integer[][] next;
-    private HashMap<Long,Integer> id2index;
-    private HashMap<Integer,Long> index2id;
+    private HashMap<Long,Integer> id2index = new HashMap<>();
+    private HashMap<Integer,Long> index2id = new HashMap<>();
     private boolean preprocessed = false;
 
     public AlgorithmsUndirected(final GraphUndirected<T, V> graph) {
@@ -226,8 +228,8 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     private void createDistNext() {
     	//based on Floyd-Warshall
     	id2index = new HashMap<>();
-    	dist = new double[graph.getNumberOfNodes()][graph.getNumberOfNodes()];
-    	next = new Integer[graph.getNumberOfNodes()][graph.getNumberOfNodes()];
+    	this.dist = new double[graph.getNumberOfNodes()][graph.getNumberOfNodes()];
+    	this.next = new Integer[graph.getNumberOfNodes()][graph.getNumberOfNodes()];
     	// create the translation from id to index
     	Collection<T> nodes = graph.getNodes();
     	int index = 0;
@@ -245,7 +247,12 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     	}
     	for(T node : nodes) {
     		for(V edge : node.getEdges()) {
-    			dist[id2index.get(edge.getNode1().getId())][id2index.get(edge.getNode2().getId())] = edge.getWeight();
+    			// TODO fix this for directed
+    			// use the edge with minimum weight
+    			if(edge.getWeight() < dist[id2index.get(edge.getNode1().getId())][id2index.get(edge.getNode2().getId())]) {
+    				dist[id2index.get(edge.getNode1().getId())][id2index.get(edge.getNode2().getId())] = edge.getWeight();
+    				dist[id2index.get(edge.getNode2().getId())][id2index.get(edge.getNode1().getId())] = edge.getWeight();
+    			}
     		}
     	}
     	// create the matrix
@@ -287,17 +294,85 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     	return new PathExtended<T>(pathList);
     }
     
-    public void matchPerfect() {
+    public void matchPerfect() throws Exception {
     	if(!preprocessed) {
     		createDistNext();
     	}
-    	// Find list of all nodes with uneven degree
-    	
+    	// Find list of all nodes with odd degree
+    	Collection<T> nodes = graph.getNodes();
+    	ArrayList<T> oddNodes = new ArrayList<T>();
+    	for(T node : nodes) {
+    		if(node.isDegreeOdd()){
+    			oddNodes.add(node);
+    		}
+    	}
     	// match their shortest path
-    	
-    	// get the paths
-    	
-    	// and create them
+    	ArrayList<ArrayList<T>> pairs = new ArrayList<>();
+    	// naive version - not perfect but greedy
+    	while(!oddNodes.isEmpty()){
+    		ArrayList<T> pair = new ArrayList<>();
+    		T firstNode = oddNodes.get(oddNodes.size()-1);
+    		pair.add(firstNode);
+    		oddNodes.remove(oddNodes.size()-1);
+    		T nextNode = oddNodes.get(0);
+    		double minDist = Double.POSITIVE_INFINITY;
+    		for(T node : oddNodes) {
+    			double distToI = dist[id2index.get(firstNode.getId())][id2index.get(node.getId())];
+    			if(distToI < minDist) {
+    				minDist = distToI;
+    				nextNode = node;
+    			}
+    		}
+    		pair.add(nextNode);
+    		oddNodes.remove(nextNode);
+    		pairs.add(pair);
+    	}
+    	// create the paths
+    	for(ArrayList<T> pair : pairs) {
+    		T startNode = pair.get(0);
+    		T endNode = pair.get(1);
+    		PathExtended<T> path = getShortestPath(startNode,endNode);
+    		List<T> nodesInPath = path.getNodes();
+    		for(int i = 1; i < path.getLength(); ++i) {
+    			T nextNode = nodesInPath.get(i);
+    			V edgeToCopy;
+    			double weight = dist[id2index.get(startNode.getId())][id2index.get(nextNode.getId())];
+    			for(V edge : startNode.getEdges()) {
+    				if(edge.getWeight() == weight && (edge.getNode1() == nextNode || edge.getNode2() == nextNode)) {
+    					edgeToCopy = edge;
+    					break;
+    				}
+    			}
+    			startNode.connectWithNodeAndWeigth(nextNode, weight);
+    			// move startNode to the next node
+    			startNode = nextNode;
+    			
+    		}
+    		
+//    		while(startNode != endNode) {
+//    			// get the next node
+//    			T nextNode = graph.getNode(index2id.get(next[id2index.get(startNode.getId())][id2index.get(endNode.getId())]));
+//    			// find the minimum weight
+//    			if(nextNode == null) {
+//    				throw new Exception();
+//    			}
+//    			double weight = dist[id2index.get(startNode.getId())][id2index.get(nextNode.getId())];
+//    			// find the right edge to copy
+//    			V edgeToCopy;
+//    			for(V edge : startNode.getEdges()) {
+//    				if(edge.getWeight() == weight && (edge.getNode1() == nextNode || edge.getNode2() == nextNode)) {
+//    					edgeToCopy = edge;
+//    					break;
+//    				}
+//    			}
+//    			// create a copy
+//    			// copy has no metaData
+//    			startNode.connectWithNodeAndWeigth(nextNode, weight);
+//    			
+//    			// move startNode to the next node
+//    			startNode = nextNode;
+//    		}
+    	}
     }
     
 }

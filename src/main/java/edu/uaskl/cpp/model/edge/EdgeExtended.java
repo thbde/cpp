@@ -4,7 +4,7 @@ import edu.uaskl.cpp.model.edge.interfaces.EdgeWeighted;
 import edu.uaskl.cpp.model.node.NodeExtended;
 
 public class EdgeExtended<T extends NodeExtended<T, V>, V extends EdgeExtended<T, V>> extends EdgeBasic<T, V>  implements EdgeWeighted<T, V> {
-    protected int weight = 0;
+    protected double weight = 0;
     private boolean isVisited = false;
 
     /** Copy constructor. Creates a new edge with the same properties (nodes + weight) */
@@ -16,18 +16,18 @@ public class EdgeExtended<T extends NodeExtended<T, V>, V extends EdgeExtended<T
         this(node1, node2, 0);
     }
 
-    public EdgeExtended(final T node1, final T node2, final int weight) {
+    public EdgeExtended(final T node1, final T node2, final double weight) {
         super(node1, node2);
         this.weight = weight;
     }
 
 	@Override
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
     @Override
-    public void setWeight(final int weight) {
+    public void setWeight(final double weight) {
         this.weight = weight;
     }
 
