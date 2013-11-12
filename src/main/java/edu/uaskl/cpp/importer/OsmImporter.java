@@ -213,5 +213,19 @@ public class OsmImporter {
         final GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph = createFiltered(osmFile, osmNodes);
         return osmGraph;
     }
+    
+    public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importZW(){
+    	GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected("src/test/resources/edu/uaskl/cpp/zweibruecken_way_no_meta.osm");
+    	graph.getAlgorithms().visitAllEdgesFromStartNode(graph.getNode(260070555l));
+    	Iterator<NodeCppOSM> iter = graph.getNodes().iterator();
+    	while(iter.hasNext()){
+    		NodeCppOSM node = iter.next();
+    		if(!node.isVisited()) {
+    			node.removeAllEdges();
+    			iter.remove();
+    		}
+    	}
+    	return graph;
+    }
 
 }

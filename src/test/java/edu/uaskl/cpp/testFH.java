@@ -2,6 +2,7 @@ package edu.uaskl.cpp;
 
 
 import static org.fest.assertions.api.Assertions.*;
+import static edu.uaskl.cpp.importer.OsmImporter.importZW;
 import static edu.uaskl.cpp.importer.OsmImporter.importOsmUndirected;
 import static edu.uaskl.cpp.model.exporter.Exporter.exportPathToHTML;
 import static org.junit.Assert.*;

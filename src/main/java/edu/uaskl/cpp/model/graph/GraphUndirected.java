@@ -29,7 +29,7 @@ public class GraphUndirected<T extends NodeExtended<T, V>, V extends EdgeExtende
     }
 
     /** Running time: O(log(|nodes| + |edgesFromGivenNode|*|edgesFromRelatedNode|)) */
-    public boolean removeNode(final String id) {
+    public boolean removeNode(final Long id) {
         final T nodeToRemove = this.nodes.remove(id);
         if (nodeToRemove == null)
             return false;

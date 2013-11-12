@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<osm version="0.6" generator="Osmosis 0.43.1">
+  <bounds minlon="7.35390" minlat="49.25620" maxlon="7.36830" maxlat="49.26840" origin="0.43.1"/>
+  <node id="260070555" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2572968" lon="7.3603165"/>
+  <node id="260070568" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2597649" lon="7.3598411"/>
+  <node id="260070570" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.259868" lon="7.3598769"/>
+  <node id="260070572" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.259883" lon="7.3599092"/>
+  <way id="23987090" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <nd ref="260070555"/>
+    <nd ref="260070568"/>
+    <tag k="highway" v="tertiary"/>
+    <tag k="name" v="Amerikastraße"/>
+    <tag k="surface" v="asphalt"/>
+  </way>
+  <way id="23987091" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <nd ref="260070568"/>
+    <nd ref="260070570"/>
+    <tag k="highway" v="tertiary"/>
+    <tag k="name" v="Amerikastraße"/>
+    <tag k="surface" v="asphalt"/>
+  </way>
+  <way id="23987092" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <nd ref="260070570"/>
+    <nd ref="260070572"/>
+    <tag k="highway" v="tertiary"/>
+    <tag k="name" v="Amerikastraße"/>
+    <tag k="surface" v="asphalt"/>
+  </way>
+  <way id="23987093" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <nd ref="260070572"/>
+    <nd ref="260070555"/>
+    <tag k="highway" v="tertiary"/>
+    <tag k="name" v="Amerikastraße"/>
+    <tag k="surface" v="asphalt"/>
+  </way>
+  <way id="23987094" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <nd ref="260070570"/>
+    <nd ref="260070555"/>
+    <tag k="highway" v="tertiary"/>
+    <tag k="name" v="Amerikastraße"/>
+    <tag k="surface" v="asphalt"/>
+  </way>
+</osm>

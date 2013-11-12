@@ -42,7 +42,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
         return true;
     }
 
-    private void visitAllEdgesFromStartNode(final T node) {
+    public void visitAllEdgesFromStartNode(final T node) {
         node.setVisited();
 
         for (final V edgeItem : node.getEdges())
