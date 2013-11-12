@@ -59,10 +59,11 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 
     /** This method changes the current graph. (I guess) it adds a matching */
     public void matchGraph() {
-        T node1 = null, node2 = null;
+        T node1 = null;
+        T node2 = null;
         ArrayList<T> pathList = new ArrayList<>();
 
-        for (final T nodeItem : graph.getNodes()) {
+        for (final T nodeItem : graph.getNodes()) { // the if/if could be simplified -tbach
             if ((node1 == null) && nodeItem.isDegreeOdd()) {
                 node1 = nodeItem;
                 continue;
@@ -88,6 +89,9 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     }
 
     public ArrayList<T> getPathBetween(final T node, final T destination) {
+        // TODO add at least the idea of what is happening here
+        // a good alternative would be a backtracking algorithm -tbach
+
         T node1 = node;
         int i = 0;
         graph.resetStates();
@@ -98,7 +102,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
                 node1.getEdges().get(j).setVisited();
                 pathList.add(node1);
                 node1 = node1.getEdges().get(j).getRelatedNode(node1);
-                j = node.getEdges().size();
+                j = node.getEdges().size(); // TODO hu? do not modify the loop variable if you want to break. someone invented the break statement for this -tbach
                 // break;
             }
 
@@ -114,7 +118,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
             } else {
                 i++;
                 if (i == node1.getEdges().size()) {
-                    final T temp = pathList.get(pathList.size() - 2);
+                    final T temp = pathList.get(pathList.size() - 2); // TODO can not follow what is happening here -tbach
                     pathList.remove(pathList.size() - 1);
                     pathList.remove(pathList.size() - 1);
                     node1 = temp;
@@ -176,7 +180,10 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     		
     	}
     */
-    public ArrayList<T> connectCircles(final ArrayList<T> big, final ArrayList<T> little) {
+
+    // TODO add javadoc with example and/or choose a better name -tbach
+    public ArrayList<T> connectCircles(final ArrayList<T> big, final ArrayList<T> little) { // TODO should be private? -tbach
+        // TODO comments are good, but we agreed to use english ;) -tbach
         // kleine wird zur großen hinzugefügt
         final ArrayList<T> list = new ArrayList<>();
 
@@ -187,24 +194,27 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
                 list.remove(i); // damit doppeltes(aufgeschobenes) element
                                 // gelöscht wird
 
+                // TODO List provides a "addAll" method -tbach
                 for (int j = 0; j < little.size(); j++)
                     list.add(little.get(j));
             }
 
         }
-
         return list;
 
     }
 
-    public ArrayList<T> getEulerianCircle(final T start) {
-        final T node = start;
+    public ArrayList<T> getEulerianCircle(final T start) { // TODO should return a path -tbach
+        // TODO comments language -tbach
+        // TODO check if one exists, before you search one. or write in the javadoc that you expect a "good" input -tbach
         T temp;
 
-        ArrayList<T> eulerianList = new ArrayList<>(getCircle(node));
+        ArrayList<T> eulerianList = new ArrayList<>(getCircle(start));
+        // TODO you could check if this is already the whole graph -tbach
 
         for (int i = 0; i < eulerianList.size(); i++) // gehe jedes element der
                                                       // Liste durch
+        // TODO this comment is obvious.. -tbach
         {
             temp = eulerianList.get(i);
 
@@ -212,13 +222,15 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
                 if (!temp.getEdges().get(j).isVisited()) // wenn eine kante noch
                                                          // nicht besucht
                                                          // wurde...
+                // TODO this comment is obvious, too. Do not write the code again in comments -tbach
                 {
                     final ArrayList<T> underGraph = new ArrayList<>(getCircle(temp));
+                    // TODO subGraph would be a better name -tbach
 
                     eulerianList = connectCircles(eulerianList, underGraph);
 
                     i = 0; // beginne nochmal von vorn zu suchen
-
+                    // TODO not a good style to change the loop variable.
                 }
 
         }
@@ -231,7 +243,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
         int i = 0;
 
         final ArrayList<T> pathList = new ArrayList<>();
-
+        // TODO this can be simplified (and some comments with the idea could be added -tbach
         for (int j = 0; j < node.getEdges().size(); j++)
             if (!node.getEdges().get(j).isVisited()) {
                 node1.getEdges().get(j).setVisited();

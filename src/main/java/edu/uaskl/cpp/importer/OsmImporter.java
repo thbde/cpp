@@ -40,7 +40,7 @@ public class OsmImporter {
     }
 
     protected static Document getDomFromFile(final String filename) {
-        final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance(); // TODO looks like this can be static? -tbach
         Document document = null;
         try {
             final DocumentBuilder builder = factory.newDocumentBuilder();
@@ -54,6 +54,7 @@ public class OsmImporter {
         return document;
     }
 
+    // TODO add javadoc with example -tbach
     protected static long get100NanoDegrees(final String parsed) {
         long value = 1;
         // different amount of decimal places (up to 7)
@@ -92,7 +93,7 @@ public class OsmImporter {
         // connect them
         final Element documentElement = osmFile.getDocumentElement();
         final NodeList ways = documentElement.getElementsByTagName("way");
-        for (int i = 0; i < ways.getLength(); ++i) {
+        for (int i = 0; i < ways.getLength(); ++i) { // TODO this should be simplified, probably with submethods -tbach
             final NodeList childNodes = ways.item(i).getChildNodes();
             Long lastWaypoint = null;
             for (int j = 0; j < childNodes.getLength(); ++j) {
@@ -125,6 +126,7 @@ public class OsmImporter {
 
         final Element documentElement = osmFile.getDocumentElement();
         final NodeList ways = documentElement.getElementsByTagName("way");
+        // TODO this method should be simplified, probably with submethods -tbach
         for (int i = 0; i < ways.getLength(); ++i) { // for each way
             final NodeList childNodes = ways.item(i).getChildNodes();
             Long lastWaypoint = null;

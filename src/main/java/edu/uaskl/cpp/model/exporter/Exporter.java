@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 import edu.uaskl.cpp.map.meta.WayNodeOSM;
@@ -14,12 +14,14 @@ import edu.uaskl.cpp.model.node.NodeCppOSM;
 import edu.uaskl.cpp.model.path.PathExtended;
 
 public class Exporter {
+
+    // TODO add javadoc with example -tbach
     private static String nanoDegreeToString(final long nanoDeg) {
         return (nanoDeg / 10000000) + "." + (nanoDeg % 10000000);
     }
 
     private static String createSegment(final List<WayNodeOSM> metaNodes, final int id) {
-        final List<String> colors = new LinkedList<>();
+        final List<String> colors = new ArrayList<>(); // TODO if the list is the same all the time, it should be static -tbach
         colors.add("b1563f");
         colors.add("b4693f");
         colors.add("b67b3f");
@@ -59,15 +61,15 @@ public class Exporter {
         final List<NodeCppOSM> nodes = path.getNodes();
         NodeCppOSM previousNode = nodes.get(0);
         NodeCppOSM currentNode;
-        try (Writer fw = new FileWriter(folder.toString() + "overlay.js");) {
+        try (Writer fw = new FileWriter(new File(folder, "overlay.js"));) {
             for (int index = 1; index < nodes.size(); ++index) {
                 currentNode = nodes.get(index);
                 final EdgeCppOSM edge = previousNode.getEdgeToNode(currentNode);
                 final List<WayNodeOSM> metaNodes = edge.getMetadata().getNodes();
-                if (((Long) metaNodes.get(0).getID()).equals(currentNode.getId()))
+                if (((Long) metaNodes.get(0).getID()).equals(currentNode.getId())) // FIXME compare long with ==, not equals -tbach
                     Collections.reverse(metaNodes);
                 fw.write(createSegment(metaNodes, index));
-                fw.append(System.lineSeparator());
+                fw.append(System.lineSeparator()); // TODO createSegment already has a line separator ("\n")? -tbach
                 previousNode = currentNode;
             }
         } catch (final IOException e) {

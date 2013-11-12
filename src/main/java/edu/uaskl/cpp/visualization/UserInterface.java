@@ -48,7 +48,7 @@ public class UserInterface extends JApplet {
 
         final Container contentContainer = frame.getContentPane();
 
-        contentContainer.add(createEmptyGraph());
+        contentContainer.add(createEmptyGraph()); // TODO you can do a frame.add, thats ok for a JFrame -tbach
         contentContainer.add(new ControlBox(visViewer), BorderLayout.EAST);
 
         frame.pack();
@@ -56,39 +56,33 @@ public class UserInterface extends JApplet {
     }
 
     private GraphZoomScrollPane createEmptyGraph() {
-        Graph<Integer, Integer> graph = new SparseMultigraph<>();
+        final Graph<Integer, Integer> graph = new SparseMultigraph<>();
 
-        Layout<Integer, Integer> layout = new KKLayout<>(graph);
+        final Layout<Integer, Integer> layout = new KKLayout<>(graph);
         visViewer = new VisualizationViewer<>(layout, new Dimension(1000, 700));
 
         // Mouse Interaction
-        DefaultModalGraphMouse<Integer, Integer> graphMouse = new DefaultModalGraphMouse<>();
+        final DefaultModalGraphMouse<Integer, Integer> graphMouse = new DefaultModalGraphMouse<>();
         graphMouse.setMode(ModalGraphMouse.Mode.TRANSFORMING);
         visViewer.setGraphMouse(graphMouse);
 
         // Edge labels
-        visViewer.getRenderContext().setEdgeLabelTransformer(
-                new Transformer<Integer, String>() {
-                    @Override
-                    public String transform(final Integer e) {
-                        return "Stub";
-                    }
-                });
+        visViewer.getRenderContext().setEdgeLabelTransformer(new Transformer<Integer, String>() {
+            @Override
+            public String transform(final Integer e) {
+                return "Stub";
+            }
+        });
 
         // Centered edge labels
-        final ConstantDirectionalEdgeValueTransformer<Integer, Integer> edgeValueTransformer =
-                new ConstantDirectionalEdgeValueTransformer<>(.5, .5);
-        visViewer.getRenderContext().setEdgeLabelClosenessTransformer(
-                edgeValueTransformer);
+        final ConstantDirectionalEdgeValueTransformer<Integer, Integer> edgeValueTransformer = new ConstantDirectionalEdgeValueTransformer<>(.5, .5);
+        visViewer.getRenderContext().setEdgeLabelClosenessTransformer(edgeValueTransformer);
 
         // Colors
         visViewer.setBackground(Color.white);
-        visViewer.getRenderContext().setEdgeDrawPaintTransformer(
-                new PickableEdgePaintTransformer<>(visViewer
-                        .getPickedEdgeState(), Color.black, Color.cyan));
+        visViewer.getRenderContext().setEdgeDrawPaintTransformer(new PickableEdgePaintTransformer<>(visViewer.getPickedEdgeState(), Color.black, Color.cyan));
         visViewer.getRenderContext().setVertexFillPaintTransformer(
-                new PickableVertexPaintTransformer<>(visViewer
-                        .getPickedVertexState(), Color.red, Color.yellow));
+                new PickableVertexPaintTransformer<>(visViewer.getPickedVertexState(), Color.red, Color.yellow));
 
         // Tool tip displaying node number
         visViewer.setVertexToolTipTransformer(new ToStringLabeller<Integer>());

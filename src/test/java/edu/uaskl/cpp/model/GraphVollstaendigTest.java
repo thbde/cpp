@@ -11,7 +11,7 @@ import edu.uaskl.cpp.model.graph.GraphComplete;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
 import edu.uaskl.cpp.model.node.NodeCpp;
 
-public class GraphVollstaendigTest {
+public class GraphVollstaendigTest { // TODO this is not the right class for all of this tests. was initially my fault :/ (+has german name) -tbach
 
     @Test
     public void hasEulerCircleTrue() {
@@ -142,6 +142,7 @@ public class GraphVollstaendigTest {
 
         assertThat(pathList).startsWith(node0);
         assertThat(pathList).endsWith(node8);
+        // TODO should check length/size -tbach
     }
 
     @Test
@@ -182,6 +183,7 @@ public class GraphVollstaendigTest {
 
         assertThat(list).startsWith(big.get(0));
         assertThat(list).endsWith(big.get(0));
+        // TODO should check length/size -tbach
     }
 
     @Test
@@ -217,6 +219,8 @@ public class GraphVollstaendigTest {
         }
         assertThat(odd).isFalse();
         assertThat(eulerianList.get(0).equals(eulerianList.get(eulerianList.size() - 1))).isTrue();
+        // TODO what about: assertThat(eulerianList).endsWith(eulerianList.get(0)); -tbach
+        // TODO should check length/size -tbach
     }
 
     @Test
@@ -255,7 +259,9 @@ public class GraphVollstaendigTest {
 
         assertThat(pathList).startsWith(node0);
         assertThat(pathList).endsWith(node8);
-
+        // TODO should check length/size -tbach
     }
+
+    // TODO should add negative tests -tbach
 
 }
