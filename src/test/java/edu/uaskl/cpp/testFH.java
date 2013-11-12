@@ -33,7 +33,7 @@ public class testFH {
         assertTrue("matched graph", graph.getAlgorithms().hasEulerCircle());
         final NodeCppOSM start = graph.getNode(260070555l);
         final ArrayList<NodeCppOSM> circle = graph.getAlgorithms().getEulerianCircle(start);
-        final PathExtended<NodeCppOSM, EdgeCppOSM> path = new PathExtended<>(circle);
+        final PathExtended<NodeCppOSM> path = new PathExtended<>(circle);
         // TODO find the right folder for the real output
         exportPathToHTML(path, folder.getRoot());
         //exportPathToHTML(path, new File("./"));

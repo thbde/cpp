@@ -2,7 +2,6 @@ package edu.uaskl.cpp.model.path.interfaces;
 
 import java.util.List;
 
-import edu.uaskl.cpp.model.edge.EdgeExtended;
 import edu.uaskl.cpp.model.node.NodeExtended;
 
 /**
@@ -11,7 +10,7 @@ import edu.uaskl.cpp.model.node.NodeExtended;
  * @author tbach
  */
 
-public interface Path<T extends NodeExtended<T, V>, V extends EdgeExtended<T, V>> {
+public interface Path<T extends NodeExtended<T, ?>> {
     public int getDistance();
 
     public int getLength();
