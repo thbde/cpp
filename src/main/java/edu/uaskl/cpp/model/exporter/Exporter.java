@@ -53,7 +53,7 @@ public class Exporter {
 	}
 	
 	
-	public static void exportPathToHTML(PathExtended<NodeCppOSM, EdgeCppOSM> path, File folder){
+	public static void exportPathToHTML(PathExtended<NodeCppOSM> path, File folder){
 		final List<NodeCppOSM> nodes = path.getNodes();
 		NodeCppOSM previousNode = nodes.get(0);
 		NodeCppOSM currentNode;

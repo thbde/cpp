@@ -29,7 +29,7 @@ public class ExportTest {
         nodes.add(graph.getNode(279266252l));
         nodes.add(graph.getNode(279266215l));
 
-        final PathExtended<NodeCppOSM, EdgeCppOSM> path = new PathExtended<>(nodes);
+        final PathExtended<NodeCppOSM> path = new PathExtended<>(nodes);
         exportPathToHTML(path, folder.getRoot()); //
         assertTrue(true); // TODO well, not that helpful. you could check if the file exists and some expected content is there -tbach
     }
