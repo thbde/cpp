@@ -48,7 +48,7 @@ public class Exporter {
 		output.append(id);
 		output.append(".setText('\u25BA ");
 		output.append(id);
-		output.append(" ', {repeat: true,offset: 0,attributes: {fill:'black'}});\n");
+		output.append(" ', {repeat: false,offset: 0,attributes: {fill:'black'}});\n");
 		return output.toString();
 	}
 	
@@ -60,6 +60,7 @@ public class Exporter {
 		try (Writer fw = new FileWriter( new File(folder, "overlay.js" ));) {
 			for(int index = 1; index < nodes.size() ; ++index){
 				currentNode = nodes.get(index);
+				//TODO use unvisited edges
 				final EdgeCppOSM edge = previousNode.getEdgeToNode(currentNode);
 				final List<WayNodeOSM> metaNodes = edge.getMetadata().getNodes();
 				if (((Long)metaNodes.get(0).getID()).equals(currentNode.getId())){

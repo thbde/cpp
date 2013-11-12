@@ -1,9 +1,12 @@
 package edu.uaskl.cpp;
 
+
+import static org.fest.assertions.api.Assertions.*;
 import static edu.uaskl.cpp.importer.OsmImporter.importOsmUndirected;
 import static edu.uaskl.cpp.model.exporter.Exporter.exportPathToHTML;
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.junit.Rule;
@@ -22,8 +25,10 @@ public class testFH {
     @Test
     public void test() {
         final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(getClass().getResource("fh_way_no_meta.osm").toString());
+        //final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(getClass().getResource("testDiamond.osm").toString());
         assertTrue("FH graph should be connected", graph.getAlgorithms().isConnected());
         assertFalse("FH graph has no Euler circle", graph.getAlgorithms().hasEulerCircle());
+        assertThat(graph.getNumberOfNodes()).isGreaterThan(0);
         graph.getAlgorithms().matchGraph();
         assertTrue("matched graph", graph.getAlgorithms().hasEulerCircle());
         final NodeCppOSM start = graph.getNode(260070555l);
@@ -31,6 +36,7 @@ public class testFH {
         final PathExtended<NodeCppOSM, EdgeCppOSM> path = new PathExtended<>(circle);
         // TODO find the right folder for the real output
         exportPathToHTML(path, folder.getRoot());
+        //exportPathToHTML(path, new File("./"));
         assertTrue(true);
 
     }

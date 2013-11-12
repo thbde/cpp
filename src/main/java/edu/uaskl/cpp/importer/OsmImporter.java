@@ -62,13 +62,14 @@ public class OsmImporter {
         }
         return osmNodes;
     }
-
+@Deprecated
     protected GraphUndirected<NodeCppOSM, EdgeCppOSM> createNaive(final Document osmFile, final HashMap<String, WayNodeOSM> osmNodes) {
         // add all waypoints to the graph
         final GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph = new GraphUndirected<>();
         final Collection<WayNodeOSM> wayPoints = osmNodes.values();
         for (final WayNodeOSM wayPoint : wayPoints) {
             final NodeCppOSM newNode = new NodeCppOSM(wayPoint.getID());
+            newNode.setName(wayPoint.getID()+"");
             osmGraph.addNode(newNode);
         }
 
@@ -151,10 +152,12 @@ public class OsmImporter {
                 final Long lastNodeId = metaIds.get(j);
                 if (osmGraph.getNode(startNodeId) == null) {
                     final NodeCppOSM newNode = new NodeCppOSM(startNodeId);
+                    newNode.setName(""+startNodeId);
                     osmGraph.addNode(newNode);
                 }
                 if (osmGraph.getNode(lastNodeId) == null) {
                     final NodeCppOSM newNode = new NodeCppOSM(lastNodeId);
+                    newNode.setName(""+lastNodeId);
                     osmGraph.addNode(newNode);
                 }
                 final List<WayNodeOSM> metaNodes = new LinkedList<>();
@@ -176,14 +179,14 @@ public class OsmImporter {
                 final EdgeCppOSM edge2 = edges.get(1);
                 final Long node1id = edge1.getNode1().getId() == (currentNodeId) ? edge1.getNode2().getId() : edge1.getNode1().getId();
                 final Long node2id = edge2.getNode1().getId() == (currentNodeId) ? edge2.getNode2().getId() : edge2.getNode1().getId();
-                if(currentNodeId == node1id){
-                	//we are in a loop and do not erase ourself
+                if (currentNodeId == node1id){
+                	// we are in a loop and do not erase ourself
                 	continue;
                 }
                 // concat the list in the right way
                 final List<WayNodeOSM> newMetaNodes = edge1.getMetadata().getNodes(), metaNodes2 = edge2.getMetadata().getNodes();
                 // newMetaNodes = metaNodes1.get(0).id==node1id ? metaNodes1 : Collections.reverse(metaNodes1);
-                if (((Long)newMetaNodes.get(0).getID()).equals(currentNodeId)){
+                if (((Long) newMetaNodes.get(0).getID()).equals(currentNodeId)){
                     Collections.reverse(newMetaNodes);
                 }
                 newMetaNodes.remove(newMetaNodes.size() - 1);

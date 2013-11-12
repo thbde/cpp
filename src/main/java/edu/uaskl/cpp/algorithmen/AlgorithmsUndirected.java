@@ -63,18 +63,18 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
         T node2 = null;
         ArrayList<T> pathList = new ArrayList<>();
 
-        for (final T nodeItem : graph.getNodes()) { // the if/if could be simplified -tbach
-            if ((node1 == null) && nodeItem.isDegreeOdd()) {
-                node1 = nodeItem;
-                continue;
-            }
+        for (final T nodeItem : graph.getNodes()) {
             if (nodeItem.isDegreeOdd()) {
-                node2 = nodeItem;
-
-                pathList = getPathBetween(node1, node2);
-                matchBetweenNodes(pathList);
-                node1 = null;
-                node2 = null;
+                if (node1 == null){
+                	node1 = nodeItem;	
+                }
+                else {
+	                node2 = nodeItem;
+	                pathList = getPathBetween(node1, node2);
+	                matchBetweenNodes(pathList);
+	                node1 = null;
+	                node2 = null;
+                }
             }
         }
     }
@@ -83,52 +83,44 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
         for (int i = 0; i < (pathList.size() - 1); i++) {
             final T node1 = pathList.get(i);
             final T node2 = pathList.get(i + 1);
-
+            //TODO connect with correct weight
             node1.connectWithNode(node2);
         }
     }
 
-    public ArrayList<T> getPathBetween(final T node, final T destination) {
-
-        T node1 = node;
+    public ArrayList<T> getPathBetween(T node, final T destination) {
         int i = 0;
         graph.resetStates();
-        
         final ArrayList<T> pathList = new ArrayList<>();	//make an arraylist to write down the track
-
-        pathList.add(node1);		// add startnode to list
-        
-        if (node1.equals(destination))
+        pathList.add(node);		// add startnode to list
+        if (node.equals(destination)) {
             return pathList;			//already finished
-
+        }
         do
         {
-            if (!node1.getEdges().get(i).isVisited()) 	//search the unvisited edge to the next node
+            if (!node.getEdges().get(i).isVisited()) 	//search the unvisited edge to the next node
             {
-                node1.getEdges().get(i).setVisited();
-                pathList.add(node1);
-                node1 = node1.getEdges().get(i).getRelatedNode(node1);	//go to next node above edge that was not visited
+                node.getEdges().get(i).setVisited();
+                node = node.getEdges().get(i).getRelatedNode(node);	//go to next node above edge that was not visited
+                pathList.add(node);
                 i = 0;	
             } 
             else 
             {
                 i++;
-                if (i == node1.getEdges().size()) 	// if all Edges form node1 are visited you are in an DeadEnd
+                if (i == node.getEdges().size()) 	// if all Edges form node1 are visited you are in an DeadEnd
                 {
-                    final T temp = pathList.get(pathList.size() - 2); // so go back to the last node that got unvisited edges (size-1 = actual node; size-2 = node you come from)
-                    pathList.remove(pathList.size() - 1);	// Remove the duplicated node in list
+                    //final T temp = pathList.get(pathList.size() - 2); // so go back to the last node that got unvisited edges (size-1 = actual node; size-2 = node you come from)
+                    //pathList.remove(pathList.size() - 1);	// Remove the duplicated node in list
                     pathList.remove(pathList.size() - 1);	// Remove the Dead End from list
-                    node1 = temp;							// go back to node that got unvisited edges (like iterative backtracking)
-
+                    //node = temp;							// go back to node that got unvisited edges (like iterative backtracking)
+                    node = pathList.get(pathList.size()-1);
                     i = 0;
                 }
             }
-        }while (!node1.equals(destination));	// do it till you have reached de destination
-
-        pathList.add(node1);		// add destination 
-        
+        }while (!node.equals(destination));	// do it till you have reached de destination
+        //pathList.add(node);		// add destination 
         return pathList;		//return the track
-        	
     }
 
  
@@ -147,8 +139,11 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
                 list.remove(i); //remove doubled(shifted) element from big list because it will be added from little list again	
 
                 // TODO List provides a "addAll" method -tbach
-                for (int j = 0; j < little.size(); j++)
-                    list.add(little.get(j));
+                list.addAll(little);
+                ++i;
+                for (; i < big.size(); i++)
+                    list.add(big.get(i));
+                return list;
             }
 
         }
@@ -157,34 +152,28 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     }
 
     public ArrayList<T> getEulerianCircle(final T start) { // TODO should return a path -tbach
-
+    	graph.resetStates();
     	if(!(isConnected() || hasEulerCircle()))
     	{
     		//throw exception?
     		return new ArrayList<>();
-    	}
-    	
+    	}    	
     	T temp;
-
         ArrayList<T> eulerianList = new ArrayList<>(getCircle(start));	//get the first subgraph
         
         if(graph.getNumberOfNodes()==1)
         {
         	return eulerianList;
         }
-
         for (int i = 0; i < eulerianList.size(); i++) 
         {
             temp = eulerianList.get(i);						//go through every node of the first subgraph...
-
             for (int j = 0; j < temp.getEdges().size(); j++)
                 if (!temp.getEdges().get(j).isVisited())	//... and have a look if there could be an other subgraph
                 {
                     final ArrayList<T> subGraph = new ArrayList<>(getCircle(temp));	//so get that new subgraph...
-
                     eulerianList = connectCircles(eulerianList, subGraph);	//...and add it to the big list
-
-                    i = 0; // beginne nochmal von vorn zu suchen
+//                    i = 0; // beginne nochmal von vorn zu suchen
                     // TODO not a good style to change the loop variable.
                 }
         }
