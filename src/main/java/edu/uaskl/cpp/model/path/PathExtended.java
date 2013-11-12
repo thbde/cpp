@@ -14,8 +14,8 @@ public class PathExtended<T extends NodeExtended<T, V>, V extends EdgeExtended<T
     private final List<T> nodes;
     private int distance;
 
-    public PathExtended(final List<T> knoten) {
-        this.nodes = knoten;
+    public PathExtended(final List<T> nodes) {
+        this.nodes = nodes;
     }
 
     public PathExtended(final List<T> nodes, final int distance) {

@@ -4,22 +4,19 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 import edu.uaskl.cpp.map.meta.WayNodeOSM;
 import edu.uaskl.cpp.model.edge.EdgeCppOSM;
 import edu.uaskl.cpp.model.node.NodeCppOSM;
-import edu.uaskl.cpp.model.path.PathExtended;;
+import edu.uaskl.cpp.model.path.PathExtended;
 
 public class Exporter {
-	private static String nanoDegreeToString(long nanoDeg){
-		return nanoDeg/10000000 +"."+nanoDeg%10000000;
-	}
 	
 	private static String createSegment(List<WayNodeOSM>metaNodes,int id){
-		List<String> colors = new LinkedList<String>();
+		final List<String> colors = new ArrayList<String>();
 		colors.add("b1563f");
 		colors.add("b4693f");
 		colors.add("b67b3f");
@@ -30,7 +27,7 @@ public class Exporter {
 		colors.add("a0c141");
 		colors.add("8ec242");
 		colors.add("7cc344");
-		StringBuilder output= new StringBuilder();
+		final StringBuilder output= new StringBuilder();
 		output.append("var line");
 		output.append(id);
 		output.append(" = L.polyline([[");
@@ -38,7 +35,7 @@ public class Exporter {
 		output.append(",");
 		output.append(metaNodes.get(0).getLongitude());
 		output.append("]");
-		for(int i=1;i<metaNodes.size();++i){
+		for(int i = 1; i < metaNodes.size() ; ++i) {
 			output.append(",[");
 			output.append(metaNodes.get(i).getLatitude());
 			output.append(",");
@@ -57,17 +54,14 @@ public class Exporter {
 	
 	
 	public static void exportPathToHTML(PathExtended<NodeCppOSM, EdgeCppOSM> path, File folder){
-		List<NodeCppOSM> nodes = path.getNodes();
+		final List<NodeCppOSM> nodes = path.getNodes();
 		NodeCppOSM previousNode = nodes.get(0);
 		NodeCppOSM currentNode;
-		Writer fw = null;
-		try {
-			fw = new FileWriter( folder.toString() + "overlay.js" );
-		
-			for(int index = 1;index<nodes.size();++index){
+		try (Writer fw = new FileWriter( new File(folder, "overlay.js" ));) {
+			for(int index = 1; index < nodes.size() ; ++index){
 				currentNode = nodes.get(index);
-				EdgeCppOSM edge = previousNode.getEdgeToNode(currentNode);
-				List<WayNodeOSM> metaNodes = edge.getMetadata().getNodes();
+				final EdgeCppOSM edge = previousNode.getEdgeToNode(currentNode);
+				final List<WayNodeOSM> metaNodes = edge.getMetadata().getNodes();
 				if (((Long)metaNodes.get(0).getID()).equals(currentNode.getId())){
 					Collections.reverse(metaNodes);
 				}
@@ -79,9 +73,5 @@ public class Exporter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			  if ( fw != null )
-			    try { fw.close(); } catch ( IOException e ) { e.printStackTrace(); }
-			}
 	}
 }

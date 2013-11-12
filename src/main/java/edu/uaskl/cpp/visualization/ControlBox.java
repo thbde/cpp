@@ -35,9 +35,9 @@ public class ControlBox extends Box {
 
     private static final long serialVersionUID = -626996308310236812L;
 
-    private VisualizationViewer<Integer, Integer> visViewer;
+    private final VisualizationViewer<Integer, Integer> visViewer;
 
-    public ControlBox(VisualizationViewer<Integer, Integer> viewer) {
+    public ControlBox(final VisualizationViewer<Integer, Integer> viewer) {
         super(BoxLayout.Y_AXIS);
 
         visViewer = viewer;
@@ -50,39 +50,36 @@ public class ControlBox extends Box {
     }
 
     private void drawGraph() {
-        Graph<Integer, Integer> graph = createOSMGraph();
+        final Graph<Integer, Integer> graph = createOSMGraph();
 
         visViewer.setGraphLayout(new ISOMLayout<>(graph));
     }
 
     private SparseMultigraph<Integer, Integer> createOSMGraph() {
-        SparseMultigraph<Integer, Integer> graph = new SparseMultigraph<>();
+        final SparseMultigraph<Integer, Integer> graph = new SparseMultigraph<>();
 
         GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph;
-        osmGraph = OsmImporter
-                .importOsmUndirected("src/test/resources/edu/uaskl/cpp/fh_way_no_meta.osm");
+        osmGraph = OsmImporter.importOsmUndirected("src/test/resources/edu/uaskl/cpp/fh_way_no_meta.osm");
 
-        Collection<NodeCppOSM> nodes = osmGraph.getNodes();
-        Iterator<NodeCppOSM> iterator = nodes.iterator();
+        final Collection<NodeCppOSM> nodes = osmGraph.getNodes();
+        final Iterator<NodeCppOSM> iterator = nodes.iterator();
 
         int edgeNumber = 0;
-        List<Integer> processedNodes = new ArrayList<>();
+        final List<Integer> processedNodes = new ArrayList<>(); // you should use a hash* here, probably a hashset -tbach
 
-        while (iterator.hasNext()) {
-            NodeCppOSM node = iterator.next();
-            graph.addVertex(node.hashCode());
+        while (iterator.hasNext()) { // TODO you could use a foreach loop here -tbach
+            final NodeCppOSM node = iterator.next();
+            graph.addVertex(node.hashCode()); // TODO the id could be more interesting? -tbach
 
-            List<EdgeCppOSM> edges = node.getEdges();
+            final List<EdgeCppOSM> edges = node.getEdges();
 
-            for (EdgeCppOSM edge : edges) {
-                if (!processedNodes.contains(edge.getNode1().hashCode())
-                        && !processedNodes.contains(edge.getNode2().hashCode())) {
-                    graph.addEdge(edgeNumber, edge.getNode1().hashCode(), edge
-                            .getNode2().hashCode());
+            for (final EdgeCppOSM edge : edges)
+                // TODO the contains is a linear search with the arraylist -tbach
+                if (!processedNodes.contains(edge.getNode1().hashCode()) && !processedNodes.contains(edge.getNode2().hashCode())) {
+                    graph.addEdge(edgeNumber, edge.getNode1().hashCode(), edge.getNode2().hashCode());
 
                     edgeNumber++;
                 }
-            }
             processedNodes.add(node.hashCode());
         }
 
@@ -101,8 +98,7 @@ public class ControlBox extends Box {
             @Override
             public void itemStateChanged(final ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    visViewer.getRenderContext().setEdgeShapeTransformer(
-                            new EdgeShape.Line<Integer, Integer>());
+                    visViewer.getRenderContext().setEdgeShapeTransformer(new EdgeShape.Line<Integer, Integer>());
                     visViewer.repaint();
                 }
             }
@@ -114,8 +110,7 @@ public class ControlBox extends Box {
             @Override
             public void itemStateChanged(final ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    visViewer.getRenderContext().setEdgeShapeTransformer(
-                            new EdgeShape.QuadCurve<Integer, Integer>());
+                    visViewer.getRenderContext().setEdgeShapeTransformer(new EdgeShape.QuadCurve<Integer, Integer>());
                     visViewer.repaint();
                 }
             }
@@ -139,15 +134,13 @@ public class ControlBox extends Box {
      * Checkbox for choosing normalized or parallel edge label alignment.
      */
     private JPanel createEdgeLabelAlignmentCheckBox() {
-        final JCheckBox edgeLabelAlignmentCheckBox = new JCheckBox(
-                "Parallel to Edge");
+        final JCheckBox edgeLabelAlignmentCheckBox = new JCheckBox("Parallel to Edge");
 
         edgeLabelAlignmentCheckBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(final ItemEvent e) {
                 final AbstractButton button = (AbstractButton) e.getSource();
-                visViewer.getRenderContext().getEdgeLabelRenderer()
-                        .setRotateEdgeLabels(button.isSelected());
+                visViewer.getRenderContext().getEdgeLabelRenderer().setRotateEdgeLabels(button.isSelected());
                 visViewer.repaint();
             }
         });
@@ -155,8 +148,7 @@ public class ControlBox extends Box {
         edgeLabelAlignmentCheckBox.setSelected(true);
 
         final JPanel edgeLabelAlignmentPanel = new JPanel();
-        edgeLabelAlignmentPanel.setBorder(BorderFactory
-                .createTitledBorder("Egde Label Alignment"));
+        edgeLabelAlignmentPanel.setBorder(BorderFactory.createTitledBorder("Egde Label Alignment"));
         edgeLabelAlignmentPanel.add(edgeLabelAlignmentCheckBox);
 
         return edgeLabelAlignmentPanel;
@@ -168,11 +160,8 @@ public class ControlBox extends Box {
     @SuppressWarnings("unchecked")
     private JPanel createMouseInteractionComboBox() {
         final JPanel mouseInteractionModePanel = new JPanel();
-        mouseInteractionModePanel.setBorder(BorderFactory
-                .createTitledBorder("Mouse Interaction Mode"));
-        mouseInteractionModePanel
-                .add(((DefaultModalGraphMouse<Integer, Integer>) visViewer
-                        .getGraphMouse()).getModeComboBox());
+        mouseInteractionModePanel.setBorder(BorderFactory.createTitledBorder("Mouse Interaction Mode"));
+        mouseInteractionModePanel.add(((DefaultModalGraphMouse<Integer, Integer>) visViewer.getGraphMouse()).getModeComboBox());
 
         return mouseInteractionModePanel;
     }

@@ -17,22 +17,21 @@ import edu.uaskl.cpp.model.node.NodeCppOSM;
 import edu.uaskl.cpp.model.path.PathExtended;
 
 public class ExportTest {
-	@Rule 
-	public TemporaryFolder folder = new TemporaryFolder();
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
-	@Test
-	public void test() {
-		GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(getClass().getResource("../fh_way_no_meta.osm").toString());
-		List<NodeCppOSM> nodes = new LinkedList<NodeCppOSM>();
-		nodes.add(graph.getNode(279266215l));
-		nodes.add(graph.getNode(279266248l));
-		nodes.add(graph.getNode(279266252l));
-		nodes.add(graph.getNode(279266215l));
-		
-		PathExtended<NodeCppOSM, EdgeCppOSM> path = new PathExtended<NodeCppOSM, EdgeCppOSM>(nodes);
-		exportPathToHTML(path, folder.getRoot());
-		assertTrue(true);
-	}
+    @Test
+    public void test() {
+        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(getClass().getResource("../fh_way_no_meta.osm").toString());
+        final List<NodeCppOSM> nodes = new LinkedList<>();
+        nodes.add(graph.getNode(279266215l));
+        nodes.add(graph.getNode(279266248l));
+        nodes.add(graph.getNode(279266252l));
+        nodes.add(graph.getNode(279266215l));
 
+        final PathExtended<NodeCppOSM, EdgeCppOSM> path = new PathExtended<>(nodes);
+        exportPathToHTML(path, folder.getRoot()); //
+        assertTrue(true); // TODO well, not that helpful. you could check if the file exists and some expected content is there -tbach
+    }
 
 }

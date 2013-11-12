@@ -26,17 +26,14 @@ import org.w3c.dom.NodeList;
 
 public class OsmImporter {
 
-	// FIXME: Redundant?
-    protected static int getDistance(final WayNodeOSM a, final WayNodeOSM b) {
-        // long diffLat = a.lat - b.lat;
-        // long diffLon = a.lon - b.lon;
-        // return (int) Math.sqrt(diffLat*diffLat+diffLon*diffLon);
+    // FIXME: Redundant?
+    protected static int getDistance(final WayNodeOSM a, final WayNodeOSM b) { // TODO is int the right return type?
         // Spherical Law of Cosines
-        return (int) (Math.acos((Math.sin(a.getLatitude()) * Math.sin(b.getLatitude())) + (Math.cos(a.getLatitude()) * Math.cos(b.getLatitude()) * Math.cos(b.getLongitude() - b.getLongitude()))) * 6367500);
+        return (int) (Math.acos((Math.sin(a.getLatitude()) * Math.sin(b.getLatitude())) + (Math.cos(a.getLatitude()) * Math.cos(b.getLatitude()) * Math.cos(b.getLongitude() - a.getLongitude()))) * 6367500);
     }
 
     protected static Document getDomFromFile(final String filename) {
-        final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance(); // TODO looks like this can be static? -tbach
         Document document = null;
         try {
             final DocumentBuilder builder = factory.newDocumentBuilder();
@@ -50,6 +47,7 @@ public class OsmImporter {
         return document;
     }
 
+    // TODO add javadoc with example -tbach
     protected static long get100NanoDegrees(final String parsed) {
         long value = 1;
         // different amount of decimal places (up to 7)
@@ -78,7 +76,7 @@ public class OsmImporter {
 
     protected GraphUndirected<NodeCppOSM, EdgeCppOSM> createNaive(final Document osmFile, final HashMap<String, WayNodeOSM> osmNodes) {
         // add all waypoints to the graph
-        final GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph = new GraphUndirected<NodeCppOSM, EdgeCppOSM>();
+        final GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph = new GraphUndirected<>();
         final Collection<WayNodeOSM> wayPoints = osmNodes.values();
         for (final WayNodeOSM wayPoint : wayPoints) {
             final NodeCppOSM newNode = new NodeCppOSM(wayPoint.getID());
@@ -88,7 +86,7 @@ public class OsmImporter {
         // connect them
         final Element documentElement = osmFile.getDocumentElement();
         final NodeList ways = documentElement.getElementsByTagName("way");
-        for (int i = 0; i < ways.getLength(); ++i) {
+        for (int i = 0; i < ways.getLength(); ++i) { // TODO this should be simplified, probably with submethods -tbach
             final NodeList childNodes = ways.item(i).getChildNodes();
             Long lastWaypoint = null;
             for (int j = 0; j < childNodes.getLength(); ++j) {
@@ -96,16 +94,16 @@ public class OsmImporter {
                 if (cNode.getNodeType() == Node.ELEMENT_NODE) {
                     final Element childNode = (Element) cNode;
                     if ((lastWaypoint == null) && (childNode.getNodeName() == "nd")) {
-                        lastWaypoint = Long.parseLong(childNode.getAttribute("ref"),10);
+                        lastWaypoint = Long.parseLong(childNode.getAttribute("ref"), 10);
                         if (!osmNodes.containsKey(lastWaypoint))
                             lastWaypoint = null;
                     } else if (childNode.getNodeName() == "nd") {
-                        final Long nodeId = Long.parseLong(childNode.getAttribute("ref"),10);
+                        final Long nodeId = Long.parseLong(childNode.getAttribute("ref"), 10);
                         final NodeCppOSM node = osmGraph.getNode(nodeId);
                         if (!(node == null)) {
                             final int distance = getDistance(osmNodes.get(lastWaypoint), osmNodes.get(childNode.getAttribute("ref")));
                             osmGraph.getNode(lastWaypoint).connectWithNodeAndWeigth(node, distance);
-                            lastWaypoint = Long.parseLong(childNode.getAttribute("ref"),10);
+                            lastWaypoint = Long.parseLong(childNode.getAttribute("ref"), 10);
                         }
                     }
                     // for non naive: check for roundabout
@@ -117,10 +115,11 @@ public class OsmImporter {
     }
 
     protected static GraphUndirected<NodeCppOSM, EdgeCppOSM> createFiltered(final Document osmFile, final HashMap<Long, WayNodeOSM> osmNodes) {
-        final GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph = new GraphUndirected<NodeCppOSM, EdgeCppOSM>();
+        final GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph = new GraphUndirected<>();
 
         final Element documentElement = osmFile.getDocumentElement();
         final NodeList ways = documentElement.getElementsByTagName("way");
+        // TODO this method should be simplified, probably with submethods -tbach
         for (int i = 0; i < ways.getLength(); ++i) { // for each way
             final NodeList childNodes = ways.item(i).getChildNodes();
             Long lastWaypoint = null;
@@ -134,7 +133,7 @@ public class OsmImporter {
                 if (cNode.getNodeType() == Node.ELEMENT_NODE) {
                     final Element childNode = (Element) cNode;
                     if (childNode.getNodeName() == "nd") {
-                        currentWaypoint = Long.parseLong(childNode.getAttribute("ref"),10);
+                        currentWaypoint = Long.parseLong(childNode.getAttribute("ref"), 10);
                         if (osmNodes.containsKey(currentWaypoint)) {
                             if (!(lastWaypoint == null))
                                 distance += getDistance(osmNodes.get(lastWaypoint), osmNodes.get(currentWaypoint));
@@ -151,14 +150,13 @@ public class OsmImporter {
                                 name = childNode.getAttribute("v");
                             }
                         }
-
                 }
             }
-            
-            
-            if (roundabout)
+
+            if (roundabout) {
                 distance = 0;
-            
+            }
+
             for (int j = 1; j < metaIds.size(); ++j) {
                 final Long startNodeId = metaIds.get(j - 1);
                 final Long lastNodeId = metaIds.get(j);
@@ -174,7 +172,8 @@ public class OsmImporter {
                 metaNodes.add(osmNodes.get(startNodeId));
                 metaNodes.add(osmNodes.get(lastNodeId));
                 // TODO: Handle way properly.
-                osmGraph.getNode(startNodeId).connectWithNodeWeigthAndMeta(osmGraph.getNode(lastNodeId), distance, new WayOSM(0, WayOSM.WayType.UNSPECIFIED, name, metaNodes));
+                osmGraph.getNode(startNodeId).connectWithNodeWeigthAndMeta(osmGraph.getNode(lastNodeId), distance,
+                        new WayOSM(0, WayOSM.WayType.UNSPECIFIED, name, metaNodes));
             }
         }
 
@@ -198,14 +197,15 @@ public class OsmImporter {
                 if (((Long)newMetaNodes.get(0).getID()).equals(currentNodeId)){
                     Collections.reverse(newMetaNodes);
                 }
-                newMetaNodes.remove(newMetaNodes.size()-1);
-                if (!((Long)metaNodes2.get(0).getID()).equals(currentNodeId)) {
+                newMetaNodes.remove(newMetaNodes.size() - 1);
+                if (!((Long) metaNodes2.get(0).getID()).equals(currentNodeId)) {
                     Collections.reverse(metaNodes2);
                 }
                 newMetaNodes.addAll(metaNodes2);
                 // add a new edge
                 // TODO: Handle way properly - what would name be in this context?
-                osmGraph.getNode(node1id).connectWithNodeWeigthAndMeta(osmGraph.getNode(node2id), edge1.getWeight() + edge2.getWeight(), new WayOSM(0, WayOSM.WayType.UNSPECIFIED, "unknown", newMetaNodes));
+                osmGraph.getNode(node1id).connectWithNodeWeigthAndMeta(osmGraph.getNode(node2id), edge1.getWeight() + edge2.getWeight(),
+                        new WayOSM(0, WayOSM.WayType.UNSPECIFIED, "unknown", newMetaNodes));
                 // remove the old node
                 node.removeAllEdges();
                 iteratorNodes.remove();
