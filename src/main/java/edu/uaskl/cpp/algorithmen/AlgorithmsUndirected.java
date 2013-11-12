@@ -89,110 +89,62 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     }
 
     public ArrayList<T> getPathBetween(final T node, final T destination) {
-        // TODO add at least the idea of what is happening here
-        // a good alternative would be a backtracking algorithm -tbach
 
         T node1 = node;
         int i = 0;
         graph.resetStates();
-        final ArrayList<T> pathList = new ArrayList<>();
+        
+        final ArrayList<T> pathList = new ArrayList<>();	//make an arraylist to write down the track
 
-        for (int j = 0; j < node.getEdges().size(); j++)
-            if (!node.getEdges().get(j).isVisited()) {
-                node1.getEdges().get(j).setVisited();
-                pathList.add(node1);
-                node1 = node1.getEdges().get(j).getRelatedNode(node1);
-                j = node.getEdges().size(); // TODO hu? do not modify the loop variable if you want to break. someone invented the break statement for this -tbach
-                // break;
-            }
-
+        pathList.add(node1);		// add startnode to list
+        
         if (node1.equals(destination))
-            return pathList;
+            return pathList;			//already finished
 
         do
-            if (!node1.getEdges().get(i).isVisited()) {
+        {
+            if (!node1.getEdges().get(i).isVisited()) 	//search the unvisited edge to the next node
+            {
                 node1.getEdges().get(i).setVisited();
                 pathList.add(node1);
-                node1 = node1.getEdges().get(i).getRelatedNode(node1);
-                i = 0;
-            } else {
+                node1 = node1.getEdges().get(i).getRelatedNode(node1);	//go to next node above edge that was not visited
+                i = 0;	
+            } 
+            else 
+            {
                 i++;
-                if (i == node1.getEdges().size()) {
-                    final T temp = pathList.get(pathList.size() - 2); // TODO can not follow what is happening here -tbach
-                    pathList.remove(pathList.size() - 1);
-                    pathList.remove(pathList.size() - 1);
-                    node1 = temp;
+                if (i == node1.getEdges().size()) 	// if all Edges form node1 are visited you are in an DeadEnd
+                {
+                    final T temp = pathList.get(pathList.size() - 2); // so go back to the last node that got unvisited edges (size-1 = actual node; size-2 = node you come from)
+                    pathList.remove(pathList.size() - 1);	// Remove the duplicated node in list
+                    pathList.remove(pathList.size() - 1);	// Remove the Dead End from list
+                    node1 = temp;							// go back to node that got unvisited edges (like iterative backtracking)
 
                     i = 0;
                 }
-
             }
-        while (!node1.equals(destination));
+        }while (!node1.equals(destination));	// do it till you have reached de destination
 
-        pathList.add(node1);
-
-        return pathList;
-
+        pathList.add(node1);		// add destination 
+        
+        return pathList;		//return the track
+        	
     }
 
-    /*
-    	public ArrayList<NodeOSM> getPathBetween(final NodeOSM start, final NodeOSM destination) {
-    		final ArrayList<NodeOSM> pathList = new ArrayList<>();
-
-    		graph.resetStates();
-    		searchForPathBetweenNodesWithArrayList(start, destination, pathList);
-
-
-    		return pathList;
-
-    	}
-
-    	private void searchForPathBetweenNodesWithArrayList(final NodeOSM actual, final NodeOSM destination, final ArrayList<NodeOSM> pathList)
-    	{
-    			if (actual.equals(destination))
-    			{		
-    				pathList.add(actual);
-    				return;
-    			}
-    				
-    			pathList.add(actual);
-    			
-    			for (int i = 0; i < actual.getEdges().size(); i++)
-    			{
-    				if (!actual.getEdges().get(i).isVisited())
-    				{
-    						
-    						actual.getEdges().get(i).setVisited();
-    						searchForPathBetweenNodesWithArrayList(actual.getEdges().get(i).getRelatedNode(actual),destination, pathList);
-    						return;
-    				}
-    				else if( i == actual.getEdges().size() - 1 )			
-    				{
-    					
-    					pathList.remove(pathList.size() - 1);
-    					NodeOSM temp = pathList.get(pathList.size() - 1);
-    					pathList.remove(pathList.size() - 1);
-    					searchForPathBetweenNodesWithArrayList(temp, destination, pathList);
-    					return;
-    				}
-    			}
-    		
-    		
-    	}
-    */
-
+ 
     // TODO add javadoc with example and/or choose a better name -tbach
-    public ArrayList<T> connectCircles(final ArrayList<T> big, final ArrayList<T> little) { // TODO should be private? -tbach
-        // TODO comments are good, but we agreed to use english ;) -tbach
-        // kleine wird zur großen hinzugefügt
+    public ArrayList<T> connectCircles(final ArrayList<T> big, final ArrayList<T> little) 
+    { // TODO should be private? -tbach //needs to be public for tests. alternative: set on private and remove test (dont know whats better) -debeck
+    	//insert list "little" into list "big"
         final ArrayList<T> list = new ArrayList<>();
 
-        for (int i = 0; i < big.size(); i++) {
-            list.add(big.get(i));
+        for (int i = 0; i < big.size(); i++) 
+        {
+            list.add(big.get(i));	//add all elements from big list...
 
-            if (big.get(i).equals(little.get(0))) {
-                list.remove(i); // damit doppeltes(aufgeschobenes) element
-                                // gelöscht wird
+            if (big.get(i).equals(little.get(0))) //...until little list could be inserted
+            {
+                list.remove(i); //remove doubled(shifted) element from big list because it will be added from little list again	
 
                 // TODO List provides a "addAll" method -tbach
                 for (int j = 0; j < little.size(); j++)
@@ -205,36 +157,37 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     }
 
     public ArrayList<T> getEulerianCircle(final T start) { // TODO should return a path -tbach
-        // TODO comments language -tbach
-        // TODO check if one exists, before you search one. or write in the javadoc that you expect a "good" input -tbach
-        T temp;
 
-        ArrayList<T> eulerianList = new ArrayList<>(getCircle(start));
-        // TODO you could check if this is already the whole graph -tbach
+    	if(!(isConnected() || hasEulerCircle()))
+    	{
+    		//throw exception?
+    		return new ArrayList<>();
+    	}
+    	
+    	T temp;
 
-        for (int i = 0; i < eulerianList.size(); i++) // gehe jedes element der
-                                                      // Liste durch
-        // TODO this comment is obvious.. -tbach
+        ArrayList<T> eulerianList = new ArrayList<>(getCircle(start));	//get the first subgraph
+        
+        if(graph.getNumberOfNodes()==1)
         {
-            temp = eulerianList.get(i);
+        	return eulerianList;
+        }
+
+        for (int i = 0; i < eulerianList.size(); i++) 
+        {
+            temp = eulerianList.get(i);						//go through every node of the first subgraph...
 
             for (int j = 0; j < temp.getEdges().size(); j++)
-                if (!temp.getEdges().get(j).isVisited()) // wenn eine kante noch
-                                                         // nicht besucht
-                                                         // wurde...
-                // TODO this comment is obvious, too. Do not write the code again in comments -tbach
+                if (!temp.getEdges().get(j).isVisited())	//... and have a look if there could be an other subgraph
                 {
-                    final ArrayList<T> underGraph = new ArrayList<>(getCircle(temp));
-                    // TODO subGraph would be a better name -tbach
+                    final ArrayList<T> subGraph = new ArrayList<>(getCircle(temp));	//so get that new subgraph...
 
-                    eulerianList = connectCircles(eulerianList, underGraph);
+                    eulerianList = connectCircles(eulerianList, subGraph);	//...and add it to the big list
 
                     i = 0; // beginne nochmal von vorn zu suchen
                     // TODO not a good style to change the loop variable.
                 }
-
         }
-
         return eulerianList;
     }
 
@@ -243,27 +196,31 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
         int i = 0;
 
         final ArrayList<T> pathList = new ArrayList<>();
-        // TODO this can be simplified (and some comments with the idea could be added -tbach
+ 
+        //add the startnode to the list and go to the next (connected) node. TODO Will be changed at optimizationstage
         for (int j = 0; j < node.getEdges().size(); j++)
-            if (!node.getEdges().get(j).isVisited()) {
+            if (!node.getEdges().get(j).isVisited()) 
+            {
                 node1.getEdges().get(j).setVisited();
                 pathList.add(node1);
                 node1 = node1.getEdges().get(j).getRelatedNode(node1);
 
                 break;
             }
-
+        
+        
         do
-            if (!node1.getEdges().get(i).isVisited()) {
+            if (!node1.getEdges().get(i).isVisited()) 	//	search connection to next node
+            {
                 node1.getEdges().get(i).setVisited();
-                pathList.add(node1);
-                node1 = node1.getEdges().get(i).getRelatedNode(node1);
+                pathList.add(node1);							//add node to list...
+                node1 = node1.getEdges().get(i).getRelatedNode(node1);	//... and go to next/connected node
                 i = 0;
             } else
                 i++;
-        while (!node1.equals(node));
+        while (!node1.equals(node)); // go through the graph till you come back to the beginning (becaus its a circle)
 
-        pathList.add(node1);
+        pathList.add(node1);	//add last node
 
         return pathList;
 

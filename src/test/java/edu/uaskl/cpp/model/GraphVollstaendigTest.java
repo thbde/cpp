@@ -142,7 +142,7 @@ public class GraphVollstaendigTest { // TODO this is not the right class for all
 
         assertThat(pathList).startsWith(node0);
         assertThat(pathList).endsWith(node8);
-        // TODO should check length/size -tbach
+        assertThat(pathList.size()<=graph.getGetNumberOfEdges());
     }
 
     @Test
@@ -183,7 +183,7 @@ public class GraphVollstaendigTest { // TODO this is not the right class for all
 
         assertThat(list).startsWith(big.get(0));
         assertThat(list).endsWith(big.get(0));
-        // TODO should check length/size -tbach
+        assertThat(list.size()-1 == big.size() + little.size());	//-1 because (121=3 and 232=3)=6 should be 12321=5
     }
 
     @Test
@@ -219,12 +219,12 @@ public class GraphVollstaendigTest { // TODO this is not the right class for all
         }
         assertThat(odd).isFalse();
         assertThat(eulerianList.get(0).equals(eulerianList.get(eulerianList.size() - 1))).isTrue();
-        // TODO what about: assertThat(eulerianList).endsWith(eulerianList.get(0)); -tbach
-        // TODO should check length/size -tbach
+        assertThat(eulerianList).endsWith(eulerianList.get(0));
+        assertThat(eulerianList.size()==graph.getGetNumberOfEdges());
     }
 
     @Test
-    public void getPathBetweenIterativBig() {
+    public void getPathBetween() {
 
         final GraphUndirected<NodeCpp, EdgeCpp> graph = new GraphUndirected<>();
 
@@ -259,7 +259,7 @@ public class GraphVollstaendigTest { // TODO this is not the right class for all
 
         assertThat(pathList).startsWith(node0);
         assertThat(pathList).endsWith(node8);
-        // TODO should check length/size -tbach
+        assertThat(pathList.size()<=graph.getGetNumberOfEdges());
     }
 
     // TODO should add negative tests -tbach
