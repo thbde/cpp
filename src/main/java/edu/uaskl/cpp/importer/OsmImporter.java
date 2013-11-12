@@ -47,17 +47,6 @@ public class OsmImporter {
         return document;
     }
 
-    // TODO add javadoc with example -tbach
-    protected static long get100NanoDegrees(final String parsed) {
-        long value = 1;
-        // different amount of decimal places (up to 7)
-        final String decimalPlaces = parsed.split("\\.")[1];
-        for (int i = 0; i < (7 - decimalPlaces.length()); ++i)
-            value *= 10;
-        value *= Long.parseLong(parsed.replace(".", ""), 10);
-
-        return value;
-    }
 
     protected static HashMap<Long, WayNodeOSM> getOsmNodes(final Document dom) {
         final HashMap<Long, WayNodeOSM> osmNodes = new HashMap<>();

@@ -27,14 +27,6 @@ public class OsmImporterTest {
     }
 
     @Test
-    public void testNanoSec() {
-        final long lat = get100NanoDegrees("49.2572968");
-        final long lon = get100NanoDegrees("49.259868");
-        assertEquals("nanoseconds parser does not work", lat, 492572968l); // TODO use assertThat -tbach
-        assertEquals("nanoseconds parser does not work", lon, 492598680l);
-    }
-
-    @Test
     public void testGetOsmNodes() {
         final Document dom = getDomFromFile(getClass().getResource("../fh_way_no_meta.osm").toString());
         final HashMap<Long, WayNodeOSM> map = getOsmNodes(dom);
