@@ -1,16 +1,24 @@
 package edu.uaskl.cpp.algorithmen;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 
 import edu.uaskl.cpp.model.edge.EdgeExtended;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
 import edu.uaskl.cpp.model.node.NodeExtended;
+import edu.uaskl.cpp.model.path.PathExtended;
 
 // Example, can be changed
 
 public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeExtended<T, V>> implements Algorithms<T, V> {
 
     private final GraphUndirected<T, V> graph;
+    private double[][] dist;
+    private Integer[][] next;
+    private HashMap<Long,Integer> id2index;
+    private HashMap<Integer,Long> index2id;
+    private boolean preprocessed = false;
 
     public AlgorithmsUndirected(final GraphUndirected<T, V> graph) {
         this.graph = graph;
@@ -215,4 +223,81 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 
     }
 
+    private void createDistNext() {
+    	//based on Floyd-Warshall
+    	id2index = new HashMap<>();
+    	dist = new double[graph.getNumberOfNodes()][graph.getNumberOfNodes()];
+    	next = new Integer[graph.getNumberOfNodes()][graph.getNumberOfNodes()];
+    	// create the translation from id to index
+    	Collection<T> nodes = graph.getNodes();
+    	int index = 0;
+    	for(T node : nodes) {
+    		index2id.put(index, node.getId());
+    		id2index.put(node.getId(), index);
+    		++index;
+    	}
+    	// initialize the distances
+    	for(int i = 0; i < dist.length; ++i) {
+    		for(int j = 0; j < dist.length; ++j) {
+    			dist[i][j] = Double.POSITIVE_INFINITY;
+    		}
+    		dist[i][i] = 0;
+    	}
+    	for(T node : nodes) {
+    		for(V edge : node.getEdges()) {
+    			dist[id2index.get(edge.getNode1().getId())][id2index.get(edge.getNode2().getId())] = edge.getWeight();
+    		}
+    	}
+    	// create the matrix
+    	for(int k = 0; k < dist.length; ++k) {
+    		for(int i = 0; i < dist.length; ++i) {
+    			for(int j = 0; j < dist.length; ++j) {
+    				if(dist[i][k] + dist[k][j] < dist[i][j]) {
+    					dist[i][j] = dist[i][k] + dist[k][j];
+    					next[i][j] = k;
+    				}
+    			}
+    		}
+    	}
+    	preprocessed = true;
+    }
+    
+    private PathExtended<T> getShortestPath(T node1, T node2){
+    	if(!preprocessed) {
+    		createDistNext();
+    	}
+    	ArrayList<T> pathList = new ArrayList<T>();
+    	if(dist[id2index.get(node1.getId())][id2index.get(node2.getId())] == Double.POSITIVE_INFINITY){
+    		throw new IllegalStateException("no path");
+    	}
+    	Integer temp = next[id2index.get(node1.getId())][id2index.get(node2.getId())];
+    	if(temp == null){
+    		pathList.add(node1);
+    		pathList.add(node2);
+    		return new PathExtended<T>(pathList);
+    	}
+    	else {
+    		PathExtended<T> path1 = getShortestPath(node1,graph.getNode(index2id.get(temp)));
+    		PathExtended<T> path2 = getShortestPath(graph.getNode(index2id.get(temp)),node2);
+    		pathList.addAll(path1.getNodes());
+    		pathList.remove(pathList.size()-1); //prevent duplicate
+    		pathList.addAll(path2.getNodes());
+    	}
+    	
+    	return new PathExtended<T>(pathList);
+    }
+    
+    public void matchPerfect() {
+    	if(!preprocessed) {
+    		createDistNext();
+    	}
+    	// Find list of all nodes with uneven degree
+    	
+    	// match their shortest path
+    	
+    	// get the paths
+    	
+    	// and create them
+    }
+    
 }
