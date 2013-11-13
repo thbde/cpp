@@ -15,11 +15,11 @@ public class EdgeCppOSM extends EdgeExtended<NodeCppOSM, EdgeCppOSM> implements 
         super(node1, node2);
     }
 
-    public EdgeCppOSM(final NodeCppOSM node1, final NodeCppOSM node2, final int weight) {
+    public EdgeCppOSM(final NodeCppOSM node1, final NodeCppOSM node2, final double weight) {
         super(node1, node2, weight);
     }
 
-    public EdgeCppOSM(NodeCppOSM node1, NodeCppOSM node2, int weight,
+    public EdgeCppOSM(NodeCppOSM node1, NodeCppOSM node2, double weight,
 			WayOSM metadata) {
     	super(node1, node2, weight);
         this.metadata=metadata;

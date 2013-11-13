@@ -22,5 +22,27 @@
          map.addLayer(mapLayer);
        </script>
        <script src="overlay.js"></script>
+       <script type="text/javascript">
+         "use strict";
+         function createSegment(pointList,index){
+             var colors = ['#b1563f','#b4693f','#b67b3f','#b98f3f','#bba33f','#beb83f','#b2c040','#a0c141','#8ec242','#7cc344'];
+             console.log(pointList);
+             var line = L.polyline(pointList,{weight:3,opacity:1,color:colors[index % colors.length]});
+             line.addTo(map);
+             line.setText('► '+(index+1), {repeat: true,offset: 0,attributes: {fill:'black'}});
+             return line;
+         };
+         function updateInLoop() {
+             var i = segments.length;
+             var displayedLine = createSegment(segments[0],i);
+             return function up(){
+                   i = (i+1)% segments.length;
+                   map.removeLayer(displayedLine);
+                   displayedLine = createSegment(segments[i],i);
+             }
+         }
+         var update = updateInLoop();
+         setInterval(update,500);
+       </script
     </body>
 </html>

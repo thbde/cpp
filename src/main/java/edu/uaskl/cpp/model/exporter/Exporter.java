@@ -16,21 +16,8 @@ import edu.uaskl.cpp.model.path.PathExtended;
 public class Exporter {
 	
 	private static String createSegment(List<WayNodeOSM>metaNodes,int id){
-		final List<String> colors = new ArrayList<String>();
-		colors.add("b1563f");
-		colors.add("b4693f");
-		colors.add("b67b3f");
-		colors.add("b98f3f");
-		colors.add("bba33f");
-		colors.add("beb83f");
-		colors.add("b2c040");
-		colors.add("a0c141");
-		colors.add("8ec242");
-		colors.add("7cc344");
 		final StringBuilder output= new StringBuilder();
-		output.append("var line");
-		output.append(id);
-		output.append(" = L.polyline([[");
+		output.append("[[");
 		output.append(metaNodes.get(0).getLatitude());
 		output.append(",");
 		output.append(metaNodes.get(0).getLongitude());
@@ -42,13 +29,7 @@ public class Exporter {
 			output.append(metaNodes.get(i).getLongitude());
 			output.append("]");
 		}
-		output.append("], {weight: 3,opacity: 1,color:'#");
-		output.append(colors.get(id%colors.size()));
-		output.append("'}).addTo(map);\nline");
-		output.append(id);
-		output.append(".setText('\u25BA ");
-		output.append(id);
-		output.append(" ', {repeat: false,offset: 0,attributes: {fill:'black'}});\n");
+		output.append("]");
 		return output.toString();
 	}
 	
@@ -58,6 +39,8 @@ public class Exporter {
 		NodeCppOSM previousNode = nodes.get(0);
 		NodeCppOSM currentNode;
 		try (Writer fw = new FileWriter( new File(folder, "overlay.js" ));) {
+			fw.write("var segments = [");;
+			boolean first = true;
 			for(int index = 1; index < nodes.size() ; ++index){
 				currentNode = nodes.get(index);
 				//TODO use unvisited edges
@@ -66,10 +49,17 @@ public class Exporter {
 				if (((Long)metaNodes.get(0).getID()).equals(currentNode.getId())){
 					Collections.reverse(metaNodes);
 				}
+				if(first){
+					first = false;
+				}
+				else {
+					fw.write(",");
+				}
 				fw.write(createSegment(metaNodes,index));
 				fw.append(System.lineSeparator());
 				previousNode = currentNode;
 			}
+			fw.write("];");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

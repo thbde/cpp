@@ -24,10 +24,11 @@ public class ExportTest {
     public void test() {
         final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(getClass().getResource("../fh_way_no_meta.osm").toString());
         final List<NodeCppOSM> nodes = new LinkedList<>();
-        nodes.add(graph.getNode(279266215l));
-        nodes.add(graph.getNode(279266248l));
-        nodes.add(graph.getNode(279266252l));
-        nodes.add(graph.getNode(279266215l));
+        nodes.add(graph.getNode(280959081l));
+        nodes.add(graph.getNode(267970528l));
+        nodes.add(graph.getNode(267969715l));
+        nodes.add(graph.getNode(267969713l));
+        nodes.add(graph.getNode(280959081l));
 
         final PathExtended<NodeCppOSM> path = new PathExtended<>(nodes);
         exportPathToHTML(path, folder.getRoot()); //

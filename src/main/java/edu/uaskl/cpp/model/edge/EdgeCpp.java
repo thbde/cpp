@@ -16,7 +16,7 @@ public class EdgeCpp extends EdgeExtended<NodeCpp, EdgeCpp> {
         super(node1, node2);
     }
 
-    public EdgeCpp(final NodeCpp node1, final NodeCpp node2, final int weight) {
+    public EdgeCpp(final NodeCpp node1, final NodeCpp node2, final double weight) {
         super(node1, node2, weight);
     }
 }

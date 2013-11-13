@@ -9,7 +9,7 @@ osmosis --read-pbf fh.osm.pbf \
         --tf reject-relations type=election,waterway \
         --tf reject-nodes highway=bus_stop \
         --tf reject-nodes amenity=* \
-        --tf reject-ways highway=footway,steps,path,track,cycleway \
+        --tf reject-ways highway=footway,steps,path,track,cycleway,service \
         --tf reject-relations boundary=* \
         --tf reject-ways area=yes \
         --used-node \

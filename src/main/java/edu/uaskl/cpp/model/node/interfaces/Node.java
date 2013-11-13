@@ -24,7 +24,7 @@ public interface Node<T extends Node<T, V>, V extends Edge<T, V>> extends Compar
     public Node<T, V> connectWithNode(T otherNode);
 
     /** Only for weighted graphs */
-    public Node<T, V> connectWithNodeAndWeigth(T otherNode, int weight);
+    public Node<T, V> connectWithNodeAndWeigth(T otherNode, double weight);
 
     /** Gets an optional name representation */
     public String getName();

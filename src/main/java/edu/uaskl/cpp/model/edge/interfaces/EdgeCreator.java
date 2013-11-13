@@ -8,5 +8,5 @@ import edu.uaskl.cpp.model.node.interfaces.Node;
  * @author tbach
  */
 public interface EdgeCreator<T extends Node<T, V>, V extends Edge<T, V>> {
-    public V create(final T node1, final T node2, final int weight);
+    public V create(final T node1, final T node2, final double weight);
  }
