@@ -62,20 +62,9 @@
   <node id="267970528" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2582114" lon="7.3571544"/>
   <node id="267970544" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2601204" lon="7.3579332"/>
   <node id="276083875" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2630162" lon="7.362019"/>
-  <node id="276083949" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2631305" lon="7.3616461"/>
-  <node id="276083987" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2636731" lon="7.3620364"/>
-  <node id="276083988" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2637405" lon="7.362065"/>
-  <node id="276083989" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2638749" lon="7.3620564"/>
-  <node id="276083990" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2639589" lon="7.362065"/>
-  <node id="276083991" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2640502" lon="7.3621145"/>
-  <node id="276083992" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2641118" lon="7.362166"/>
-  <node id="276083993" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2642118" lon="7.3622525"/>
-  <node id="276084003" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2641681" lon="7.361991"/>
   <node id="276158613" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2653291" lon="7.3633172"/>
-  <node id="276158948" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2648404" lon="7.3627732"/>
   <node id="276159335" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2619764" lon="7.3622394"/>
   <node id="276159344" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2647267" lon="7.3649283"/>
-  <node id="276171816" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2630435" lon="7.36193"/>
   <node id="276174803" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2624015" lon="7.3609652"/>
   <node id="276222584" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2655329" lon="7.3628458"/>
   <node id="276222585" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2657641" lon="7.3624407"/>
@@ -197,16 +186,9 @@
   <node id="280959971" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2581254" lon="7.3567732"/>
   <node id="280959972" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2581538" lon="7.3568583"/>
   <node id="280959973" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.258189" lon="7.3569999"/>
-  <node id="283905460" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2633189" lon="7.3610195"/>
-  <node id="283905828" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2631793" lon="7.3614746"/>
-  <node id="283907694" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2625518" lon="7.3610269"/>
   <node id="347608705" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2612568" lon="7.3607452"/>
   <node id="347613302" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2619736" lon="7.3612285"/>
   <node id="347613303" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2614557" lon="7.3608489"/>
-  <node id="347613342" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2606433" lon="7.358678"/>
-  <node id="347613351" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2618293" lon="7.3593113"/>
-  <node id="347617302" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2604092" lon="7.3584844"/>
-  <node id="347617303" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2603853" lon="7.3582696"/>
   <node id="347617305" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2600802" lon="7.3581901"/>
   <node id="412141572" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2595905" lon="7.3641444"/>
   <node id="412141573" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2595422" lon="7.3642106"/>
@@ -236,43 +218,9 @@
   <node id="421423064" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2622165" lon="7.361241"/>
   <node id="421423065" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2621643" lon="7.3612551"/>
   <node id="421423066" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2621269" lon="7.3612912"/>
-  <node id="421425767" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2613222" lon="7.3605355"/>
-  <node id="421425769" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2614418" lon="7.360159"/>
-  <node id="421427944" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2615233" lon="7.3602184"/>
-  <node id="421427945" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2616948" lon="7.360375"/>
-  <node id="421427946" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2617561" lon="7.3604759"/>
-  <node id="421427947" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.262314" lon="7.3609032"/>
-  <node id="421427948" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2623431" lon="7.3609255"/>
-  <node id="421427951" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2619304" lon="7.3589958"/>
-  <node id="421427952" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2619854" lon="7.3589111"/>
-  <node id="421427953" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2620407" lon="7.3588827"/>
-  <node id="421427954" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2621254" lon="7.3588939"/>
-  <node id="421427955" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2627717" lon="7.359271"/>
-  <node id="421427956" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.262866" lon="7.3594605"/>
-  <node id="421427957" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2628772" lon="7.3595549"/>
-  <node id="421427958" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2628772" lon="7.3597437"/>
-  <node id="421427959" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2628604" lon="7.3598553"/>
-  <node id="421427960" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2628324" lon="7.3599411"/>
-  <node id="421427961" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2627819" lon="7.3600098"/>
-  <node id="421427962" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2627315" lon="7.3600441"/>
-  <node id="421427963" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2623327" lon="7.3597115"/>
-  <node id="421427964" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2623901" lon="7.3597496"/>
-  <node id="421427965" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2624436" lon="7.3597828"/>
-  <node id="421427966" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.262451" lon="7.3598574"/>
-  <node id="421427967" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2624795" lon="7.3599411"/>
-  <node id="421427968" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2625579" lon="7.3600098"/>
-  <node id="421427969" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2626307" lon="7.3600441"/>
-  <node id="421427970" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2626867" lon="7.3600527"/>
-  <node id="421427971" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2618488" lon="7.3599343"/>
-  <node id="421427972" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2618745" lon="7.3598553"/>
-  <node id="421427973" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2625299" lon="7.3603617"/>
-  <node id="421427974" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2625015" lon="7.3604473"/>
   <node id="937540588" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2598901" lon="7.3600141"/>
   <node id="937540591" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2651461" lon="7.3637051"/>
   <node id="937540595" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2650359" lon="7.3639127"/>
-  <node id="1204182548" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2640727" lon="7.3621333"/>
-  <node id="1204182554" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2642722" lon="7.3620728"/>
-  <node id="1276745810" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2618828" lon="7.3591155"/>
   <node id="1276745845" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.259737" lon="7.3598672"/>
   <node id="1276745852" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2597061" lon="7.359954"/>
   <node id="1276745867" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.259816" lon="7.3598335"/>
@@ -295,21 +243,8 @@
   <node id="1277469835" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2628062" lon="7.3629249"/>
   <node id="1277469848" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2648872" lon="7.3643842"/>
   <node id="1277469850" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2643717" lon="7.3643241"/>
-  <node id="1279204166" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.26604" lon="7.3622927"/>
-  <node id="1279204170" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2660148" lon="7.3620157"/>
-  <node id="1279204182" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2660148" lon="7.3626749"/>
-  <node id="1279204187" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2659896" lon="7.36244"/>
-  <node id="1279204188" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2666966" lon="7.3619281"/>
-  <node id="1279204189" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2660537" lon="7.3620859"/>
-  <node id="1279204191" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2658981" lon="7.3619491"/>
-  <node id="1279204205" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2660674" lon="7.3627731"/>
   <node id="1279204207" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2644285" lon="7.3643954"/>
-  <node id="1279204209" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2659805" lon="7.3625171"/>
-  <node id="1279204211" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2660583" lon="7.3621875"/>
-  <node id="1279204219" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2659553" lon="7.3619666"/>
-  <node id="1279204225" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2662596" lon="7.3629589"/>
   <node id="1279204226" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2647453" lon="7.3645619"/>
-  <node id="1279204232" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2659896" lon="7.3626048"/>
   <node id="1516297004" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2622613" lon="7.3624476"/>
   <node id="1534460315" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2590383" lon="7.3599151"/>
   <node id="1534460316" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2600779" lon="7.3600077"/>
@@ -335,27 +270,7 @@
   <node id="2187360627" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2655064" lon="7.3647451"/>
   <node id="2187360662" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2653261" lon="7.3646485"/>
   <node id="2187377519" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2628389" lon="7.3607216"/>
-  <node id="2187377521" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2647415" lon="7.3603114"/>
-  <node id="2187377522" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2627745" lon="7.3605473"/>
-  <node id="2187377526" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2647069" lon="7.3603139"/>
   <node id="2187377531" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2629284" lon="7.3607545"/>
-  <node id="2187377535" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2650552" lon="7.3611132"/>
-  <node id="2187377541" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2645966" lon="7.3602308"/>
-  <node id="2187377557" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2647888" lon="7.3603328"/>
-  <node id="2187377560" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2637512" lon="7.3600967"/>
-  <node id="2187377571" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2646561" lon="7.3603622"/>
-  <node id="2187377573" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.267495" lon="7.365268"/>
-  <node id="2187377581" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2643936" lon="7.3605553"/>
-  <node id="2187377584" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2633871" lon="7.359925"/>
-  <node id="2187377586" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2628252" lon="7.3606197"/>
-  <node id="2187377597" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2631246" lon="7.3601235"/>
-  <node id="2187377599" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.264876" lon="7.3609621"/>
-  <node id="2187377605" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2658113" lon="7.3641978"/>
-  <node id="2187377610" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2673445" lon="7.3656596"/>
-  <node id="2187377612" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2645353" lon="7.3601852"/>
-  <node id="2187377613" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2632453" lon="7.3599652"/>
-  <node id="2187377614" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2673879" lon="7.3651528"/>
-  <node id="2187377615" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2629565" lon="7.3599143"/>
   <way id="23987089" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
     <nd ref="262205001"/>
     <nd ref="278906064"/>
@@ -583,35 +498,6 @@
     <tag k="oneway" v="yes"/>
     <tag k="surface" v="asphalt"/>
   </way>
-  <way id="25337989" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="276083875"/>
-    <nd ref="276171816"/>
-    <nd ref="276083949"/>
-    <nd ref="283905828"/>
-    <nd ref="283905460"/>
-    <nd ref="276222610"/>
-    <tag k="highway" v="service"/>
-  </way>
-  <way id="25338028" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="276083949"/>
-    <nd ref="276083987"/>
-    <nd ref="276083988"/>
-    <nd ref="276083989"/>
-    <nd ref="276083990"/>
-    <nd ref="276083991"/>
-    <nd ref="1204182548"/>
-    <nd ref="276083992"/>
-    <nd ref="276083993"/>
-    <nd ref="276158948"/>
-    <nd ref="276158613"/>
-    <tag k="highway" v="service"/>
-  </way>
-  <way id="25338030" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="276083992"/>
-    <nd ref="276084003"/>
-    <tag k="highway" v="service"/>
-    <tag k="service" v="parking_aisle"/>
-  </way>
   <way id="25342805" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
     <nd ref="421423053"/>
     <nd ref="276159335"/>
@@ -807,47 +693,6 @@
     <tag k="oneway" v="yes"/>
     <tag k="surface" v="asphalt"/>
   </way>
-  <way id="26014641" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="283905828"/>
-    <nd ref="283907694"/>
-    <tag k="highway" v="service"/>
-  </way>
-  <way id="31261988" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="421427944"/>
-    <nd ref="347613351"/>
-    <nd ref="1276745810"/>
-    <nd ref="421427951"/>
-    <nd ref="421427952"/>
-    <nd ref="421427953"/>
-    <nd ref="421427954"/>
-    <nd ref="421427955"/>
-    <nd ref="421427956"/>
-    <nd ref="421427957"/>
-    <nd ref="421427958"/>
-    <nd ref="421427959"/>
-    <nd ref="421427960"/>
-    <nd ref="421427961"/>
-    <nd ref="421427962"/>
-    <tag k="highway" v="service"/>
-  </way>
-  <way id="31262364" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="347608705"/>
-    <nd ref="421425767"/>
-    <nd ref="421425769"/>
-    <nd ref="421427944"/>
-    <nd ref="421427945"/>
-    <nd ref="421427946"/>
-    <nd ref="421427947"/>
-    <nd ref="421427948"/>
-    <tag k="highway" v="service"/>
-  </way>
-  <way id="31262457" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="347613342"/>
-    <nd ref="347617302"/>
-    <nd ref="347617303"/>
-    <nd ref="347617305"/>
-    <tag k="highway" v="service"/>
-  </way>
   <way id="35136421" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
     <nd ref="412141572"/>
     <nd ref="412141573"/>
@@ -858,51 +703,6 @@
     <tag k="highway" v="residential"/>
     <tag k="name" v="Rudolf-Nebel-Weg"/>
     <tag k="surface" v="paving_stones"/>
-  </way>
-  <way id="36072970" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="347613351"/>
-    <nd ref="421427963"/>
-    <nd ref="421427964"/>
-    <nd ref="421427965"/>
-    <nd ref="421427966"/>
-    <nd ref="421427967"/>
-    <nd ref="421427968"/>
-    <nd ref="421427969"/>
-    <nd ref="421427970"/>
-    <nd ref="421427962"/>
-    <tag k="highway" v="service"/>
-  </way>
-  <way id="36072971" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="421427945"/>
-    <nd ref="421427971"/>
-    <nd ref="421427972"/>
-    <nd ref="421427973"/>
-    <nd ref="421427974"/>
-    <nd ref="421427948"/>
-    <tag k="highway" v="service"/>
-  </way>
-  <way id="104371972" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="276083993"/>
-    <nd ref="1204182554"/>
-    <tag k="highway" v="service"/>
-    <tag k="service" v="parking_aisle"/>
-  </way>
-  <way id="112574224" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="276222587"/>
-    <nd ref="1279204191"/>
-    <nd ref="1279204219"/>
-    <nd ref="1279204170"/>
-    <nd ref="1279204189"/>
-    <nd ref="1279204211"/>
-    <nd ref="1279204166"/>
-    <nd ref="1279204187"/>
-    <nd ref="1279204209"/>
-    <nd ref="1279204232"/>
-    <nd ref="1279204182"/>
-    <nd ref="1279204205"/>
-    <nd ref="1279204225"/>
-    <nd ref="1279204188"/>
-    <tag k="highway" v="service"/>
   </way>
   <way id="140045955" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
     <nd ref="260070573"/>
@@ -962,56 +762,6 @@
     <nd ref="2187360584"/>
     <tag k="highway" v="residential"/>
     <tag k="name" v="Missouristraße"/>
-  </way>
-  <way id="208444328" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="279266252"/>
-    <nd ref="2187377605"/>
-    <tag k="highway" v="service"/>
-  </way>
-  <way id="208444329" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="421427973"/>
-    <nd ref="2187377522"/>
-    <nd ref="2187377586"/>
-    <nd ref="2187377519"/>
-    <tag k="highway" v="service"/>
-    <tag k="oneway" v="yes"/>
-  </way>
-  <way id="208444332" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="2187377613"/>
-    <nd ref="2187377615"/>
-    <tag k="highway" v="service"/>
-  </way>
-  <way id="208444333" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="279266215"/>
-    <nd ref="2187377610"/>
-    <nd ref="2187377573"/>
-    <nd ref="2187377614"/>
-    <tag k="highway" v="service"/>
-  </way>
-  <way id="208444336" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="2187377599"/>
-    <nd ref="2187377571"/>
-    <nd ref="2187377541"/>
-    <nd ref="2187377612"/>
-    <tag k="highway" v="service"/>
-  </way>
-  <way id="208444339" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="2187377571"/>
-    <nd ref="2187377526"/>
-    <nd ref="2187377521"/>
-    <nd ref="2187377557"/>
-    <tag k="highway" v="service"/>
-  </way>
-  <way id="208444343" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="2187377531"/>
-    <nd ref="2187377597"/>
-    <nd ref="2187377613"/>
-    <nd ref="2187377584"/>
-    <nd ref="2187377560"/>
-    <nd ref="2187377581"/>
-    <nd ref="2187377599"/>
-    <nd ref="2187377535"/>
-    <tag k="highway" v="service"/>
   </way>
   <relation id="1476112" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
     <member type="way" ref="23987089" role="from"/>

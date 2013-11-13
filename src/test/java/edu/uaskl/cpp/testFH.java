@@ -25,9 +25,10 @@ public class testFH {
 
     @Test
     public void test() throws Exception {
-        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(getClass().getResource("fh_way_no_meta.osm").toString());
+//        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(getClass().getResource("fh_way_no_meta.osm").toString());
 //        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(getClass().getResource("testDiamond.osm").toString());
-        assertTrue("FH graph should be connected", graph.getAlgorithms().isConnected());
+        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importZW();
+    	assertTrue("FH graph should be connected", graph.getAlgorithms().isConnected());
         assertFalse("FH graph has no Euler circle", graph.getAlgorithms().hasEulerCircle());
         assertThat(graph.getNumberOfNodes()).isGreaterThan(0);
         graph.getAlgorithms().matchPerfect();
