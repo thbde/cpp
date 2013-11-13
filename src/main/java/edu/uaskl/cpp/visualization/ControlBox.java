@@ -4,25 +4,21 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.awt.GridLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.LayoutManager;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 
-//import edu.uci.ics.jung.algorithms.layout.KKLayout;
-//import edu.uci.ics.jung.algorithms.layout.FRLayout;
 import edu.uci.ics.jung.algorithms.layout.ISOMLayout;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.SparseMultigraph;
-//import edu.uci.ics.jung.graph.util.EdgeType;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.control.DefaultModalGraphMouse;
 import edu.uci.ics.jung.visualization.decorators.EdgeShape;
@@ -31,20 +27,20 @@ import edu.uaskl.cpp.model.node.NodeCppOSM;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
 import edu.uaskl.cpp.importer.OsmImporter;
 
-public class ControlBox extends Box {
+public class ControlBox extends JPanel {
 
     private static final long serialVersionUID = -626996308310236812L;
 
     private final VisualizationViewer<Integer, Integer> visViewer;
 
     public ControlBox(final VisualizationViewer<Integer, Integer> viewer) {
-        super(BoxLayout.Y_AXIS);
-
+        super((LayoutManager) new FlowLayout(FlowLayout.LEFT));
+        
         visViewer = viewer;
 
-        add(createEdgeTypeRadioButtons());
-        add(createEdgeLabelAlignmentCheckBox());
         add(createMouseInteractionComboBox());
+        add(createEdgeTypeComboBox());
+        add(createEdgeLabelAlignmentCheckBox());
 
         drawGraph();
     }
@@ -89,44 +85,37 @@ public class ControlBox extends Box {
     /**
      * Radio buttons for choosing an edge interpolation.
      */
-    private JPanel createEdgeTypeRadioButtons() {
-        final ButtonGroup edgeTypeGroup = new ButtonGroup();
+    private JPanel createEdgeTypeComboBox() {
+        final String[] edgeTypes = { "Line", "Quad Curve" };
+        final JComboBox<String> edgeTypeComboBox = new JComboBox<>();
+        edgeTypeComboBox.setPreferredSize(new Dimension(150, 28));
 
-        final JRadioButton edgeTypeLineRadio = new JRadioButton("Line");
-
-        edgeTypeLineRadio.addItemListener(new ItemListener() {
-            @Override
+        edgeTypeComboBox.addItem(edgeTypes[0]);
+        edgeTypeComboBox.addItem(edgeTypes[1]);
+        
+        edgeTypeComboBox.addItemListener(new ItemListener() {
             public void itemStateChanged(final ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    visViewer.getRenderContext().setEdgeShapeTransformer(new EdgeShape.Line<Integer, Integer>());
-                    visViewer.repaint();
+                    if ((String)e.getItem() == edgeTypes[0]) {
+                        visViewer.getRenderContext().setEdgeShapeTransformer(new EdgeShape.Line<Integer, Integer>());
+                        visViewer.repaint();
+                    }
+                    else if ((String)e.getItem() == edgeTypes[1]) {
+                        visViewer.getRenderContext().setEdgeShapeTransformer(new EdgeShape.QuadCurve<Integer, Integer>());
+                        visViewer.repaint();
+                    }
                 }
             }
         });
 
-        final JRadioButton edgeTypeQuadRadio = new JRadioButton("Quad Curve");
-
-        edgeTypeQuadRadio.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(final ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    visViewer.getRenderContext().setEdgeShapeTransformer(new EdgeShape.QuadCurve<Integer, Integer>());
-                    visViewer.repaint();
-                }
-            }
-        });
-
-        edgeTypeQuadRadio.setSelected(true);
-
-        edgeTypeGroup.add(edgeTypeLineRadio);
-        edgeTypeGroup.add(edgeTypeQuadRadio);
-
-        final JPanel edgeTypePanel = new JPanel(new GridLayout(0, 1));
+        edgeTypeComboBox.setSelectedIndex(1);
+        
+        final JPanel edgeTypePanel = new JPanel();
+        edgeTypePanel.setPreferredSize(new Dimension(180, 65));
         edgeTypePanel.setBorder(BorderFactory.createTitledBorder("Edge Type"));
 
-        edgeTypePanel.add(edgeTypeLineRadio);
-        edgeTypePanel.add(edgeTypeQuadRadio);
-
+        edgeTypePanel.add(edgeTypeComboBox);
+        
         return edgeTypePanel;
     }
 
@@ -148,6 +137,7 @@ public class ControlBox extends Box {
         edgeLabelAlignmentCheckBox.setSelected(true);
 
         final JPanel edgeLabelAlignmentPanel = new JPanel();
+        edgeLabelAlignmentPanel.setPreferredSize(new Dimension(180, 65));
         edgeLabelAlignmentPanel.setBorder(BorderFactory.createTitledBorder("Egde Label Alignment"));
         edgeLabelAlignmentPanel.add(edgeLabelAlignmentCheckBox);
 
@@ -160,9 +150,13 @@ public class ControlBox extends Box {
     @SuppressWarnings("unchecked")
     private JPanel createMouseInteractionComboBox() {
         final JPanel mouseInteractionModePanel = new JPanel();
+        mouseInteractionModePanel.setPreferredSize(new Dimension(180, 65));
         mouseInteractionModePanel.setBorder(BorderFactory.createTitledBorder("Mouse Interaction Mode"));
-        mouseInteractionModePanel.add(((DefaultModalGraphMouse<Integer, Integer>) visViewer.getGraphMouse()).getModeComboBox());
-
+        JComboBox<String> graphMouseComboBox = ((DefaultModalGraphMouse<Integer, Integer>) visViewer.getGraphMouse()).getModeComboBox();
+        graphMouseComboBox.setPreferredSize(new Dimension(150, 28));
+        
+        mouseInteractionModePanel.add(graphMouseComboBox);
+        
         return mouseInteractionModePanel;
     }
 
