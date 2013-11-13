@@ -8,7 +8,7 @@ import edu.uaskl.cpp.model.node.interfaces.Node;
  * @author tbach
  */
 public interface EdgeWeighted<K extends Node<K, V>, V extends Edge<K, V>> extends Edge<K, V> {
-    public int getWeight();
+    public double getWeight();
 
-    public void setWeight(int gewicht);
+    public void setWeight(double gewicht);
 }

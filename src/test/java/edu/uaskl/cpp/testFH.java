@@ -24,20 +24,20 @@ public class testFH {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void test() {
-        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(getClass().getResource("fh_way_no_meta.osm").toString());
-        //final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(getClass().getResource("testDiamond.osm").toString());
-        assertTrue("FH graph should be connected", graph.getAlgorithms().isConnected());
+    public void test() throws Exception {
+//        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(getClass().getResource("fh_way_no_meta.osm").toString());
+//        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(getClass().getResource("testDiamond.osm").toString());
+        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importZW();
+    	assertTrue("FH graph should be connected", graph.getAlgorithms().isConnected());
         assertFalse("FH graph has no Euler circle", graph.getAlgorithms().hasEulerCircle());
         assertThat(graph.getNumberOfNodes()).isGreaterThan(0);
-        graph.getAlgorithms().matchGraph();
+        graph.getAlgorithms().matchPerfect();
         assertTrue("matched graph", graph.getAlgorithms().hasEulerCircle());
         final NodeCppOSM start = graph.getNode(260070555l);
-        final ArrayList<NodeCppOSM> circle = graph.getAlgorithms().getEulerianCircle(start);
-        final PathExtended<NodeCppOSM> path = new PathExtended<>(circle);
+        final PathExtended<NodeCppOSM> path = graph.getAlgorithms().getEulerianCircle(start);
         // TODO find the right folder for the real output
         exportPathToHTML(path, folder.getRoot());
-        //exportPathToHTML(path, new File("./"));
+//        exportPathToHTML(path, new File("./src/test/resources/edu/uaskl/cpp/exporter"));
         assertTrue(true);
 
     }

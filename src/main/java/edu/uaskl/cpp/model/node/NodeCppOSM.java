@@ -27,7 +27,7 @@ public class NodeCppOSM extends NodeExtended<NodeCppOSM, EdgeCppOSM> implements 
         super(knoten, isForCpp);
     }
     
-    public NodeCppOSM connectWithNodeWeigthAndMeta(final NodeCppOSM otherNode, final int weight, WayOSM metadata) {
+    public NodeCppOSM connectWithNodeWeigthAndMeta(final NodeCppOSM otherNode, final double weight, WayOSM metadata) {
         addEdge(((EdgeCreatorCppOSM)getEdgeCreator()).create(this, otherNode, weight, metadata));
         return this;
     }

@@ -58,7 +58,7 @@ public class NodeExtended<T extends NodeExtended<T, V>, V extends EdgeExtended<T
         resetAllEdgesVisitedStates();
     }
     
-    public NodeExtended<T, V> connectWithNodeAndWeigth(final T otherNode, final int weight) {
+    public NodeExtended<T, V> connectWithNodeAndWeigth(final T otherNode, final double weight) {
         addEdge(getEdgeCreator().create((T)this, otherNode, weight));
         return this;
     }

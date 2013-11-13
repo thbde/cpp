@@ -1,8 +1,7 @@
 #!/bin/sh
 osmosis --read-pbf rheinland-pfalz-latest.osm.pbf \
-        --bounding-polygon file="fh.poly" \
-        --write-pbf fh.osm.pbf omitmetadata=true
-osmosis --read-pbf fh.osm.pbf \
+        --write-pbf rlp.osm.pbf omitmetadata=true
+osmosis --read-pbf rlp.osm.pbf \
         --tf accept-ways highway=* \
         --tf reject-ways highway=motorway,motorway_link \
         --tf reject-ways waterway=* \
@@ -13,4 +12,4 @@ osmosis --read-pbf fh.osm.pbf \
         --tf reject-relations boundary=* \
         --tf reject-ways area=yes \
         --used-node \
-        --write-xml fh_way_no_meta.osm
+        --write-xml rlp.osm

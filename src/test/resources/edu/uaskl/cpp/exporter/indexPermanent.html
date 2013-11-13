@@ -34,14 +34,12 @@
          };
          function updateInLoop() {
              var i = segments.length-1;
-             var displayedLine = createSegment(segments[0],0);
              return function up(){
                    if((i+1)% segments.lengt < i) {
                        clearInterval(loop);
                    }
                    else {
                    i = (i+1)% segments.length;
-                   map.removeLayer(displayedLine);
                    displayedLine = createSegment(segments[i],i);
                    }
              }

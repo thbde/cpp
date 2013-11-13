@@ -26,10 +26,9 @@ import org.w3c.dom.NodeList;
 
 public class OsmImporter {
 
-    // FIXME: Redundant?
-    protected static int getDistance(final WayNodeOSM a, final WayNodeOSM b) { // TODO is int the right return type?
+    protected static double getDistance(final WayNodeOSM a, final WayNodeOSM b) {
         // Spherical Law of Cosines
-        return (int) (Math.acos((Math.sin(a.getLatitude()) * Math.sin(b.getLatitude())) + (Math.cos(a.getLatitude()) * Math.cos(b.getLatitude()) * Math.cos(b.getLongitude() - a.getLongitude()))) * 6367500);
+    	return (Math.acos((Math.sin(a.getLatitude()/180*Math.PI) * Math.sin(b.getLatitude()/180*Math.PI)) + (Math.cos(a.getLatitude()/180*Math.PI) * Math.cos(b.getLatitude()/180*Math.PI) * Math.cos((b.getLongitude() - a.getLongitude())/180*Math.PI))) * 6367500);
     }
 
     protected static Document getDomFromFile(final String filename) {
@@ -91,7 +90,7 @@ public class OsmImporter {
                         final Long nodeId = Long.parseLong(childNode.getAttribute("ref"), 10);
                         final NodeCppOSM node = osmGraph.getNode(nodeId);
                         if (!(node == null)) {
-                            final int distance = getDistance(osmNodes.get(lastWaypoint), osmNodes.get(childNode.getAttribute("ref")));
+                            final double distance = getDistance(osmNodes.get(lastWaypoint), osmNodes.get(childNode.getAttribute("ref")));
                             osmGraph.getNode(lastWaypoint).connectWithNodeAndWeigth(node, distance);
                             lastWaypoint = Long.parseLong(childNode.getAttribute("ref"), 10);
                         }
@@ -215,6 +214,7 @@ public class OsmImporter {
     }
     
     public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importZW(){
+    	// TODO get the right filename
     	GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected("src/test/resources/edu/uaskl/cpp/zweibruecken_way_no_meta.osm");
     	graph.getAlgorithms().visitAllEdgesFromStartNode(graph.getNode(260070555l));
     	Iterator<NodeCppOSM> iter = graph.getNodes().iterator();
