@@ -26,10 +26,9 @@ import org.w3c.dom.NodeList;
 
 public class OsmImporter {
 
-    // FIXME: Redundant?
-    protected static double getDistance(final WayNodeOSM a, final WayNodeOSM b) { // TODO is int the right return type?
+    protected static double getDistance(final WayNodeOSM a, final WayNodeOSM b) {
         // Spherical Law of Cosines
-        return (Math.acos((Math.sin(a.getLatitude()) * Math.sin(b.getLatitude())) + (Math.cos(a.getLatitude()) * Math.cos(b.getLatitude()) * Math.cos(b.getLongitude() - a.getLongitude()))) * 6367500);
+    	return (Math.acos((Math.sin(a.getLatitude()/180*Math.PI) * Math.sin(b.getLatitude()/180*Math.PI)) + (Math.cos(a.getLatitude()/180*Math.PI) * Math.cos(b.getLatitude()/180*Math.PI) * Math.cos((b.getLongitude() - a.getLongitude())/180*Math.PI))) * 6367500);
     }
 
     protected static Document getDomFromFile(final String filename) {
