@@ -68,6 +68,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     }
 
     /** This method changes the current graph. (I guess) it adds a matching */
+    @Deprecated
     public void matchGraph() {
         T node1 = null;
         T node2 = null;
@@ -88,7 +89,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
             }
         }
     }
-
+@Deprecated
     private void matchBetweenNodes(final ArrayList<T> pathList) {
         for (int i = 0; i < (pathList.size() - 1); i++) {
             final T node1 = pathList.get(i);
@@ -97,7 +98,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
             node1.connectWithNode(node2);
         }
     }
-
+@Deprecated
     public ArrayList<T> getPathBetween(T node, final T destination) {
         int i = 0;
         graph.resetStates();
@@ -161,19 +162,19 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 
     }
 
-    public ArrayList<T> getEulerianCircle(final T start) { // TODO should return a path -tbach
+    public PathExtended<T> getEulerianCircle(final T start) throws Exception {
     	graph.resetStates();
     	if(!(isConnected() || hasEulerCircle()))
     	{
-    		//throw exception?
-    		return new ArrayList<>();
+    		//TODO throw better exception
+    		throw new Exception("not eulerian");
     	}    	
     	T temp;
         ArrayList<T> eulerianList = new ArrayList<>(getCircle(start));	//get the first subgraph
         
         if(graph.getNumberOfNodes()==1)
         {
-        	return eulerianList;
+        	return new PathExtended<T>(eulerianList);
         }
         for (int i = 0; i < eulerianList.size(); i++) 
         {
@@ -187,7 +188,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
                     // TODO not a good style to change the loop variable.
                 }
         }
-        return eulerianList;
+        return new PathExtended<T>(eulerianList);
     }
 
     private ArrayList<T> getCircle(final T node) {

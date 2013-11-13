@@ -187,7 +187,7 @@ public class GraphVollstaendigTest { // TODO this is not the right class for all
     }
 
     @Test
-    public void getEulerianCircleTEST() {
+    public void getEulerianCircleTEST() throws Exception {
         final GraphUndirected<NodeCpp, EdgeCpp> graph = new GraphUndirected<>();
 
         final NodeCpp node0 = new NodeCpp();
@@ -206,7 +206,7 @@ public class GraphVollstaendigTest { // TODO this is not the right class for all
 
         graph.addNode(node0).addNode(node1).addNode(node2).addNode(node3).addNode(node4);
 
-        final ArrayList<NodeCpp> eulerianList = new ArrayList<>(graph.getAlgorithms().getEulerianCircle(node0));
+        final ArrayList<NodeCpp> eulerianList = new ArrayList<>(graph.getAlgorithms().getEulerianCircle(node0).getNodes());
 
         boolean odd = false;
 

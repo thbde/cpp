@@ -34,8 +34,7 @@ public class testFH {
         graph.getAlgorithms().matchPerfect();
         assertTrue("matched graph", graph.getAlgorithms().hasEulerCircle());
         final NodeCppOSM start = graph.getNode(260070555l);
-        final ArrayList<NodeCppOSM> circle = graph.getAlgorithms().getEulerianCircle(start);
-        final PathExtended<NodeCppOSM> path = new PathExtended<>(circle);
+        final PathExtended<NodeCppOSM> path = graph.getAlgorithms().getEulerianCircle(start);
         // TODO find the right folder for the real output
         exportPathToHTML(path, folder.getRoot());
 //        exportPathToHTML(path, new File("./src/test/resources/edu/uaskl/cpp/exporter"));
