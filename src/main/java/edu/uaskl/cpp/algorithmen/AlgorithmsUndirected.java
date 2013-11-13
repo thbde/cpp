@@ -18,8 +18,8 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     private final GraphUndirected<T, V> graph;
     private double[][] dist;
     private Integer[][] next;
-    private HashMap<Long,Integer> id2index = new HashMap<>();
-    private HashMap<Integer,Long> index2id = new HashMap<>();
+    private HashMap<Long,Integer> id2index;
+    private HashMap<Integer,Long> index2id;
     private boolean preprocessed = false;
 
     public AlgorithmsUndirected(final GraphUndirected<T, V> graph) {
@@ -225,11 +225,9 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 
     }
 
-    private void createDistNext() {
-    	//based on Floyd-Warshall
+    private void createTanslation(){
     	id2index = new HashMap<>();
-    	this.dist = new double[graph.getNumberOfNodes()][graph.getNumberOfNodes()];
-    	this.next = new Integer[graph.getNumberOfNodes()][graph.getNumberOfNodes()];
+    	index2id = new HashMap<>();
     	// create the translation from id to index
     	Collection<T> nodes = graph.getNodes();
     	int index = 0;
@@ -238,6 +236,12 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     		id2index.put(node.getId(), index);
     		++index;
     	}
+    }
+    
+    private void initDist(){
+    	this.dist = new double[graph.getNumberOfNodes()][graph.getNumberOfNodes()];
+    	this.next = new Integer[graph.getNumberOfNodes()][graph.getNumberOfNodes()];
+
     	// initialize the distances
     	for(int i = 0; i < dist.length; ++i) {
     		for(int j = 0; j < dist.length; ++j) {
@@ -245,6 +249,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     		}
     		dist[i][i] = 0;
     	}
+    	Collection<T> nodes = graph.getNodes();
     	for(T node : nodes) {
     		for(V edge : node.getEdges()) {
     			// TODO fix this for directed
@@ -255,6 +260,12 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     			}
     		}
     	}
+    }
+    
+    private void createDistNext() {
+    	//based on Floyd-Warshall
+    	createTanslation();
+    	initDist();
     	// create the matrix
     	for(int k = 0; k < dist.length; ++k) {
     		for(int i = 0; i < dist.length; ++i) {
@@ -267,6 +278,13 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     		}
     	}
     	preprocessed = true;
+    }
+
+    private ArrayList<T> connectPathsDeDup(PathExtended<T> path1,PathExtended<T> path2){
+		ArrayList<T> pathList = new ArrayList<>(path1.getNodes());
+		pathList.remove(pathList.size()-1); //prevent duplicate
+		pathList.addAll(path2.getNodes());
+		return pathList;
     }
     
     private PathExtended<T> getShortestPath(T node1, T node2){
@@ -286,34 +304,22 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     	else {
     		PathExtended<T> path1 = getShortestPath(node1,graph.getNode(index2id.get(temp)));
     		PathExtended<T> path2 = getShortestPath(graph.getNode(index2id.get(temp)),node2);
-    		pathList.addAll(path1.getNodes());
-    		pathList.remove(pathList.size()-1); //prevent duplicate
-    		pathList.addAll(path2.getNodes());
+    		pathList = connectPathsDeDup(path1,path2);
     	}
     	
     	return new PathExtended<T>(pathList);
     }
-    
-    public void matchPerfect() throws Exception {
-    	if(!preprocessed) {
-    		createDistNext();
-    	}
-    	// Find list of all nodes with odd degree
-    	Collection<T> nodes = graph.getNodes();
-    	ArrayList<T> oddNodes = new ArrayList<T>();
-    	for(T node : nodes) {
-    		if(node.isDegreeOdd()){
-    			oddNodes.add(node);
-    		}
-    	}
-    	// match their shortest path
-    	ArrayList<ArrayList<T>> pairs = new ArrayList<>();
+
+    private ArrayList<ArrayList<T>> getPairsNaiveGreedy(ArrayList<T>oddNodes){
     	// naive version - not perfect but greedy
+    	ArrayList<ArrayList<T>> pairs = new ArrayList<>();
     	while(!oddNodes.isEmpty()){
+    		// get the last node in the list
     		ArrayList<T> pair = new ArrayList<>();
     		T firstNode = oddNodes.get(oddNodes.size()-1);
     		pair.add(firstNode);
     		oddNodes.remove(oddNodes.size()-1);
+    		// find the nearest partner
     		T nextNode = oddNodes.get(0);
     		double minDist = Double.POSITIVE_INFINITY;
     		for(T node : oddNodes) {
@@ -323,56 +329,64 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     				nextNode = node;
     			}
     		}
+    		// connect them and remove them from the search
     		pair.add(nextNode);
     		oddNodes.remove(nextNode);
     		pairs.add(pair);
     	}
+    	return pairs;
+    }
+    
+    
+    public void matchPerfect() throws Exception {
+    	if(!preprocessed) {
+    		createDistNext();
+    	}
+    	// Find list of all nodes with odd degree
+    	ArrayList<T> oddNodes = getOddNodes();
+    	// match their shortest path
+    	ArrayList<ArrayList<T>> pairs = getPairsNaiveGreedy(oddNodes);
     	// create the paths
-    	for(ArrayList<T> pair : pairs) {
+    	createDupEdges(pairs);
+    }
+
+	private void createDupEdges(ArrayList<ArrayList<T>> pairs) {
+		for(ArrayList<T> pair : pairs) {
+			// for each pair, get their shortest path
     		T startNode = pair.get(0);
     		T endNode = pair.get(1);
     		PathExtended<T> path = getShortestPath(startNode,endNode);
     		List<T> nodesInPath = path.getNodes();
     		for(int i = 1; i < path.getLength(); ++i) {
+    			// for each link, find the correct edge
     			T nextNode = nodesInPath.get(i);
-    			V edgeToCopy;
-    			double weight = dist[id2index.get(startNode.getId())][id2index.get(nextNode.getId())];
-    			for(V edge : startNode.getEdges()) {
-    				if(edge.getWeight() == weight && (edge.getNode1() == nextNode || edge.getNode2() == nextNode)) {
-    					edgeToCopy = edge;
-    					break;
-    				}
-    			}
-    			startNode.connectWithNodeAndWeigth(nextNode, weight);
-    			// move startNode to the next node
-    			startNode = nextNode;
-    			
-    		}
-    		
-//    		while(startNode != endNode) {
-//    			// get the next node
-//    			T nextNode = graph.getNode(index2id.get(next[id2index.get(startNode.getId())][id2index.get(endNode.getId())]));
-//    			// find the minimum weight
-//    			if(nextNode == null) {
-//    				throw new Exception();
-//    			}
-//    			double weight = dist[id2index.get(startNode.getId())][id2index.get(nextNode.getId())];
-//    			// find the right edge to copy
 //    			V edgeToCopy;
+    			double weight = dist[id2index.get(startNode.getId())][id2index.get(nextNode.getId())];
+    			//if we have a "copy" method find the right edge
 //    			for(V edge : startNode.getEdges()) {
 //    				if(edge.getWeight() == weight && (edge.getNode1() == nextNode || edge.getNode2() == nextNode)) {
 //    					edgeToCopy = edge;
 //    					break;
 //    				}
 //    			}
-//    			// create a copy
-//    			// copy has no metaData
-//    			startNode.connectWithNodeAndWeigth(nextNode, weight);
-//    			
-//    			// move startNode to the next node
-//    			startNode = nextNode;
-//    		}
+    			// create the edge
+    			startNode.connectWithNodeAndWeigth(nextNode, weight);
+    			// move startNode to the next node
+    			startNode = nextNode;
+    			
+    		}
     	}
-    }
+	}
+
+	private ArrayList<T> getOddNodes() {
+		Collection<T> nodes = graph.getNodes();
+    	ArrayList<T> oddNodes = new ArrayList<T>();
+    	for(T node : nodes) {
+    		if(node.isDegreeOdd()){
+    			oddNodes.add(node);
+    		}
+    	}
+		return oddNodes;
+	}
     
 }
