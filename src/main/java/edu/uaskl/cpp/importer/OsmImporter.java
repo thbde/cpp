@@ -215,6 +215,7 @@ public class OsmImporter {
     }
     
     public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importZW(){
+    	// TODO get the right filename
     	GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected("src/test/resources/edu/uaskl/cpp/zweibruecken_way_no_meta.osm");
     	graph.getAlgorithms().visitAllEdgesFromStartNode(graph.getNode(260070555l));
     	Iterator<NodeCppOSM> iter = graph.getNodes().iterator();
