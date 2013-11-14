@@ -6,6 +6,7 @@ import static edu.uaskl.cpp.importer.OsmImporter.importClean;
 import static edu.uaskl.cpp.importer.OsmImporter.importZW;
 import static edu.uaskl.cpp.importer.OsmImporter.importKL;
 import static edu.uaskl.cpp.importer.OsmImporter.importFH;
+import static edu.uaskl.cpp.importer.OsmImporter.importRLP;
 import static edu.uaskl.cpp.importer.OsmImporter.importOsmUndirected;
 import static edu.uaskl.cpp.model.exporter.Exporter.exportPathToHTML;
 import static org.junit.Assert.*;

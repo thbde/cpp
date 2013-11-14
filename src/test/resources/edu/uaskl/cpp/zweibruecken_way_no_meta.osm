@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <osm version="0.6" generator="Osmosis 0.43.1">
   <bounds minlon="7.28895" minlat="49.18974" maxlon="7.44865" maxlat="49.31691" origin="0.43.1"/>
-  <node id="488867" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2451113" lon="7.3582391">
+  <node id="488867" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2454366" lon="7.3578337">
     <tag k="highway" v="motorway_junction"/>
     <tag k="name" v="Zweibrücken-Mitte"/>
     <tag k="ref" v="32"/>
@@ -12,7 +12,7 @@
     <tag k="TMC:cid_58:tabcd_1:NextLocationCode" v="12509"/>
     <tag k="TMC:cid_58:tabcd_1:PrevLocationCode" v="12507"/>
   </node>
-  <node id="488937" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2366112" lon="7.3955943">
+  <node id="488937" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.236784" lon="7.3945883">
     <tag k="highway" v="motorway_junction"/>
     <tag k="name" v="Contwig"/>
     <tag k="ref" v="34"/>
@@ -24,7 +24,7 @@
     <tag k="TMC:cid_58:tabcd_1:PrevLocationCode" v="12509"/>
   </node>
   <node id="488957" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2348042" lon="7.3993655"/>
-  <node id="489001" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2267153" lon="7.3652875">
+  <node id="489001" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2265715" lon="7.3667964">
     <tag k="highway" v="motorway_junction"/>
     <tag k="name" v="Zweibrücken-Ixheim"/>
     <tag k="ref" v="33"/>
@@ -48,7 +48,7 @@
     <tag k="TMC:cid_58:tabcd_1:PrevLocationCode" v="12506"/>
   </node>
   <node id="489047" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2370266" lon="7.3972552"/>
-  <node id="489060" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2497376" lon="7.348754"/>
+  <node id="489060" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.249723" lon="7.3487176"/>
   <node id="527754" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2319012" lon="7.4060094"/>
   <node id="527762" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2343969" lon="7.4003586"/>
   <node id="527766" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2333034" lon="7.4030443"/>
@@ -69,15 +69,15 @@
   <node id="527813" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2579035" lon="7.3377681">
     <tag k="highway" v="traffic_signals"/>
   </node>
-  <node id="527815" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500506" lon="7.3486842"/>
-  <node id="527816" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500423" lon="7.3481058"/>
+  <node id="527815" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500426" lon="7.3486901"/>
+  <node id="527816" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2501363" lon="7.3479522"/>
   <node id="527817" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.25097" lon="7.34676"/>
   <node id="527818" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2511958" lon="7.3465431"/>
   <node id="527819" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2520982" lon="7.3460288"/>
   <node id="527820" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2525974" lon="7.3459838"/>
   <node id="527821" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2529602" lon="7.3460355"/>
-  <node id="527823" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2497304" lon="7.3488948"/>
-  <node id="527824" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500248" lon="7.3491242"/>
+  <node id="527823" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2496912" lon="7.3488426"/>
+  <node id="527824" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500156" lon="7.3491291"/>
   <node id="29409901" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2617076" lon="7.3372619"/>
   <node id="49842014" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2611099" lon="7.3378063"/>
   <node id="49842028" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2504676" lon="7.3474469">
@@ -110,23 +110,17 @@
   <node id="49842104" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2504351" lon="7.3486173">
     <tag k="created_by" v="JOSM"/>
   </node>
-  <node id="49842108" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2503016" lon="7.3486804">
-    <tag k="created_by" v="JOSM"/>
-  </node>
-  <node id="49842112" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.250099" lon="7.3486306"/>
-  <node id="49842116" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500163" lon="7.348493"/>
+  <node id="49842108" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2503354" lon="7.3486906"/>
+  <node id="49842112" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500846" lon="7.3486255"/>
+  <node id="49842116" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500279" lon="7.3485337"/>
   <node id="49842118" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2514255" lon="7.3457524">
     <tag k="created_by" v="JOSM"/>
   </node>
-  <node id="49842119" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2501935" lon="7.3486967"/>
-  <node id="50609485" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2498607" lon="7.3491615">
-    <tag k="created_by" v="JOSM"/>
-  </node>
-  <node id="50609487" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500961" lon="7.3489788">
-    <tag k="created_by" v="JOSM"/>
-  </node>
-  <node id="50609494" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.24973" lon="7.3488137"/>
-  <node id="50609495" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2492962" lon="7.3489609"/>
+  <node id="49842119" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2502428" lon="7.3487111"/>
+  <node id="50609485" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2498578" lon="7.3491932"/>
+  <node id="50609487" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500812" lon="7.3489821"/>
+  <node id="50609494" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2497042" lon="7.3487715"/>
+  <node id="50609495" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2493453" lon="7.3488965"/>
   <node id="50609501" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2490191" lon="7.3491171"/>
   <node id="50609508" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2485617" lon="7.3499245"/>
   <node id="50609512" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2483735" lon="7.3505503"/>
@@ -143,7 +137,7 @@
   <node id="60873865" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2284826" lon="7.400246"/>
   <node id="60873866" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2285598" lon="7.4001223"/>
   <node id="60873867" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.22878" lon="7.4000943"/>
-  <node id="62731972" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.230738" lon="7.3589097">
+  <node id="62731972" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2315826" lon="7.3587581">
     <tag k="highway" v="motorway_junction"/>
     <tag k="name" v="Zweibrücken-Ixheim"/>
     <tag k="ref" v="33"/>
@@ -154,8 +148,8 @@
     <tag k="TMC:cid_58:tabcd_1:NextLocationCode" v="12510"/>
     <tag k="TMC:cid_58:tabcd_1:PrevLocationCode" v="12508"/>
   </node>
-  <node id="62733030" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2281884" lon="7.3619668"/>
-  <node id="62733033" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2282073" lon="7.3612405"/>
+  <node id="62733030" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.228215" lon="7.3620124"/>
+  <node id="62733033" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2285765" lon="7.36069"/>
   <node id="62740037" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2280648" lon="7.3600654"/>
   <node id="62740038" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2277088" lon="7.3604024"/>
   <node id="62740039" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2273203" lon="7.3608549"/>
@@ -239,26 +233,15 @@
   <node id="253419272" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2428613" lon="7.3643263"/>
   <node id="253419273" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2429565" lon="7.3641718"/>
   <node id="253419274" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2430462" lon="7.363837"/>
-  <node id="253419275" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2429677" lon="7.3630989"/>
-  <node id="253419276" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2429341" lon="7.3626783"/>
-  <node id="253419277" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2429845" lon="7.3624466"/>
-  <node id="253419278" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2431751" lon="7.3622148"/>
+  <node id="253419275" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.242984" lon="7.363074"/>
+  <node id="253419276" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2429547" lon="7.3626567"/>
+  <node id="253419277" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2429943" lon="7.3624449"/>
+  <node id="253419278" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2431664" lon="7.3621733"/>
   <node id="253419622" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2042628" lon="7.3297852"/>
   <node id="253419628" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2095012" lon="7.332873"/>
   <node id="253419629" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2095909" lon="7.3329484"/>
   <node id="253419634" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2137385" lon="7.3411034"/>
   <node id="254774942" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.237381" lon="7.3967512"/>
-  <node id="254775017" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2355363" lon="7.4001138">
-    <tag k="highway" v="motorway_junction"/>
-    <tag k="name" v="Contwig"/>
-    <tag k="ref" v="34"/>
-    <tag k="TMC:cid_58:tabcd_1:Class" v="Point"/>
-    <tag k="TMC:cid_58:tabcd_1:Direction" v="negative"/>
-    <tag k="TMC:cid_58:tabcd_1:LCLversion" v="9.00"/>
-    <tag k="TMC:cid_58:tabcd_1:LocationCode" v="12510"/>
-    <tag k="TMC:cid_58:tabcd_1:NextLocationCode" v="12511"/>
-    <tag k="TMC:cid_58:tabcd_1:PrevLocationCode" v="12509"/>
-  </node>
   <node id="260070496" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2531568" lon="7.3466559"/>
   <node id="260070498" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2527264" lon="7.3480065"/>
   <node id="260070499" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2525788" lon="7.3489351"/>
@@ -426,12 +409,12 @@
   <node id="262204169" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2433269" lon="7.361492"/>
   <node id="262204170" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2433292" lon="7.3617033"/>
   <node id="262204171" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2433388" lon="7.3618557"/>
-  <node id="262204172" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2433773" lon="7.3620755">
+  <node id="262204172" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2433827" lon="7.3620531">
     <tag k="highway" v="traffic_signals"/>
   </node>
-  <node id="262204173" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2434445" lon="7.3622913"/>
-  <node id="262204174" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2435202" lon="7.3624546"/>
-  <node id="262204175" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2436151" lon="7.3626708"/>
+  <node id="262204173" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.243515" lon="7.362484"/>
+  <node id="262204174" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2435918" lon="7.3626373"/>
+  <node id="262204175" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.243652" lon="7.3627422"/>
   <node id="262204177" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2439998" lon="7.3632777"/>
   <node id="262204179" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2444091" lon="7.3636809"/>
   <node id="262204181" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2448095" lon="7.3641664"/>
@@ -577,13 +560,13 @@
   <node id="265764634" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2650191" lon="7.3638791"/>
   <node id="265764635" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2650142" lon="7.3637954"/>
   <node id="265764636" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2650207" lon="7.3637644"/>
-  <node id="267371948" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499304" lon="7.3483896"/>
+  <node id="267371948" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499114" lon="7.3483813"/>
   <node id="267372007" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.250241" lon="7.3477995"/>
-  <node id="267372023" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499768" lon="7.3482287"/>
-  <node id="267372024" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499104" lon="7.3484957"/>
-  <node id="267372056" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500949" lon="7.3487917"/>
-  <node id="267372057" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2497731" lon="7.3490705"/>
-  <node id="267372058" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499316" lon="7.3491745"/>
+  <node id="267372023" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.25007" lon="7.348039"/>
+  <node id="267372024" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2498939" lon="7.3485101"/>
+  <node id="267372056" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500819" lon="7.3488003"/>
+  <node id="267372057" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2497485" lon="7.3491082"/>
+  <node id="267372058" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499245" lon="7.3491924"/>
   <node id="267372601" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.248794" lon="7.349405"/>
   <node id="267373300" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2477933" lon="7.3517759"/>
   <node id="267373301" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2475599" lon="7.3525164"/>
@@ -706,7 +689,7 @@
   <node id="273483108" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500431" lon="7.3581555">
     <tag k="highway" v="traffic_signals"/>
   </node>
-  <node id="273483109" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2505082" lon="7.3611513"/>
+  <node id="273483109" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2505014" lon="7.3611271"/>
   <node id="273483251" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2501902" lon="7.3499278"/>
   <node id="273483252" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2498073" lon="7.3516035"/>
   <node id="273483253" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2493823" lon="7.3531392"/>
@@ -802,18 +785,18 @@
   <node id="276162480" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2525297" lon="7.3485168"/>
   <node id="276162481" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2524691" lon="7.3485807"/>
   <node id="276162482" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2524134" lon="7.3486552"/>
-  <node id="276164170" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500701" lon="7.3490562"/>
-  <node id="276164171" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2501057" lon="7.3488948"/>
-  <node id="276164172" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500062" lon="7.3486338"/>
-  <node id="276164175" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2497416" lon="7.3489861"/>
-  <node id="276164176" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2498128" lon="7.3491258"/>
-  <node id="276164177" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499834" lon="7.3491572"/>
+  <node id="276164170" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500575" lon="7.3490584"/>
+  <node id="276164171" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500903" lon="7.3489008"/>
+  <node id="276164172" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499862" lon="7.3486196"/>
+  <node id="276164175" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.249708" lon="7.3490206"/>
+  <node id="276164176" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2497967" lon="7.3491621"/>
+  <node id="276164177" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499761" lon="7.3491671"/>
   <node id="276164211" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.250212" lon="7.3489207"/>
   <node id="276164212" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2503247" lon="7.3488543"/>
   <node id="276164213" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2504352" lon="7.3487231"/>
   <node id="276164214" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2505089" lon="7.3486117"/>
   <node id="276164311" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500034" lon="7.3483128"/>
-  <node id="276164359" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499009" lon="7.3485779"/>
+  <node id="276164359" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2498537" lon="7.3485867"/>
   <node id="276165155" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2521056" lon="7.3445777"/>
   <node id="276174803" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2624015" lon="7.3609652"/>
   <node id="276222584" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2655329" lon="7.3628458"/>
@@ -1172,7 +1155,7 @@
   <node id="277816548" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2537477" lon="7.3511427"/>
   <node id="277816549" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2538093" lon="7.3511598"/>
   <node id="277817148" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2511785" lon="7.3470331"/>
-  <node id="277817890" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2491683" lon="7.3490008"/>
+  <node id="277817890" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2491417" lon="7.3490319"/>
   <node id="277827909" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2442657" lon="7.3603669"/>
   <node id="277827989" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2439519" lon="7.3603159"/>
   <node id="277827991" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2438954" lon="7.3606281"/>
@@ -1184,9 +1167,9 @@
   <node id="277828170" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2427604" lon="7.3644293"/>
   <node id="277828171" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2430238" lon="7.3639915"/>
   <node id="277828172" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.243063" lon="7.3636396"/>
-  <node id="277828173" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2430294" lon="7.3633735"/>
-  <node id="277828215" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2429397" lon="7.3628843"/>
-  <node id="277828216" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2430742" lon="7.3623178"/>
+  <node id="277828173" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2430543" lon="7.3633619"/>
+  <node id="277828215" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2429505" lon="7.362861"/>
+  <node id="277828216" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2430525" lon="7.3623012"/>
   <node id="278397662" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.254612" lon="7.3819097"/>
   <node id="278642221" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.243469" lon="7.3853978"/>
   <node id="278642406" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2439818" lon="7.385637">
@@ -1266,7 +1249,7 @@
   <node id="279006451" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2481059" lon="7.3672241"/>
   <node id="279006452" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2479203" lon="7.3676301"/>
   <node id="279006605" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2484609" lon="7.3683008"/>
-  <node id="279009542" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2436872" lon="7.3628182"/>
+  <node id="279009542" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.243762" lon="7.3628963"/>
   <node id="279009743" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2439305" lon="7.3630028"/>
   <node id="279009744" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2443965" lon="7.3631927"/>
   <node id="279009745" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2448354" lon="7.363343"/>
@@ -2343,7 +2326,7 @@
   <node id="302305069" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2511333" lon="7.3472496"/>
   <node id="302305070" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2509795" lon="7.3477513"/>
   <node id="302305071" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.250865" lon="7.3479831"/>
-  <node id="302305881" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2497909" lon="7.3486534"/>
+  <node id="302305881" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2497805" lon="7.3486311"/>
   <node id="303771846" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2530332" lon="7.3416089"/>
   <node id="303771848" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2530311" lon="7.3415091"/>
   <node id="303771854" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2530106" lon="7.3417084"/>
@@ -2520,8 +2503,8 @@
   <node id="330044512" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2473519" lon="7.3656838">
     <tag k="highway" v="traffic_signals"/>
   </node>
-  <node id="330083398" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2503832" lon="7.361242"/>
-  <node id="330083399" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2502546" lon="7.361341"/>
+  <node id="330083398" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2504471" lon="7.3611624"/>
+  <node id="330083399" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2502552" lon="7.3613253"/>
   <node id="330083432" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2520056" lon="7.3475353"/>
   <node id="330083435" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2496535" lon="7.358438"/>
   <node id="330263436" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2470626" lon="7.3635209"/>
@@ -2651,12 +2634,12 @@
   <node id="343605115" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2289013" lon="7.4004414"/>
   <node id="343722803" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2600808" lon="7.3343236"/>
   <node id="343722839" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2591014" lon="7.3372635"/>
-  <node id="343725308" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499509" lon="7.3485983"/>
+  <node id="343725308" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499446" lon="7.3485935"/>
   <node id="343725309" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2465804" lon="7.3617978"/>
   <node id="343725310" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2469544" lon="7.3621843"/>
   <node id="344190335" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2594921" lon="7.3352531"/>
   <node id="344201802" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2524258" lon="7.3459833"/>
-  <node id="344201803" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2498408" lon="7.348612"/>
+  <node id="344201803" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2498289" lon="7.3485961"/>
   <node id="344403456" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2183525" lon="7.3830429"/>
   <node id="344403490" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2269143" lon="7.3780441"/>
   <node id="345833941" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2319324" lon="7.4058969"/>
@@ -4984,7 +4967,7 @@
   <node id="1276244339" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2288687" lon="7.3595904"/>
   <node id="1276244359" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2284693" lon="7.3597926"/>
   <node id="1276244360" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2287741" lon="7.3596306"/>
-  <node id="1276244369" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2292957" lon="7.3594573"/>
+  <node id="1276244369" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2291532" lon="7.3594865"/>
   <node id="1276252062" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2395472" lon="7.3691379"/>
   <node id="1276252076" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2351856" lon="7.3754095"/>
   <node id="1276252080" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2358112" lon="7.3756938">
@@ -5278,12 +5261,11 @@
   <node id="1277335303" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2450383" lon="7.3858106"/>
   <node id="1277335313" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.244452" lon="7.3860479"/>
   <node id="1277366659" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2548371" lon="7.3494996"/>
-  <node id="1277366662" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.252113" lon="7.349564"/>
-  <node id="1277366665" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2523161" lon="7.3490061"/>
-  <node id="1277366673" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2532405" lon="7.3478473"/>
-  <node id="1277366676" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2519939" lon="7.3497678">
+  <node id="1277366662" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2522405" lon="7.3492595">
     <tag k="highway" v="turning_circle"/>
   </node>
+  <node id="1277366665" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2523161" lon="7.3490061"/>
+  <node id="1277366673" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2532405" lon="7.3478473"/>
   <node id="1277366678" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.254501" lon="7.3489417"/>
   <node id="1277366680" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2548301" lon="7.3493386"/>
   <node id="1277366682" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.254648" lon="7.3490919"/>
@@ -5291,7 +5273,6 @@
   <node id="1277366686" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2548021" lon="7.3497463">
     <tag k="highway" v="turning_circle"/>
   </node>
-  <node id="1277366688" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.252239" lon="7.3492635"/>
   <node id="1277366691" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2523581" lon="7.3488666"/>
   <node id="1277366693" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2531985" lon="7.3475147"/>
   <node id="1277397690" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2600398" lon="7.3504115"/>
@@ -6313,7 +6294,7 @@
   <node id="1497349059" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2166738" lon="7.346612"/>
   <node id="1497349062" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2172485" lon="7.3472021"/>
   <node id="1497349063" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2170663" lon="7.3469875"/>
-  <node id="1499108598" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2536686" lon="7.3328355">
+  <node id="1499108598" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2541595" lon="7.3321235">
     <tag k="highway" v="motorway_junction"/>
     <tag k="name" v="Zweibrücken-Ernstweiler"/>
     <tag k="ref" v="31"/>
@@ -6398,11 +6379,11 @@
   <node id="1540563431" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2294988" lon="7.3594015"/>
   <node id="1540563433" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2295559" lon="7.3607625"/>
   <node id="1540563434" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2298233" lon="7.3607629"/>
-  <node id="1540563436" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2299246" lon="7.3594207"/>
+  <node id="1540563436" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2299656" lon="7.3593902"/>
   <node id="1540563437" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2299943" lon="7.3608034"/>
   <node id="1540563439" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2301311" lon="7.3608431"/>
-  <node id="1540563440" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2303336" lon="7.3594686"/>
-  <node id="1540563442" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2305282" lon="7.3595142"/>
+  <node id="1540563440" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2303336" lon="7.3594498"/>
+  <node id="1540563442" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2305267" lon="7.3594978"/>
   <node id="1540563443" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2306249" lon="7.3610199"/>
   <node id="1540563446" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2307107" lon="7.3595856"/>
   <node id="1540563447" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2310706" lon="7.3612213"/>
@@ -6603,7 +6584,6 @@
   <node id="2178274443" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2480009" lon="7.3415084"/>
   <node id="2178274516" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2472305" lon="7.342325"/>
   <node id="2178419377" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2472984" lon="7.3461795"/>
-  <node id="2179701347" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2454286" lon="7.3464874"/>
   <node id="2179721188" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2467146" lon="7.3473093"/>
   <node id="2179721352" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2466387" lon="7.3474676"/>
   <node id="2180328172" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2534853" lon="7.3593692"/>
@@ -7023,7 +7003,7 @@
   <node id="2319610661" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2469793" lon="7.3548804"/>
   <node id="2319610679" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2473753" lon="7.3578177"/>
   <node id="2319610680" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2476451" lon="7.3582694"/>
-  <node id="2319610744" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2496033" lon="7.3489069"/>
+  <node id="2319610744" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2496061" lon="7.3488661"/>
   <node id="2319610748" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2487457" lon="7.349513"/>
   <node id="2319610753" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2483224" lon="7.3506582"/>
   <node id="2319624859" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2485221" lon="7.350056"/>
@@ -7031,9 +7011,9 @@
   <node id="2319624865" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2486472" lon="7.3494118"/>
   <node id="2319624866" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.248692" lon="7.3493342"/>
   <node id="2319641321" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2501715" lon="7.3489108"/>
-  <node id="2319641322" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2501736" lon="7.3486828"/>
-  <node id="2319641327" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500128" lon="7.3484438"/>
-  <node id="2319641328" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499151" lon="7.3484706"/>
+  <node id="2319641322" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2501708" lon="7.3486947"/>
+  <node id="2319641327" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500073" lon="7.3484472"/>
+  <node id="2319641328" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.249901" lon="7.3484682"/>
   <node id="2319943808" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500146" lon="7.3539653"/>
   <node id="2319943810" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2501945" lon="7.3526443"/>
   <node id="2319943821" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2511809" lon="7.3581631"/>
@@ -7093,7 +7073,7 @@
   <node id="2417000347" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2289534" lon="7.4018494"/>
   <node id="2417000348" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2290004" lon="7.401505"/>
   <node id="2417000350" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2290775" lon="7.4017591"/>
-  <node id="2419598026" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2285397" lon="7.3597457"/>
+  <node id="2419598026" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2286742" lon="7.3596759"/>
   <node id="2450660249" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2808031" lon="7.4147611"/>
   <node id="2450671212" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2990439" lon="7.39141"/>
   <node id="2450671213" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.3018368" lon="7.4020989"/>
@@ -7117,6 +7097,7 @@
   <node id="2450675559" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.298937" lon="7.4066271"/>
   <node id="2450675560" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2994511" lon="7.4059076"/>
   <node id="2457833244" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2514943" lon="7.3378986"/>
+  <node id="2457833270" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2522824" lon="7.3348192"/>
   <node id="2457866789" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2429052" lon="7.3607851"/>
   <node id="2457866791" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2429158" lon="7.3606154"/>
   <node id="2457866793" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2429238" lon="7.360784"/>
@@ -7173,6 +7154,39 @@
   <node id="2482493354" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2444811" lon="7.3565995"/>
   <node id="2482493355" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2445103" lon="7.3562501"/>
   <node id="2482493365" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2446054" lon="7.3563029"/>
+  <node id="2496430261" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2432759" lon="7.3621078"/>
+  <node id="2496430265" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2436963" lon="7.3628105"/>
+  <node id="2496505185" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2289727" lon="7.3595524"/>
+  <node id="2496505191" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2290827" lon="7.3595122"/>
+  <node id="2496505198" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2293529" lon="7.3594306"/>
+  <node id="2496505208" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2297297" lon="7.3593916"/>
+  <node id="2496505213" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2301828" lon="7.3594161"/>
+  <node id="2496605327" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2498821" lon="7.3485457"/>
+  <node id="2496605328" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499102" lon="7.3485833"/>
+  <node id="2496605330" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499262" lon="7.348312"/>
+  <node id="2496605335" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499543" lon="7.3484566"/>
+  <node id="2496605337" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499563" lon="7.3484947"/>
+  <node id="2496605339" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499602" lon="7.3483233"/>
+  <node id="2496605341" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.249966" lon="7.3482116"/>
+  <node id="2496605342" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499663" lon="7.348555"/>
+  <node id="2496605343" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2499774" lon="7.3482308"/>
+  <node id="2496605344" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500023" lon="7.3483835"/>
+  <node id="2496605346" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500185" lon="7.3482135"/>
+  <node id="2496605347" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2501248" lon="7.3486611"/>
+  <node id="2496614747" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2491787" lon="7.3490114"/>
+  <node id="2496614749" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2492511" lon="7.3489309"/>
+  <node id="2496614751" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2492561" lon="7.3490129"/>
+  <node id="2496614754" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2493661" lon="7.348978"/>
+  <node id="2496614755" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2494206" lon="7.3488747"/>
+  <node id="2496614757" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2494464" lon="7.3489582"/>
+  <node id="2496614759" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2496048" lon="7.3489552"/>
+  <node id="2496614762" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2496615" lon="7.3489719"/>
+  <node id="2496614764" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2496644" lon="7.3488535"/>
+  <node id="2496614766" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2496908" lon="7.3489329"/>
+  <node id="2496614768" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500269" lon="7.3480942"/>
+  <node id="2496614770" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2500372" lon="7.3481029"/>
+  <node id="2498143248" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2520515" lon="7.353125"/>
+  <node id="2498143249" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2520451" lon="7.3532431"/>
   <way id="4635750" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
     <nd ref="527769"/>
     <nd ref="527771"/>
@@ -7222,12 +7236,14 @@
     <nd ref="527815"/>
     <nd ref="276164172"/>
     <nd ref="343725308"/>
+    <nd ref="2496605328"/>
     <nd ref="276164359"/>
     <nd ref="344201803"/>
     <nd ref="302305881"/>
     <nd ref="489060"/>
     <nd ref="50609494"/>
     <nd ref="527823"/>
+    <nd ref="2496614766"/>
     <nd ref="276164175"/>
     <nd ref="267372057"/>
     <nd ref="276164176"/>
@@ -7795,12 +7811,6 @@
     <nd ref="527817"/>
     <nd ref="49842028"/>
     <nd ref="267372007"/>
-    <nd ref="527816"/>
-    <nd ref="267372023"/>
-    <nd ref="267371948"/>
-    <nd ref="2319641328"/>
-    <nd ref="267372024"/>
-    <nd ref="276164359"/>
     <tag k="highway" v="tertiary"/>
     <tag k="lcn" v="yes"/>
     <tag k="name" v="Gottlieb-Daimler-Straße"/>
@@ -8031,9 +8041,7 @@
     <nd ref="276162482"/>
     <nd ref="1277366691"/>
     <nd ref="1277366665"/>
-    <nd ref="1277366688"/>
     <nd ref="1277366662"/>
-    <nd ref="1277366676"/>
     <tag k="highway" v="residential"/>
     <tag k="name" v="Schulstraße"/>
     <tag k="noexit" v="yes"/>
@@ -8044,10 +8052,13 @@
     <nd ref="49842108"/>
     <nd ref="49842119"/>
     <nd ref="2319641322"/>
+    <nd ref="2496605347"/>
     <nd ref="49842112"/>
     <nd ref="49842116"/>
     <nd ref="2319641327"/>
+    <nd ref="2496605344"/>
     <nd ref="276164311"/>
+    <nd ref="2496605346"/>
     <nd ref="527816"/>
     <tag k="highway" v="residential"/>
     <tag k="name" v="Wilkstraße"/>
@@ -9239,6 +9250,7 @@
     <nd ref="281842037"/>
     <nd ref="281841723"/>
     <nd ref="281841889"/>
+    <nd ref="2503334844"/>
     <nd ref="281841890"/>
     <nd ref="281841726"/>
     <nd ref="281841727"/>
@@ -9247,6 +9259,7 @@
     <nd ref="281841892"/>
     <nd ref="281841731"/>
     <nd ref="281841894"/>
+    <nd ref="2503334803"/>
     <nd ref="281842038"/>
     <nd ref="281841735"/>
     <nd ref="281841736"/>
@@ -9343,7 +9356,7 @@
     <nd ref="2482493354"/>
     <nd ref="2244491079"/>
     <nd ref="412162214"/>
-    <tag k="highway" v="tertiary"/>
+    <tag k="highway" v="residential"/>
     <tag k="name" v="Bubenhauser Straße"/>
     <tag k="ref" v="K 2"/>
     <tag k="surface" v="asphalt"/>
@@ -10043,7 +10056,8 @@
     <nd ref="253280159"/>
     <nd ref="1281217518"/>
     <nd ref="290419406"/>
-    <tag k="highway" v="tertiary"/>
+    <tag k="highway" v="residential"/>
+    <tag k="maxspeed" v="50"/>
     <tag k="name" v="Lanzstraße"/>
     <tag k="ref" v="K 2"/>
     <tag k="surface" v="asphalt"/>
@@ -11067,6 +11081,7 @@
     <nd ref="262204173"/>
     <nd ref="262204174"/>
     <nd ref="262204175"/>
+    <nd ref="2496430265"/>
     <nd ref="279009542"/>
     <tag k="bridge" v="yes"/>
     <tag k="highway" v="secondary"/>
@@ -11141,12 +11156,7 @@
   <way id="31831783" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
     <nd ref="260070502"/>
     <nd ref="419690683"/>
-    <nd ref="276161571"/>
-    <nd ref="419690685"/>
-    <nd ref="260070503"/>
-    <nd ref="356436910"/>
-    <nd ref="2180342187"/>
-    <nd ref="267373839"/>
+    <nd ref="2498143248"/>
     <tag k="highway" v="secondary"/>
     <tag k="name" v="Dinglerstraße"/>
     <tag k="ref" v="L 469"/>
@@ -11521,7 +11531,7 @@
     <nd ref="412162215"/>
     <nd ref="412162227"/>
     <tag k="bridge" v="yes"/>
-    <tag k="highway" v="tertiary"/>
+    <tag k="highway" v="residential"/>
     <tag k="layer" v="1"/>
     <tag k="maxheight" v="4.2"/>
     <tag k="name" v="Lanzstraße"/>
@@ -11531,7 +11541,7 @@
     <nd ref="412162227"/>
     <nd ref="1281219216"/>
     <nd ref="253280160"/>
-    <tag k="highway" v="tertiary"/>
+    <tag k="highway" v="residential"/>
     <tag k="maxheight" v="4.2"/>
     <tag k="name" v="Lanzstraße"/>
     <tag k="ref" v="K 2"/>
@@ -11544,7 +11554,7 @@
     <nd ref="283550631"/>
     <nd ref="283550488"/>
     <nd ref="283550489"/>
-    <tag k="highway" v="tertiary"/>
+    <tag k="highway" v="residential"/>
     <tag k="name" v="Bubenhauser Straße"/>
     <tag k="ref" v="K 2"/>
     <tag k="surface" v="asphalt"/>
@@ -11553,7 +11563,7 @@
     <nd ref="412162214"/>
     <nd ref="283550632"/>
     <tag k="bridge" v="yes"/>
-    <tag k="highway" v="tertiary"/>
+    <tag k="highway" v="residential"/>
     <tag k="layer" v="1"/>
     <tag k="name" v="Bubenhauser Straße"/>
     <tag k="ref" v="K 2"/>
@@ -11842,10 +11852,8 @@
     <nd ref="267372601"/>
     <nd ref="50609501"/>
     <nd ref="277817890"/>
-    <nd ref="50609495"/>
-    <nd ref="2319610744"/>
-    <nd ref="527823"/>
-    <tag k="highway" v="tertiary"/>
+    <nd ref="2496614747"/>
+    <tag k="highway" v="residential"/>
     <tag k="name" v="Gottlieb-Daimler-Straße"/>
     <tag k="note" v="Bürgersteig mit erlaubter Radbenutzung auf der nördlichen Seite"/>
     <tag k="ref" v="K 2"/>
@@ -16933,7 +16941,6 @@
     <nd ref="1277562771"/>
     <nd ref="1277562774"/>
     <nd ref="1277562764"/>
-    <nd ref="2179701347"/>
     <tag k="highway" v="residential"/>
     <tag k="name" v="Heiligentalstraße"/>
     <tag k="surface" v="asphalt"/>
@@ -16992,6 +16999,7 @@
     <nd ref="412345321"/>
     <nd ref="290419406"/>
     <tag k="highway" v="residential"/>
+    <tag k="maxspeed" v="50"/>
     <tag k="name" v="Unterer Hornbachstaden"/>
     <tag k="surface" v="asphalt"/>
   </way>
@@ -18865,6 +18873,7 @@
     <nd ref="253419277"/>
     <nd ref="277828216"/>
     <nd ref="253419278"/>
+    <nd ref="2496430261"/>
     <nd ref="262204172"/>
     <tag k="highway" v="primary"/>
     <tag k="name" v="Ixheimer Straße"/>
@@ -19284,7 +19293,7 @@
     <nd ref="277785790"/>
     <nd ref="798458706"/>
     <nd ref="253280159"/>
-    <tag k="highway" v="tertiary"/>
+    <tag k="highway" v="residential"/>
     <tag k="name" v="Friedrich-Ebert-Straße"/>
     <tag k="ref" v="K 2"/>
     <tag k="surface" v="asphalt"/>
@@ -20156,10 +20165,12 @@
     <nd ref="1540563446"/>
     <nd ref="1540563442"/>
     <nd ref="1540563440"/>
+    <nd ref="2496505213"/>
     <nd ref="1540563436"/>
+    <nd ref="2496505208"/>
     <nd ref="1540563431"/>
+    <nd ref="2496505198"/>
     <nd ref="1276244369"/>
-    <nd ref="1276244339"/>
     <tag k="highway" v="primary"/>
     <tag k="name" v="Bitscher Straße"/>
     <tag k="ref" v="B 424"/>
@@ -20593,14 +20604,6 @@
     <tag k="ref" v="L 465"/>
     <tag k="surface" v="asphalt"/>
   </way>
-  <way id="198205448" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="2083689959"/>
-    <nd ref="2083689967"/>
-    <nd ref="2083689956"/>
-    <tag k="highway" v="living_street"/>
-    <tag k="name" v="Himmelsbergstraße"/>
-    <tag k="surface" v="paving_stones"/>
-  </way>
   <way id="205626121" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
     <nd ref="2155961211"/>
     <nd ref="2155961260"/>
@@ -20618,7 +20621,6 @@
     <nd ref="1276244360"/>
     <nd ref="2419598026"/>
     <nd ref="1276244359"/>
-    <nd ref="273892617"/>
     <tag k="highway" v="primary"/>
     <tag k="name" v="Bitscher Straße"/>
     <tag k="ref" v="B 424"/>
@@ -20899,14 +20901,6 @@
     <tag k="name" v="Schwalbenstraße"/>
     <tag k="surface" v="asphalt"/>
   </way>
-  <way id="215026907" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <nd ref="322745549"/>
-    <nd ref="2244491133"/>
-    <nd ref="2244491082"/>
-    <nd ref="286988797"/>
-    <tag k="highway" v="residential"/>
-    <tag k="name" v="Schlachthofstraße"/>
-  </way>
   <way id="215084339" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
     <nd ref="2245030958"/>
     <nd ref="2245030920"/>
@@ -20999,7 +20993,7 @@
     <nd ref="2319624864"/>
     <nd ref="2319624865"/>
     <nd ref="2319610748"/>
-    <tag k="highway" v="tertiary_link"/>
+    <tag k="highway" v="residential"/>
     <tag k="oneway" v="yes"/>
   </way>
   <way id="223015637" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
@@ -21007,7 +21001,7 @@
     <nd ref="2319624866"/>
     <nd ref="253280162"/>
     <nd ref="253280160"/>
-    <tag k="highway" v="tertiary"/>
+    <tag k="highway" v="residential"/>
     <tag k="maxheight" v="4.2"/>
     <tag k="name" v="Lanzstraße"/>
     <tag k="oneway" v="yes"/>
@@ -21124,6 +21118,7 @@
     <nd ref="2457833244"/>
     <nd ref="288553917"/>
     <tag k="highway" v="residential"/>
+    <tag k="maxspeed" v="50"/>
     <tag k="name" v="Unterer Hornbachstaden"/>
     <tag k="surface" v="asphalt"/>
   </way>
@@ -21133,7 +21128,7 @@
     <nd ref="322745539"/>
     <nd ref="2457866836"/>
     <nd ref="273435058"/>
-    <tag k="highway" v="tertiary"/>
+    <tag k="highway" v="residential"/>
     <tag k="name" v="Bubenhauser Straße"/>
     <tag k="oneway" v="yes"/>
     <tag k="ref" v="K 2"/>
@@ -21180,7 +21175,7 @@
     <nd ref="2128928205"/>
     <nd ref="2128928177"/>
     <nd ref="2128928210"/>
-    <tag k="highway" v="tertiary"/>
+    <tag k="highway" v="residential"/>
     <tag k="oneway" v="yes"/>
     <tag k="surface" v="asphalt"/>
   </way>
@@ -21234,257 +21229,374 @@
     <nd ref="2457866815"/>
     <nd ref="2457866812"/>
     <nd ref="2457866810"/>
-    <tag k="highway" v="secondary"/>
+    <tag k="highway" v="residential"/>
     <tag k="maxheight:physical" v="4,3"/>
     <tag k="oneway" v="yes"/>
     <tag k="ref" v="L 471"/>
     <tag k="surface" v="asphalt"/>
   </way>
+  <way id="242102247" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <nd ref="1276244359"/>
+    <nd ref="273892617"/>
+    <tag k="highway" v="primary"/>
+    <tag k="name" v="Bitscher Straße"/>
+    <tag k="ref" v="B 424"/>
+    <tag k="surface" v="asphalt"/>
+  </way>
+  <way id="242102248" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <nd ref="1276244369"/>
+    <nd ref="2496505191"/>
+    <nd ref="2496505185"/>
+    <nd ref="1276244339"/>
+    <tag k="highway" v="primary"/>
+    <tag k="name" v="Bitscher Straße"/>
+    <tag k="ref" v="B 424"/>
+    <tag k="surface" v="asphalt"/>
+  </way>
+  <way id="242110556" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <nd ref="527816"/>
+    <nd ref="267372023"/>
+    <tag k="highway" v="tertiary"/>
+    <tag k="lcn" v="yes"/>
+    <tag k="name" v="Gottlieb-Daimler-Straße"/>
+    <tag k="ref" v="K 2"/>
+  </way>
+  <way id="242110557" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <nd ref="267372007"/>
+    <nd ref="527816"/>
+    <tag k="highway" v="tertiary"/>
+    <tag k="lcn" v="yes"/>
+    <tag k="name" v="Gottlieb-Daimler-Straße"/>
+    <tag k="ref" v="K 2"/>
+  </way>
+  <way id="242110558" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <nd ref="276164172"/>
+    <nd ref="2496605342"/>
+    <nd ref="2496605337"/>
+    <nd ref="2496605335"/>
+    <nd ref="2496605339"/>
+    <nd ref="2496605343"/>
+    <nd ref="2496614770"/>
+    <nd ref="267372023"/>
+    <tag k="highway" v="tertiary"/>
+    <tag k="lcn" v="yes"/>
+    <tag k="name" v="Gottlieb-Daimler-Straße"/>
+    <tag k="oneway" v="yes"/>
+    <tag k="ref" v="K 2"/>
+  </way>
+  <way id="242110559" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <nd ref="267372023"/>
+    <nd ref="2496614768"/>
+    <nd ref="2496605341"/>
+    <nd ref="2496605330"/>
+    <nd ref="267371948"/>
+    <nd ref="2319641328"/>
+    <nd ref="267372024"/>
+    <nd ref="2496605327"/>
+    <nd ref="276164359"/>
+    <tag k="highway" v="tertiary"/>
+    <tag k="lcn" v="yes"/>
+    <tag k="name" v="Gottlieb-Daimler-Straße"/>
+    <tag k="oneway" v="yes"/>
+    <tag k="ref" v="K 2"/>
+  </way>
+  <way id="242110870" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <nd ref="2496614747"/>
+    <nd ref="2496614751"/>
+    <nd ref="2496614754"/>
+    <nd ref="2496614757"/>
+    <nd ref="2496614759"/>
+    <nd ref="2496614762"/>
+    <nd ref="276164175"/>
+    <tag k="highway" v="residential"/>
+    <tag k="name" v="Gottlieb-Daimler-Straße"/>
+    <tag k="oneway" v="yes"/>
+    <tag k="ref" v="K 2"/>
+    <tag k="surface" v="asphalt"/>
+  </way>
+  <way id="242110871" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <nd ref="527823"/>
+    <nd ref="2496614764"/>
+    <nd ref="2319610744"/>
+    <nd ref="2496614755"/>
+    <nd ref="50609495"/>
+    <nd ref="2496614749"/>
+    <nd ref="2496614747"/>
+    <tag k="highway" v="residential"/>
+    <tag k="name" v="Gottlieb-Daimler-Straße"/>
+    <tag k="oneway" v="yes"/>
+    <tag k="ref" v="K 2"/>
+    <tag k="surface" v="asphalt"/>
+  </way>
+  <way id="242315344" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <nd ref="2498143249"/>
+    <nd ref="276161571"/>
+    <nd ref="419690685"/>
+    <nd ref="260070503"/>
+    <nd ref="356436910"/>
+    <nd ref="2180342187"/>
+    <nd ref="267373839"/>
+    <tag k="highway" v="secondary"/>
+    <tag k="name" v="Dinglerstraße"/>
+    <tag k="ref" v="L 469"/>
+    <tag k="surface" v="asphalt"/>
+  </way>
+  <way id="242315345" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <nd ref="2498143248"/>
+    <nd ref="2498143249"/>
+    <tag k="highway" v="secondary"/>
+    <tag k="maxheight:physical" v="4,3"/>
+    <tag k="name" v="Dinglerstraße"/>
+    <tag k="ref" v="L 469"/>
+    <tag k="surface" v="asphalt"/>
+  </way>
   <relation id="88376" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <member type="way" ref="49711476" role=""/>
-    <member type="way" ref="173662872" role=""/>
-    <member type="way" ref="173662873" role=""/>
-    <member type="way" ref="4386158" role=""/>
-    <member type="way" ref="166265081" role=""/>
-    <member type="way" ref="163114869" role=""/>
-    <member type="way" ref="167362102" role=""/>
-    <member type="way" ref="61605551" role=""/>
-    <member type="way" ref="61605553" role=""/>
-    <member type="way" ref="23577692" role=""/>
-    <member type="way" ref="25563418" role=""/>
-    <member type="way" ref="61605584" role="forward"/>
-    <member type="way" ref="55478964" role="forward"/>
-    <member type="way" ref="129768446" role="forward"/>
-    <member type="way" ref="55478953" role="forward"/>
-    <member type="way" ref="182770860" role="forward"/>
-    <member type="way" ref="182770895" role="forward"/>
-    <member type="way" ref="183353549" role="forward"/>
-    <member type="way" ref="55480007" role="forward"/>
-    <member type="way" ref="182832463" role="forward"/>
-    <member type="way" ref="182832461" role="forward"/>
-    <member type="way" ref="183353547" role="forward"/>
-    <member type="way" ref="183353537" role="forward"/>
-    <member type="way" ref="61605884" role="forward"/>
-    <member type="way" ref="61605565" role="forward"/>
-    <member type="way" ref="61605566" role="forward"/>
-    <member type="way" ref="55478950" role="forward"/>
-    <member type="way" ref="106998089" role="forward"/>
-    <member type="way" ref="180046734" role="forward"/>
-    <member type="way" ref="55478966" role="forward"/>
-    <member type="way" ref="157551270" role="forward"/>
-    <member type="way" ref="183353538" role="forward"/>
-    <member type="way" ref="189260398" role="forward"/>
-    <member type="way" ref="182081933" role="forward"/>
-    <member type="way" ref="32851732" role="forward"/>
-    <member type="way" ref="48978191" role=""/>
-    <member type="way" ref="48978190" role=""/>
-    <member type="way" ref="55480101" role=""/>
-    <member type="way" ref="55480111" role=""/>
-    <member type="way" ref="64942263" role=""/>
-    <member type="way" ref="61605939" role=""/>
-    <member type="way" ref="25563411" role=""/>
-    <member type="way" ref="129768445" role=""/>
-    <member type="way" ref="25585517" role=""/>
-    <member type="way" ref="23598732" role=""/>
-    <member type="way" ref="25563396" role=""/>
-    <member type="way" ref="25563270" role=""/>
-    <member type="way" ref="25563266" role=""/>
-    <member type="way" ref="142991583" role=""/>
-    <member type="way" ref="23487609" role=""/>
-    <member type="way" ref="24612183" role=""/>
-    <member type="way" ref="24612225" role=""/>
-    <member type="way" ref="25563258" role=""/>
-    <member type="way" ref="23628665" role=""/>
-    <member type="way" ref="179147122" role=""/>
-    <member type="way" ref="28390237" role=""/>
-    <member type="way" ref="28055447" role=""/>
-    <member type="way" ref="23806303" role=""/>
-    <member type="way" ref="24218945" role=""/>
-    <member type="way" ref="25407415" role=""/>
-    <member type="way" ref="238654487" role=""/>
-    <member type="way" ref="238654484" role=""/>
-    <member type="way" ref="238654482" role=""/>
-    <member type="way" ref="238654486" role=""/>
-    <member type="way" ref="238654479" role=""/>
-    <member type="way" ref="238654481" role=""/>
-    <member type="way" ref="229017954" role=""/>
-    <member type="way" ref="233570901" role=""/>
-    <member type="way" ref="233570902" role=""/>
-    <member type="way" ref="25407029" role=""/>
-    <member type="way" ref="24218946" role=""/>
-    <member type="way" ref="24218948" role=""/>
-    <member type="way" ref="25555445" role=""/>
-    <member type="way" ref="25843005" role=""/>
-    <member type="way" ref="25843070" role=""/>
-    <member type="way" ref="119052200" role=""/>
-    <member type="way" ref="25843071" role=""/>
-    <member type="way" ref="232000874" role=""/>
-    <member type="way" ref="218448413" role=""/>
-    <member type="way" ref="27672666" role=""/>
-    <member type="way" ref="39019980" role=""/>
-    <member type="way" ref="26063053" role=""/>
-    <member type="way" ref="69231870" role=""/>
-    <member type="way" ref="26056407" role=""/>
-    <member type="way" ref="26056405" role=""/>
-    <member type="way" ref="26056406" role=""/>
-    <member type="way" ref="180838401" role=""/>
-    <member type="way" ref="180838402" role=""/>
-    <member type="way" ref="26057698" role=""/>
-    <member type="way" ref="26056409" role=""/>
-    <member type="way" ref="26056410" role=""/>
-    <member type="way" ref="180840320" role=""/>
-    <member type="way" ref="106995953" role=""/>
-    <member type="way" ref="223762078" role=""/>
-    <member type="way" ref="180841426" role=""/>
-    <member type="way" ref="180841424" role=""/>
-    <member type="way" ref="223762079" role=""/>
-    <member type="way" ref="25909864" role=""/>
-    <member type="way" ref="25909865" role=""/>
-    <member type="way" ref="129127846" role=""/>
-    <member type="way" ref="26056412" role=""/>
-    <member type="way" ref="160011572" role=""/>
-    <member type="way" ref="25534543" role=""/>
-    <member type="way" ref="160011571" role=""/>
-    <member type="way" ref="25533947" role=""/>
-    <member type="way" ref="32779931" role=""/>
-    <member type="way" ref="25533946" role=""/>
-    <member type="way" ref="25533944" role=""/>
-    <member type="way" ref="25533945" role=""/>
-    <member type="way" ref="25533943" role=""/>
-    <member type="way" ref="217648889" role=""/>
-    <member type="way" ref="118179548" role=""/>
-    <member type="way" ref="188883133" role=""/>
-    <member type="way" ref="25919671" role=""/>
-    <member type="way" ref="176624417" role=""/>
-    <member type="way" ref="176624418" role=""/>
-    <member type="way" ref="120510507" role=""/>
-    <member type="way" ref="25533941" role=""/>
-    <member type="way" ref="188880267" role=""/>
-    <member type="way" ref="188880268" role=""/>
-    <member type="way" ref="32884987" role=""/>
-    <member type="way" ref="32884985" role=""/>
-    <member type="way" ref="35935723" role=""/>
-    <member type="way" ref="161868319" role=""/>
-    <member type="way" ref="25768247" role=""/>
-    <member type="way" ref="43179015" role=""/>
-    <member type="way" ref="26233668" role=""/>
-    <member type="way" ref="26233568" role=""/>
-    <member type="way" ref="229857050" role=""/>
-    <member type="way" ref="194772289" role=""/>
-    <member type="way" ref="60690085" role=""/>
-    <member type="way" ref="229857056" role=""/>
-    <member type="way" ref="229857053" role=""/>
-    <member type="way" ref="229857057" role=""/>
-    <member type="way" ref="229857055" role=""/>
-    <member type="way" ref="229857058" role=""/>
-    <member type="way" ref="128405402" role=""/>
-    <member type="way" ref="135574548" role=""/>
-    <member type="way" ref="90116540" role=""/>
-    <member type="way" ref="131389654" role=""/>
-    <member type="way" ref="135576312" role=""/>
-    <member type="way" ref="104203984" role=""/>
-    <member type="way" ref="135576354" role=""/>
-    <member type="way" ref="135576352" role=""/>
-    <member type="way" ref="113733902" role=""/>
-    <member type="way" ref="135576351" role=""/>
-    <member type="way" ref="135578209" role=""/>
-    <member type="way" ref="135578211" role=""/>
-    <member type="way" ref="135576359" role=""/>
-    <member type="way" ref="208102255" role=""/>
-    <member type="way" ref="208102248" role=""/>
-    <member type="way" ref="180658073" role=""/>
-    <member type="way" ref="180658075" role=""/>
-    <member type="way" ref="180658072" role=""/>
-    <member type="way" ref="209210540" role=""/>
-    <member type="way" ref="135576320" role=""/>
-    <member type="way" ref="207888903" role=""/>
-    <member type="way" ref="135579117" role=""/>
-    <member type="way" ref="40254294" role=""/>
-    <member type="way" ref="135576322" role=""/>
-    <member type="way" ref="40254300" role=""/>
-    <member type="way" ref="135252743" role=""/>
-    <member type="way" ref="135576364" role=""/>
-    <member type="way" ref="26502159" role=""/>
-    <member type="way" ref="26502173" role=""/>
-    <member type="way" ref="135576315" role=""/>
-    <member type="way" ref="26502172" role=""/>
-    <member type="way" ref="26597077" role=""/>
-    <member type="way" ref="135576307" role=""/>
-    <member type="way" ref="135576304" role=""/>
-    <member type="way" ref="26491411" role=""/>
-    <member type="way" ref="26502132" role=""/>
-    <member type="way" ref="26502133" role=""/>
-    <member type="way" ref="32811643" role=""/>
-    <member type="way" ref="32811311" role=""/>
-    <member type="way" ref="39825201" role=""/>
-    <member type="way" ref="66727998" role=""/>
-    <member type="way" ref="135579118" role=""/>
-    <member type="way" ref="27802652" role=""/>
-    <member type="way" ref="39793737" role=""/>
-    <member type="way" ref="135576308" role=""/>
-    <member type="way" ref="134399272" role=""/>
-    <member type="way" ref="135576377" role=""/>
-    <member type="way" ref="134399258" role=""/>
-    <member type="way" ref="135576373" role=""/>
-    <member type="way" ref="134399246" role=""/>
-    <member type="way" ref="135576353" role=""/>
-    <member type="way" ref="116872666" role=""/>
-    <member type="way" ref="180660270" role=""/>
-    <member type="way" ref="180660268" role=""/>
-    <member type="way" ref="116874340" role=""/>
-    <member type="way" ref="135576334" role=""/>
-    <member type="way" ref="180660263" role=""/>
-    <member type="way" ref="135576381" role=""/>
-    <member type="way" ref="135576376" role=""/>
-    <member type="way" ref="90649496" role=""/>
-    <member type="way" ref="135579601" role=""/>
-    <member type="way" ref="135579603" role=""/>
-    <member type="way" ref="135576348" role=""/>
-    <member type="way" ref="180660269" role=""/>
-    <member type="way" ref="131429640" role=""/>
-    <member type="way" ref="135576372" role=""/>
-    <member type="way" ref="131437859" role=""/>
-    <member type="way" ref="131437458" role=""/>
-    <member type="way" ref="29420971" role=""/>
-    <member type="way" ref="29420997" role=""/>
-    <member type="way" ref="30096009" role=""/>
-    <member type="way" ref="39675384" role=""/>
-    <member type="way" ref="29374648" role=""/>
-    <member type="way" ref="70119076" role=""/>
-    <member type="way" ref="61639199" role=""/>
-    <member type="way" ref="25857231" role=""/>
-    <member type="way" ref="23947473" role=""/>
-    <member type="way" ref="70006544" role=""/>
-    <member type="way" ref="23947471" role=""/>
-    <member type="way" ref="39675383" role=""/>
-    <member type="way" ref="39675382" role=""/>
-    <member type="way" ref="49838668" role=""/>
-    <member type="way" ref="49838670" role=""/>
-    <member type="way" ref="49838671" role=""/>
-    <member type="way" ref="28349834" role=""/>
-    <member type="way" ref="28349837" role=""/>
-    <member type="way" ref="28349836" role=""/>
-    <member type="way" ref="179250056" role=""/>
-    <member type="way" ref="45875865" role=""/>
-    <member type="way" ref="131405396" role=""/>
-    <member type="way" ref="131405395" role=""/>
-    <member type="way" ref="28349835" role=""/>
-    <member type="way" ref="172451870" role=""/>
-    <member type="way" ref="135576371" role=""/>
-    <member type="way" ref="41920422" role=""/>
-    <member type="way" ref="135576347" role=""/>
-    <member type="way" ref="41920420" role=""/>
-    <member type="way" ref="33892181" role=""/>
-    <member type="way" ref="135576333" role=""/>
-    <member type="way" ref="33892184" role=""/>
-    <member type="way" ref="33892185" role=""/>
-    <member type="way" ref="135576301" role=""/>
     <member type="way" ref="38228600" role=""/>
-    <member type="way" ref="182081932" role=""/>
-    <member type="way" ref="173662870" role=""/>
-    <member type="way" ref="33174469" role=""/>
+    <member type="way" ref="135576301" role=""/>
+    <member type="way" ref="33892185" role=""/>
+    <member type="way" ref="33892184" role=""/>
+    <member type="way" ref="135576333" role=""/>
+    <member type="way" ref="33892181" role=""/>
+    <member type="way" ref="41920420" role=""/>
+    <member type="way" ref="135576347" role=""/>
+    <member type="way" ref="41920422" role=""/>
+    <member type="way" ref="135576371" role=""/>
+    <member type="way" ref="172451870" role=""/>
+    <member type="way" ref="28349835" role=""/>
+    <member type="way" ref="131405395" role=""/>
+    <member type="way" ref="131405396" role=""/>
+    <member type="way" ref="45875865" role=""/>
+    <member type="way" ref="179250056" role=""/>
+    <member type="way" ref="28349836" role=""/>
+    <member type="way" ref="28349837" role=""/>
+    <member type="way" ref="28349834" role=""/>
+    <member type="way" ref="49838671" role=""/>
+    <member type="way" ref="49838670" role=""/>
+    <member type="way" ref="49838668" role=""/>
+    <member type="way" ref="39675382" role=""/>
+    <member type="way" ref="39675383" role=""/>
+    <member type="way" ref="23947471" role=""/>
+    <member type="way" ref="70006544" role=""/>
+    <member type="way" ref="23947473" role=""/>
+    <member type="way" ref="25857231" role=""/>
+    <member type="way" ref="61639199" role=""/>
+    <member type="way" ref="70119076" role=""/>
+    <member type="way" ref="29374648" role=""/>
+    <member type="way" ref="39675384" role=""/>
+    <member type="way" ref="30096009" role=""/>
+    <member type="way" ref="29420997" role=""/>
+    <member type="way" ref="29420971" role=""/>
+    <member type="way" ref="131437458" role=""/>
+    <member type="way" ref="131437859" role=""/>
+    <member type="way" ref="135576372" role=""/>
+    <member type="way" ref="131429640" role=""/>
+    <member type="way" ref="180660269" role=""/>
+    <member type="way" ref="135576348" role=""/>
+    <member type="way" ref="135579603" role=""/>
+    <member type="way" ref="135579601" role=""/>
+    <member type="way" ref="241287230" role=""/>
+    <member type="way" ref="90649496" role=""/>
+    <member type="way" ref="135576376" role=""/>
+    <member type="way" ref="241287234" role=""/>
+    <member type="way" ref="135576381" role=""/>
+    <member type="way" ref="180660263" role=""/>
+    <member type="way" ref="135576334" role=""/>
+    <member type="way" ref="116874340" role=""/>
+    <member type="way" ref="180660268" role=""/>
+    <member type="way" ref="180660270" role=""/>
+    <member type="way" ref="116872666" role=""/>
+    <member type="way" ref="135576353" role=""/>
+    <member type="way" ref="134399246" role=""/>
+    <member type="way" ref="135576373" role=""/>
+    <member type="way" ref="241512502" role=""/>
+    <member type="way" ref="134399272" role=""/>
+    <member type="way" ref="135576308" role=""/>
+    <member type="way" ref="241512494" role=""/>
+    <member type="way" ref="39793737" role=""/>
+    <member type="way" ref="27802652" role=""/>
+    <member type="way" ref="135579118" role=""/>
+    <member type="way" ref="66727998" role=""/>
+    <member type="way" ref="39825201" role=""/>
+    <member type="way" ref="32811311" role=""/>
+    <member type="way" ref="32811643" role=""/>
+    <member type="way" ref="26502133" role=""/>
+    <member type="way" ref="26502132" role=""/>
+    <member type="way" ref="26491411" role=""/>
+    <member type="way" ref="135576304" role=""/>
+    <member type="way" ref="135576307" role=""/>
+    <member type="way" ref="26597077" role=""/>
+    <member type="way" ref="26502172" role=""/>
+    <member type="way" ref="135576315" role=""/>
+    <member type="way" ref="26502173" role=""/>
+    <member type="way" ref="26502159" role=""/>
+    <member type="way" ref="135576364" role=""/>
+    <member type="way" ref="135252743" role=""/>
+    <member type="way" ref="40254300" role=""/>
+    <member type="way" ref="135576322" role=""/>
+    <member type="way" ref="40254294" role=""/>
+    <member type="way" ref="135579117" role=""/>
+    <member type="way" ref="207888903" role=""/>
+    <member type="way" ref="135576320" role=""/>
+    <member type="way" ref="209210540" role=""/>
+    <member type="way" ref="180658072" role=""/>
+    <member type="way" ref="180658075" role=""/>
+    <member type="way" ref="180658073" role=""/>
+    <member type="way" ref="208102248" role=""/>
+    <member type="way" ref="208102255" role=""/>
+    <member type="way" ref="135576359" role=""/>
+    <member type="way" ref="135578211" role=""/>
+    <member type="way" ref="135578209" role=""/>
+    <member type="way" ref="135576351" role=""/>
+    <member type="way" ref="113733902" role=""/>
+    <member type="way" ref="135576352" role=""/>
+    <member type="way" ref="135576354" role=""/>
+    <member type="way" ref="104203984" role=""/>
+    <member type="way" ref="135576312" role=""/>
+    <member type="way" ref="131389654" role=""/>
+    <member type="way" ref="90116540" role=""/>
+    <member type="way" ref="135574548" role=""/>
+    <member type="way" ref="128405402" role=""/>
+    <member type="way" ref="229857058" role=""/>
+    <member type="way" ref="229857055" role=""/>
+    <member type="way" ref="229857057" role=""/>
+    <member type="way" ref="229857053" role=""/>
+    <member type="way" ref="229857056" role=""/>
+    <member type="way" ref="60690085" role=""/>
+    <member type="way" ref="194772289" role=""/>
+    <member type="way" ref="229857050" role=""/>
+    <member type="way" ref="26233568" role=""/>
+    <member type="way" ref="26233668" role=""/>
+    <member type="way" ref="43179015" role=""/>
+    <member type="way" ref="25768247" role=""/>
+    <member type="way" ref="161868319" role=""/>
+    <member type="way" ref="35935723" role=""/>
+    <member type="way" ref="32884985" role=""/>
+    <member type="way" ref="32884987" role=""/>
+    <member type="way" ref="188880268" role=""/>
+    <member type="way" ref="188880267" role=""/>
+    <member type="way" ref="25533941" role=""/>
+    <member type="way" ref="120510507" role=""/>
+    <member type="way" ref="176624418" role=""/>
+    <member type="way" ref="176624417" role=""/>
+    <member type="way" ref="25919671" role=""/>
+    <member type="way" ref="188883133" role=""/>
+    <member type="way" ref="118179548" role=""/>
+    <member type="way" ref="217648889" role=""/>
+    <member type="way" ref="25533943" role=""/>
+    <member type="way" ref="25533945" role=""/>
+    <member type="way" ref="25533944" role=""/>
+    <member type="way" ref="25533946" role=""/>
+    <member type="way" ref="32779931" role=""/>
+    <member type="way" ref="25533947" role=""/>
+    <member type="way" ref="160011571" role=""/>
+    <member type="way" ref="25534543" role=""/>
+    <member type="way" ref="160011572" role=""/>
+    <member type="way" ref="26056412" role=""/>
+    <member type="way" ref="129127846" role=""/>
+    <member type="way" ref="25909865" role=""/>
+    <member type="way" ref="25909864" role=""/>
+    <member type="way" ref="223762079" role=""/>
+    <member type="way" ref="180841424" role=""/>
+    <member type="way" ref="180841426" role=""/>
+    <member type="way" ref="223762078" role=""/>
+    <member type="way" ref="106995953" role=""/>
+    <member type="way" ref="180840320" role=""/>
+    <member type="way" ref="26056410" role=""/>
+    <member type="way" ref="26056409" role=""/>
+    <member type="way" ref="26057698" role=""/>
+    <member type="way" ref="180838402" role=""/>
+    <member type="way" ref="180838401" role=""/>
+    <member type="way" ref="26056406" role=""/>
+    <member type="way" ref="26056405" role=""/>
+    <member type="way" ref="26056407" role=""/>
+    <member type="way" ref="69231870" role=""/>
+    <member type="way" ref="26063053" role=""/>
+    <member type="way" ref="39019980" role=""/>
+    <member type="way" ref="27672666" role=""/>
+    <member type="way" ref="218448413" role=""/>
+    <member type="way" ref="232000874" role=""/>
+    <member type="way" ref="25843071" role=""/>
+    <member type="way" ref="119052200" role=""/>
+    <member type="way" ref="25843070" role=""/>
+    <member type="way" ref="25843005" role=""/>
+    <member type="way" ref="25555445" role=""/>
+    <member type="way" ref="24218948" role=""/>
+    <member type="way" ref="24218946" role=""/>
+    <member type="way" ref="25407029" role=""/>
+    <member type="way" ref="233570902" role=""/>
+    <member type="way" ref="233570901" role=""/>
+    <member type="way" ref="229017954" role=""/>
+    <member type="way" ref="238654481" role=""/>
+    <member type="way" ref="238654479" role=""/>
+    <member type="way" ref="238654486" role=""/>
+    <member type="way" ref="238654482" role=""/>
+    <member type="way" ref="238654484" role=""/>
+    <member type="way" ref="238654487" role=""/>
+    <member type="way" ref="25407415" role=""/>
+    <member type="way" ref="24218945" role=""/>
+    <member type="way" ref="23806303" role=""/>
+    <member type="way" ref="28055447" role=""/>
+    <member type="way" ref="28390237" role=""/>
+    <member type="way" ref="179147122" role=""/>
+    <member type="way" ref="23628665" role=""/>
+    <member type="way" ref="25563258" role=""/>
+    <member type="way" ref="24612225" role=""/>
+    <member type="way" ref="24612183" role=""/>
+    <member type="way" ref="23487609" role=""/>
+    <member type="way" ref="142991583" role=""/>
+    <member type="way" ref="25563266" role=""/>
+    <member type="way" ref="25563270" role=""/>
+    <member type="way" ref="25563396" role=""/>
+    <member type="way" ref="23598732" role=""/>
+    <member type="way" ref="25585517" role=""/>
+    <member type="way" ref="129768445" role=""/>
+    <member type="way" ref="25563411" role=""/>
+    <member type="way" ref="61605939" role=""/>
+    <member type="way" ref="64942263" role=""/>
+    <member type="way" ref="55480111" role=""/>
+    <member type="way" ref="55480101" role=""/>
+    <member type="way" ref="48978190" role=""/>
+    <member type="way" ref="48978191" role=""/>
+    <member type="way" ref="32851732" role="forward"/>
+    <member type="way" ref="182081933" role="forward"/>
+    <member type="way" ref="189260398" role="forward"/>
+    <member type="way" ref="183353538" role="forward"/>
+    <member type="way" ref="157551270" role="forward"/>
+    <member type="way" ref="55478966" role="forward"/>
+    <member type="way" ref="180046734" role="forward"/>
+    <member type="way" ref="106998089" role="forward"/>
+    <member type="way" ref="55478950" role="forward"/>
+    <member type="way" ref="61605566" role="forward"/>
+    <member type="way" ref="61605565" role="forward"/>
+    <member type="way" ref="61605884" role="forward"/>
+    <member type="way" ref="183353537" role="forward"/>
+    <member type="way" ref="183353547" role="forward"/>
+    <member type="way" ref="182832461" role="forward"/>
+    <member type="way" ref="182832463" role="forward"/>
+    <member type="way" ref="55480007" role="forward"/>
+    <member type="way" ref="183353549" role="forward"/>
+    <member type="way" ref="182770895" role="forward"/>
+    <member type="way" ref="182770860" role="forward"/>
+    <member type="way" ref="55478953" role="forward"/>
+    <member type="way" ref="129768446" role="forward"/>
+    <member type="way" ref="55478964" role="forward"/>
+    <member type="way" ref="61605584" role="forward"/>
+    <member type="way" ref="25563418" role=""/>
+    <member type="way" ref="23577692" role=""/>
+    <member type="way" ref="61605553" role=""/>
+    <member type="way" ref="61605551" role=""/>
+    <member type="way" ref="167362102" role=""/>
+    <member type="way" ref="163114869" role=""/>
+    <member type="way" ref="166265081" role=""/>
+    <member type="way" ref="4386158" role=""/>
+    <member type="way" ref="173662873" role=""/>
+    <member type="way" ref="173662872" role=""/>
+    <member type="way" ref="49711476" role=""/>
     <member type="way" ref="143749261" role=""/>
     <member type="way" ref="173662871" role=""/>
+    <member type="way" ref="33174469" role=""/>
+    <member type="way" ref="173662870" role=""/>
+    <member type="way" ref="182081932" role=""/>
     <member type="way" ref="33174470" role=""/>
     <member type="way" ref="173669476" role=""/>
     <member type="way" ref="48564392" role=""/>
@@ -21496,6 +21608,7 @@
     <member type="way" ref="4386161" role=""/>
     <member type="way" ref="162015836" role=""/>
     <member type="way" ref="55811352" role=""/>
+    <member type="way" ref="243090036" role=""/>
     <member type="way" ref="55811350" role=""/>
     <member type="way" ref="4386163" role=""/>
     <member type="way" ref="38435810" role=""/>
@@ -21590,7 +21703,8 @@
     <member type="way" ref="61734067" role=""/>
     <member type="way" ref="60727330" role=""/>
     <member type="way" ref="231788318" role=""/>
-    <member type="way" ref="25111730" role=""/>
+    <member type="way" ref="242832814" role=""/>
+    <member type="way" ref="159397584" role=""/>
     <member type="way" ref="25111408" role=""/>
     <member type="way" ref="26241072" role=""/>
     <member type="way" ref="207248475" role=""/>
@@ -21645,6 +21759,7 @@
     <member type="way" ref="127737401" role=""/>
     <member type="way" ref="55853449" role=""/>
     <member type="way" ref="24679355" role=""/>
+    <member type="way" ref="241221926" role=""/>
     <member type="way" ref="196984754" role=""/>
     <member type="way" ref="196984752" role=""/>
     <member type="way" ref="26388019" role=""/>
@@ -22013,9 +22128,9 @@
     <member type="way" ref="37192125" role=""/>
     <member type="way" ref="26209125" role=""/>
     <member type="way" ref="37192196" role=""/>
+    <member type="way" ref="242831540" role=""/>
+    <member type="way" ref="242831541" role=""/>
     <member type="way" ref="37192195" role=""/>
-    <member type="way" ref="240521336" role=""/>
-    <member type="way" ref="240521335" role=""/>
     <member type="way" ref="37192201" role=""/>
     <member type="way" ref="154796129" role=""/>
     <member type="way" ref="24595460" role=""/>
@@ -22299,9 +22414,13 @@
     <member type="way" ref="23417575" role=""/>
     <member type="way" ref="22414488" role=""/>
     <member type="way" ref="22906319" role=""/>
+    <member type="way" ref="244407395" role=""/>
+    <member type="way" ref="244407393" role=""/>
     <member type="way" ref="58109962" role=""/>
     <member type="way" ref="24036442" role=""/>
     <member type="way" ref="34419294" role=""/>
+    <member type="way" ref="244867842" role=""/>
+    <member type="way" ref="244867843" role=""/>
     <member type="way" ref="58383038" role=""/>
     <member type="way" ref="58109854" role=""/>
     <member type="way" ref="25404469" role=""/>
@@ -22343,16 +22462,17 @@
     <member type="way" ref="173518616" role=""/>
     <member type="way" ref="33870877" role=""/>
     <member type="way" ref="25403549" role=""/>
+    <member type="way" ref="242828276" role=""/>
     <member type="way" ref="25403443" role=""/>
     <member type="way" ref="25403436" role=""/>
     <member type="way" ref="25403422" role=""/>
     <member type="way" ref="25133803" role=""/>
     <member type="way" ref="33891664" role=""/>
-    <member type="way" ref="32843746" role=""/>
-    <member type="way" ref="8054126" role=""/>
+    <member type="way" ref="243671748" role=""/>
+    <member type="way" ref="45476637" role=""/>
     <member type="way" ref="40166042" role=""/>
     <member type="way" ref="45476634" role=""/>
-    <member type="way" ref="45476637" role=""/>
+    <member type="way" ref="243671749" role=""/>
     <member type="way" ref="30128680" role=""/>
     <member type="way" ref="30128682" role=""/>
     <member type="way" ref="30510375" role=""/>
@@ -22923,7 +23043,6 @@
     <member type="way" ref="27921373" role=""/>
     <member type="way" ref="24256538" role=""/>
     <member type="way" ref="36003010" role=""/>
-    <member type="way" ref="36003009" role=""/>
     <member type="way" ref="154796117" role=""/>
     <member type="way" ref="98491776" role=""/>
     <member type="way" ref="98491777" role=""/>
@@ -23161,6 +23280,7 @@
     <member type="way" ref="46491460" role=""/>
     <member type="way" ref="11144861" role=""/>
     <member type="way" ref="67156979" role=""/>
+    <member type="way" ref="241600794" role=""/>
     <member type="way" ref="16874418" role=""/>
     <member type="way" ref="20293209" role=""/>
     <member type="way" ref="25350282" role=""/>
@@ -23421,8 +23541,6 @@
     <member type="way" ref="10704894" role=""/>
     <member type="way" ref="40761694" role=""/>
     <member type="way" ref="162916785" role=""/>
-    <member type="way" ref="230059451" role="forward"/>
-    <member type="way" ref="143967807" role="forward"/>
     <member type="way" ref="143968702" role=""/>
     <member type="way" ref="143968693" role=""/>
     <member type="way" ref="143968698" role=""/>
@@ -23480,7 +23598,7 @@
     <member type="node" ref="489046" role=""/>
     <member type="way" ref="6117559" role=""/>
     <member type="way" ref="237981636" role=""/>
-    <member type="way" ref="24595354" role=""/>
+    <member type="way" ref="242110872" role=""/>
     <member type="way" ref="27535904" role=""/>
     <member type="node" ref="1499108598" role=""/>
     <tag k="junction" v="link"/>
@@ -23489,7 +23607,7 @@
     <tag k="type" v="junction"/>
   </relation>
   <relation id="121229" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <member type="way" ref="112228868" role=""/>
+    <member type="way" ref="242102249" role=""/>
     <member type="way" ref="25497336" role=""/>
     <member type="way" ref="25991702" role=""/>
     <member type="way" ref="8745578" role=""/>
@@ -23553,9 +23671,8 @@
     <member type="way" ref="37192125" role=""/>
     <member type="way" ref="26209125" role=""/>
     <member type="way" ref="37192196" role=""/>
+    <member type="way" ref="242831540" role=""/>
     <member type="way" ref="37192195" role=""/>
-    <member type="way" ref="240521336" role=""/>
-    <member type="way" ref="240521335" role=""/>
     <member type="way" ref="37192201" role=""/>
     <member type="way" ref="154796129" role=""/>
     <member type="way" ref="24595460" role=""/>
@@ -23755,145 +23872,6 @@
     <tag k="route" v="bicycle"/>
     <tag k="type" v="route"/>
     <tag k="website" v="www.radwanderland.de/public/steckbriefe/pirminius-radweg.pdf"/>
-  </relation>
-  <relation id="166269" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
-    <member type="way" ref="191924033" role=""/>
-    <member type="way" ref="129218465" role=""/>
-    <member type="way" ref="129218461" role=""/>
-    <member type="way" ref="239931750" role=""/>
-    <member type="way" ref="129218467" role=""/>
-    <member type="way" ref="167229877" role=""/>
-    <member type="way" ref="167229879" role=""/>
-    <member type="way" ref="240178017" role=""/>
-    <member type="way" ref="26363540" role=""/>
-    <member type="way" ref="23999487" role=""/>
-    <member type="way" ref="23999488" role=""/>
-    <member type="way" ref="240177996" role=""/>
-    <member type="way" ref="25807158" role=""/>
-    <member type="way" ref="240178002" role=""/>
-    <member type="way" ref="240177998" role=""/>
-    <member type="way" ref="121640135" role=""/>
-    <member type="way" ref="138205416" role=""/>
-    <member type="way" ref="142696748" role=""/>
-    <member type="way" ref="163075798" role=""/>
-    <member type="way" ref="162555886" role=""/>
-    <member type="way" ref="240178000" role=""/>
-    <member type="way" ref="240178003" role=""/>
-    <member type="way" ref="45138302" role=""/>
-    <member type="way" ref="41201870" role=""/>
-    <member type="way" ref="240177997" role=""/>
-    <member type="way" ref="29262718" role=""/>
-    <member type="way" ref="29262716" role=""/>
-    <member type="way" ref="163075797" role=""/>
-    <member type="way" ref="25807223" role=""/>
-    <member type="way" ref="163075799" role=""/>
-    <member type="way" ref="105137996" role=""/>
-    <member type="way" ref="236420665" role=""/>
-    <member type="way" ref="236420663" role=""/>
-    <member type="way" ref="27074378" role=""/>
-    <member type="way" ref="51980241" role=""/>
-    <member type="way" ref="51980222" role=""/>
-    <member type="way" ref="27074376" role=""/>
-    <member type="way" ref="24224127" role=""/>
-    <member type="way" ref="199040724" role=""/>
-    <member type="way" ref="199040726" role=""/>
-    <member type="way" ref="126815508" role=""/>
-    <member type="way" ref="126815499" role=""/>
-    <member type="way" ref="133130686" role=""/>
-    <member type="way" ref="44490306" role=""/>
-    <member type="way" ref="163075800" role=""/>
-    <member type="way" ref="163075814" role=""/>
-    <member type="way" ref="84124033" role=""/>
-    <member type="way" ref="84124110" role=""/>
-    <member type="way" ref="44490246" role=""/>
-    <member type="way" ref="44490244" role=""/>
-    <member type="way" ref="163074297" role=""/>
-    <member type="way" ref="206369354" role=""/>
-    <member type="way" ref="206369357" role=""/>
-    <member type="way" ref="206369355" role=""/>
-    <member type="way" ref="38886193" role=""/>
-    <member type="way" ref="30908619" role=""/>
-    <member type="way" ref="34754476" role=""/>
-    <member type="way" ref="26123948" role=""/>
-    <member type="way" ref="38899435" role=""/>
-    <member type="way" ref="231383099" role=""/>
-    <member type="way" ref="38878601" role=""/>
-    <member type="way" ref="38899409" role=""/>
-    <member type="way" ref="25915731" role=""/>
-    <member type="way" ref="25886865" role=""/>
-    <member type="way" ref="104010596" role=""/>
-    <member type="way" ref="25886864" role=""/>
-    <member type="way" ref="38878563" role=""/>
-    <member type="way" ref="31766754" role=""/>
-    <member type="way" ref="25840782" role=""/>
-    <member type="way" ref="122624880" role=""/>
-    <member type="way" ref="122624883" role=""/>
-    <member type="way" ref="122624881" role=""/>
-    <member type="way" ref="56131753" role=""/>
-    <member type="way" ref="56131754" role=""/>
-    <member type="way" ref="154796150" role=""/>
-    <member type="way" ref="37196490" role=""/>
-    <member type="way" ref="112390289" role=""/>
-    <member type="way" ref="112390293" role=""/>
-    <member type="way" ref="26450601" role=""/>
-    <member type="way" ref="25493562" role=""/>
-    <member type="way" ref="25955509" role=""/>
-    <member type="way" ref="37196422" role=""/>
-    <member type="way" ref="25955507" role=""/>
-    <member type="way" ref="25955506" role=""/>
-    <member type="way" ref="25955504" role=""/>
-    <member type="way" ref="25955503" role=""/>
-    <member type="way" ref="25955502" role=""/>
-    <member type="way" ref="55825028" role=""/>
-    <member type="way" ref="25955501" role=""/>
-    <member type="way" ref="25605109" role=""/>
-    <member type="way" ref="25859101" role=""/>
-    <member type="way" ref="25955349" role=""/>
-    <member type="way" ref="112789554" role=""/>
-    <member type="way" ref="112789556" role=""/>
-    <member type="way" ref="112789553" role=""/>
-    <member type="way" ref="29984153" role=""/>
-    <member type="way" ref="29984155" role=""/>
-    <member type="way" ref="37192259" role=""/>
-    <member type="way" ref="25955329" role=""/>
-    <member type="way" ref="37192240" role=""/>
-    <member type="way" ref="25623885" role=""/>
-    <member type="way" ref="25596305" role=""/>
-    <member type="way" ref="25596303" role=""/>
-    <member type="way" ref="24595460" role=""/>
-    <member type="way" ref="37192235" role=""/>
-    <member type="way" ref="104372224" role=""/>
-    <member type="way" ref="223015637" role=""/>
-    <member type="way" ref="35137512" role=""/>
-    <member type="way" ref="35137511" role=""/>
-    <member type="way" ref="28823046" role=""/>
-    <member type="way" ref="112397243" role=""/>
-    <member type="way" ref="26337687" role=""/>
-    <member type="way" ref="163074158" role=""/>
-    <member type="way" ref="138642012" role=""/>
-    <member type="way" ref="237931445" role=""/>
-    <member type="way" ref="163074157" role=""/>
-    <member type="way" ref="170755409" role=""/>
-    <member type="way" ref="26604397" role=""/>
-    <member type="way" ref="214242334" role=""/>
-    <member type="way" ref="56134024" role=""/>
-    <member type="way" ref="56134025" role=""/>
-    <member type="way" ref="163078154" role=""/>
-    <member type="way" ref="25955251" role=""/>
-    <member type="way" ref="27621546" role=""/>
-    <member type="way" ref="33720620" role=""/>
-    <member type="way" ref="33720621" role=""/>
-    <member type="way" ref="27609751" role=""/>
-    <member type="way" ref="27609750" role=""/>
-    <member type="way" ref="34910458" role=""/>
-    <tag k="description" v="Johanniskreuz über Waldfischbach-Burgalben, Zweibrücken zum Glan-Blies-Radweg bei Einöd"/>
-    <tag k="distance" v="60 Km"/>
-    <tag k="name" v="Südwestpfalz Tour"/>
-    <tag k="network" v="lcn"/>
-    <tag k="ref" v="SWPf"/>
-    <tag k="route" v="bicycle"/>
-    <tag k="type" v="route"/>
-    <tag k="website" v="www.radwanderland.de/public/steckbriefe/suedwestpfalz-tour.pdf"/>
   </relation>
   <relation id="166325" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
     <member type="way" ref="25740229" role=""/>
@@ -24837,6 +24815,7 @@
     <member type="way" ref="146467975" role=""/>
     <member type="way" ref="146467976" role=""/>
     <member type="way" ref="32936043" role=""/>
+    <member type="way" ref="242014570" role=""/>
     <member type="way" ref="25136609" role=""/>
     <member type="way" ref="138517607" role=""/>
     <member type="way" ref="25136536" role=""/>
@@ -24878,8 +24857,10 @@
     <member type="way" ref="14307909" role=""/>
     <member type="way" ref="8746309" role=""/>
     <member type="way" ref="140654364" role=""/>
+    <member type="way" ref="242102248" role=""/>
     <member type="way" ref="206667146" role=""/>
     <member type="way" ref="206667147" role=""/>
+    <member type="way" ref="242102247" role=""/>
     <member type="way" ref="140654365" role=""/>
     <member type="way" ref="136510279" role=""/>
     <member type="way" ref="136510272" role=""/>
@@ -25442,7 +25423,6 @@
     <member type="node" ref="299812429" role=""/>
     <member type="node" ref="318804216" role=""/>
     <member type="node" ref="346129089" role=""/>
-    <member type="node" ref="293344365" role=""/>
     <member type="node" ref="471106209" role=""/>
     <member type="node" ref="619706396" role=""/>
     <member type="node" ref="299376185" role=""/>
@@ -25598,6 +25578,7 @@
     <member type="node" ref="2365944297" role=""/>
     <member type="node" ref="1562087818" role=""/>
     <member type="node" ref="2478212098" role=""/>
+    <member type="node" ref="2513889060" role=""/>
     <tag k="name" v="Packstationen"/>
     <tag k="operator" v="DHL Vertriebs GmbH &amp; Co. OHG"/>
     <tag k="type" v="network"/>
@@ -26199,8 +26180,10 @@
     <member type="way" ref="112787266" role=""/>
     <member type="way" ref="83687003" role=""/>
     <member type="way" ref="83687011" role=""/>
+    <member type="way" ref="242102247" role=""/>
     <member type="way" ref="206667147" role=""/>
     <member type="way" ref="206667146" role=""/>
+    <member type="way" ref="242102248" role=""/>
     <member type="way" ref="140654364" role=""/>
     <member type="way" ref="140654365" role=""/>
     <member type="way" ref="136510279" role=""/>
@@ -26365,7 +26348,6 @@
     <member type="way" ref="171698929" role=""/>
     <member type="node" ref="414033180" role=""/>
     <member type="way" ref="216207296" role=""/>
-    <member type="way" ref="216207776" role=""/>
     <member type="way" ref="172623714" role=""/>
     <member type="way" ref="122971751" role=""/>
     <member type="way" ref="38227735" role=""/>
@@ -26472,7 +26454,9 @@
     <member type="way" ref="26479857" role=""/>
     <member type="way" ref="117512358" role=""/>
     <member type="way" ref="127052378" role=""/>
+    <member type="way" ref="242229886" role=""/>
     <member type="way" ref="127052379" role=""/>
+    <member type="way" ref="242229885" role=""/>
     <member type="way" ref="127052376" role=""/>
     <member type="way" ref="127052377" role=""/>
     <member type="way" ref="37606739" role=""/>
@@ -26622,6 +26606,8 @@
     <member type="way" ref="79919499" role=""/>
     <member type="way" ref="114129119" role=""/>
     <member type="way" ref="31831784" role=""/>
+    <member type="way" ref="242315344" role=""/>
+    <member type="way" ref="242315345" role=""/>
     <member type="way" ref="31831783" role=""/>
     <member type="way" ref="136510693" role=""/>
     <member type="way" ref="23987088" role=""/>
@@ -27015,8 +27001,8 @@
   </relation>
   <relation id="2778158" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
     <member type="way" ref="206667146" role="from"/>
-    <member type="way" ref="140654364" role="to"/>
     <member type="node" ref="1276244339" role="via"/>
+    <member type="way" ref="242102248" role="to"/>
     <tag k="restriction" v="only_straight_on"/>
     <tag k="type" v="restriction"/>
   </relation>
@@ -27025,6 +27011,176 @@
     <member type="way" ref="206667147" role="to"/>
     <member type="node" ref="1276244360" role="via"/>
     <tag k="restriction" v="only_straight_on"/>
+    <tag k="type" v="restriction"/>
+  </relation>
+  <relation id="3259403" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <member type="way" ref="191924033" role=""/>
+    <member type="way" ref="129218465" role=""/>
+    <member type="way" ref="129218461" role=""/>
+    <member type="way" ref="239931750" role=""/>
+    <member type="way" ref="129218467" role=""/>
+    <member type="way" ref="167229877" role=""/>
+    <member type="way" ref="167229879" role=""/>
+    <member type="way" ref="240178017" role=""/>
+    <member type="way" ref="26363540" role=""/>
+    <member type="way" ref="23999487" role=""/>
+    <member type="way" ref="23999488" role=""/>
+    <member type="way" ref="240177996" role=""/>
+    <member type="way" ref="25807158" role=""/>
+    <member type="way" ref="240178002" role=""/>
+    <member type="way" ref="240177998" role=""/>
+    <member type="way" ref="121640135" role=""/>
+    <member type="way" ref="138205416" role=""/>
+    <member type="way" ref="241545716" role=""/>
+    <member type="way" ref="215036660" role=""/>
+    <member type="way" ref="148255534" role=""/>
+    <member type="way" ref="142696748" role=""/>
+    <member type="way" ref="163075798" role=""/>
+    <member type="way" ref="162555886" role=""/>
+    <member type="way" ref="240178000" role=""/>
+    <member type="way" ref="240178003" role=""/>
+    <member type="way" ref="45138302" role=""/>
+    <member type="way" ref="41201870" role=""/>
+    <member type="way" ref="240177997" role=""/>
+    <member type="way" ref="29262718" role=""/>
+    <member type="way" ref="29262716" role=""/>
+    <member type="way" ref="163075797" role=""/>
+    <member type="way" ref="25807223" role=""/>
+    <member type="way" ref="163075799" role=""/>
+    <member type="way" ref="105137996" role=""/>
+    <member type="way" ref="236420665" role=""/>
+    <member type="way" ref="236420663" role=""/>
+    <member type="way" ref="27074378" role=""/>
+    <member type="way" ref="51980241" role=""/>
+    <member type="way" ref="51980222" role=""/>
+    <member type="way" ref="27074376" role=""/>
+    <member type="way" ref="24224127" role=""/>
+    <member type="way" ref="199040724" role=""/>
+    <member type="way" ref="199040726" role=""/>
+    <member type="way" ref="126815508" role=""/>
+    <member type="way" ref="126815499" role=""/>
+    <member type="way" ref="133130686" role=""/>
+    <member type="way" ref="44490306" role=""/>
+    <member type="way" ref="163075800" role=""/>
+    <member type="way" ref="163075814" role=""/>
+    <member type="way" ref="84124033" role=""/>
+    <member type="way" ref="84124110" role=""/>
+    <member type="way" ref="44490246" role=""/>
+    <member type="way" ref="44490244" role=""/>
+    <member type="way" ref="163074297" role=""/>
+    <member type="way" ref="206369354" role=""/>
+    <member type="way" ref="206369357" role=""/>
+    <member type="way" ref="206369355" role=""/>
+    <member type="way" ref="38886193" role=""/>
+    <member type="way" ref="30908619" role=""/>
+    <member type="way" ref="34754476" role=""/>
+    <member type="way" ref="26123948" role=""/>
+    <member type="way" ref="38899435" role=""/>
+    <member type="way" ref="231383099" role=""/>
+    <member type="way" ref="38878601" role=""/>
+    <member type="way" ref="38899409" role=""/>
+    <member type="way" ref="25915731" role=""/>
+    <member type="way" ref="25886865" role=""/>
+    <member type="way" ref="104010596" role=""/>
+    <member type="way" ref="25886864" role=""/>
+    <member type="way" ref="38878563" role=""/>
+    <member type="way" ref="31766754" role=""/>
+    <member type="way" ref="25840782" role=""/>
+    <member type="way" ref="122624880" role=""/>
+    <member type="way" ref="122624883" role=""/>
+    <member type="way" ref="122624881" role=""/>
+    <member type="way" ref="56131753" role=""/>
+    <member type="way" ref="56131754" role=""/>
+    <member type="way" ref="154796150" role=""/>
+    <member type="way" ref="37196490" role=""/>
+    <member type="way" ref="112390289" role=""/>
+    <member type="way" ref="112390293" role=""/>
+    <member type="way" ref="26450601" role=""/>
+    <member type="way" ref="25493562" role=""/>
+    <member type="way" ref="25955509" role=""/>
+    <member type="way" ref="37196422" role=""/>
+    <member type="way" ref="25955507" role=""/>
+    <member type="way" ref="25955506" role=""/>
+    <member type="way" ref="25955504" role=""/>
+    <member type="way" ref="25955503" role=""/>
+    <member type="way" ref="25955502" role=""/>
+    <member type="way" ref="55825028" role=""/>
+    <member type="way" ref="25955501" role=""/>
+    <member type="way" ref="25605109" role=""/>
+    <member type="way" ref="25859101" role=""/>
+    <member type="way" ref="25955349" role=""/>
+    <member type="way" ref="112789554" role=""/>
+    <member type="way" ref="112789556" role=""/>
+    <member type="way" ref="112789553" role=""/>
+    <member type="way" ref="29984153" role=""/>
+    <member type="way" ref="29984155" role=""/>
+    <member type="way" ref="37192259" role=""/>
+    <member type="way" ref="25955329" role=""/>
+    <member type="way" ref="37192240" role=""/>
+    <member type="way" ref="25623885" role=""/>
+    <member type="way" ref="25596305" role=""/>
+    <member type="way" ref="25596303" role=""/>
+    <member type="way" ref="24595460" role=""/>
+    <member type="way" ref="37192235" role=""/>
+    <member type="way" ref="104372224" role=""/>
+    <member type="way" ref="223015637" role=""/>
+    <member type="way" ref="35137512" role=""/>
+    <member type="way" ref="35137511" role=""/>
+    <member type="way" ref="28823046" role=""/>
+    <member type="way" ref="112397243" role=""/>
+    <member type="way" ref="26337687" role=""/>
+    <member type="way" ref="163074158" role=""/>
+    <member type="way" ref="138642012" role=""/>
+    <member type="way" ref="237931445" role=""/>
+    <member type="way" ref="163074157" role=""/>
+    <member type="way" ref="170755409" role=""/>
+    <member type="way" ref="26604397" role=""/>
+    <member type="way" ref="214242334" role=""/>
+    <member type="way" ref="56134024" role=""/>
+    <member type="way" ref="56134025" role=""/>
+    <member type="way" ref="163078154" role=""/>
+    <member type="way" ref="25955251" role=""/>
+    <member type="way" ref="27621546" role=""/>
+    <member type="way" ref="33720620" role=""/>
+    <member type="way" ref="33720621" role=""/>
+    <member type="way" ref="27609751" role=""/>
+    <member type="way" ref="27609750" role=""/>
+    <member type="way" ref="34910458" role=""/>
+    <tag k="description" v="Johanniskreuz über Waldfischbach-Burgalben, Zweibrücken zum Glan-Blies-Radweg bei Einöd"/>
+    <tag k="distance" v="60 Km"/>
+    <tag k="name" v="Südwestpfalz Tour"/>
+    <tag k="network" v="lcn"/>
+    <tag k="ref" v="SWPf"/>
+    <tag k="route" v="bicycle"/>
+    <tag k="type" v="route"/>
+    <tag k="website" v="www.radwanderland.de/public/steckbriefe/suedwestpfalz-tour.pdf"/>
+  </relation>
+  <relation id="3271285" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <member type="way" ref="206667147" role="from"/>
+    <member type="way" ref="242102247" role="to"/>
+    <member type="node" ref="1276244359" role="via"/>
+    <tag k="restriction" v="only_straight_on"/>
+    <tag k="type" v="restriction"/>
+  </relation>
+  <relation id="3271286" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <member type="way" ref="242102248" role="from"/>
+    <member type="way" ref="140654364" role="to"/>
+    <member type="node" ref="1276244369" role="via"/>
+    <tag k="restriction" v="only_straight_on"/>
+    <tag k="type" v="restriction"/>
+  </relation>
+  <relation id="3271291" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <member type="way" ref="237931444" role="from"/>
+    <member type="way" ref="237911528" role="to"/>
+    <member type="node" ref="2457833270" role="via"/>
+    <tag k="restriction" v="only_straight_on"/>
+    <tag k="type" v="restriction"/>
+  </relation>
+  <relation id="3271377" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1">
+    <member type="way" ref="25342962" role="from"/>
+    <member type="way" ref="242110557" role="to"/>
+    <member type="node" ref="527816" role="via"/>
+    <tag k="restriction" v="only_right_turn"/>
     <tag k="type" v="restriction"/>
   </relation>
 </osm>

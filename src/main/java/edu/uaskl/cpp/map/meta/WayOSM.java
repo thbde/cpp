@@ -7,7 +7,7 @@ import edu.uaskl.cpp.model.meta.interfaces.Metadata;
 //TODO add javadoc with description and purpose of this class. -tbach
 
 public class WayOSM implements Metadata {
-    public enum WayType { // TODO why is this public? at least, it should be static, because it is not needed separately for each instance -tbach
+    public static enum WayType { // TODO why is this public? at least, it should be static, because it is not needed separately for each instance -tbach
         UNSPECIFIED, HIGHWAY;
     }
 
