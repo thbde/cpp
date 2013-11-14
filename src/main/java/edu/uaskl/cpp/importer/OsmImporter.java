@@ -231,7 +231,7 @@ public class OsmImporter {
     	return importClean(260070555l,"src/test/resources/edu/uaskl/cpp/zweibruecken_way_no_meta.osm");
     }
     public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importFH(){
-    	return importClean(260070555l,"src/test/resources/edu/uaskl/cpp/FH_way_no_meta.osm");
+    	return importClean(260070555l,"src/test/resources/edu/uaskl/cpp/fh_way_no_meta.osm");
     }
     public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importKL(){
     	return importClean(281170640l,"src/test/resources/edu/uaskl/cpp/kl.osm");

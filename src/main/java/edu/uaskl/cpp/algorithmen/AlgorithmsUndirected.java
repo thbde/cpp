@@ -186,6 +186,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
                     eulerianList = connectCircles(eulerianList, subGraph);	//...and add it to the big list
 //                    i = 0; // beginne nochmal von vorn zu suchen
                     // TODO not a good style to change the loop variable.
+                    j--;
                 }
         }
         return new PathExtended<T>(eulerianList);

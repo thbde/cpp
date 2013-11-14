@@ -40,6 +40,7 @@ public class testFH {
         final PathExtended<NodeCppOSM> path = graph.getAlgorithms().getEulerianCircle(start);
         // TODO find the right folder for the real output
 //        exportPathToHTML(path, folder.getRoot());
+        graph.resetStates();
         exportPathToHTML(path, new File("./src/test/resources/edu/uaskl/cpp/exporter"));
         assertTrue(true);
 
