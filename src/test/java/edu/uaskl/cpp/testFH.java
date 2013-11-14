@@ -2,13 +2,15 @@ package edu.uaskl.cpp;
 
 
 import static org.fest.assertions.api.Assertions.*;
+import static edu.uaskl.cpp.importer.OsmImporter.importClean;
 import static edu.uaskl.cpp.importer.OsmImporter.importZW;
+import static edu.uaskl.cpp.importer.OsmImporter.importKL;
+import static edu.uaskl.cpp.importer.OsmImporter.importFH;
 import static edu.uaskl.cpp.importer.OsmImporter.importOsmUndirected;
 import static edu.uaskl.cpp.model.exporter.Exporter.exportPathToHTML;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -33,11 +35,12 @@ public class testFH {
         assertThat(graph.getNumberOfNodes()).isGreaterThan(0);
         graph.getAlgorithms().matchPerfect();
         assertTrue("matched graph", graph.getAlgorithms().hasEulerCircle());
-        final NodeCppOSM start = graph.getNode(260070555l);
+        final NodeCppOSM start = graph.getNode(260070555l);//ZW
+//        final NodeCppOSM start = graph.getNode(281170640l);//KL
         final PathExtended<NodeCppOSM> path = graph.getAlgorithms().getEulerianCircle(start);
         // TODO find the right folder for the real output
-        exportPathToHTML(path, folder.getRoot());
-//        exportPathToHTML(path, new File("./src/test/resources/edu/uaskl/cpp/exporter"));
+//        exportPathToHTML(path, folder.getRoot());
+        exportPathToHTML(path, new File("./src/test/resources/edu/uaskl/cpp/exporter"));
         assertTrue(true);
 
     }

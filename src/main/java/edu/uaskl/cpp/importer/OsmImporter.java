@@ -213,10 +213,10 @@ public class OsmImporter {
         return osmGraph;
     }
     
-    public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importZW(){
+    public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importClean(long nodeId,String fileName){
     	// TODO get the right filename
-    	GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected("src/test/resources/edu/uaskl/cpp/zweibruecken_way_no_meta.osm");
-    	graph.getAlgorithms().visitAllEdgesFromStartNode(graph.getNode(260070555l));
+    	GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(fileName);
+    	graph.getAlgorithms().visitAllEdgesFromStartNode(graph.getNode(nodeId));
     	Iterator<NodeCppOSM> iter = graph.getNodes().iterator();
     	while(iter.hasNext()){
     		NodeCppOSM node = iter.next();
@@ -227,5 +227,14 @@ public class OsmImporter {
     	}
     	return graph;
     }
+    public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importZW(){
+    	return importClean(260070555l,"src/test/resources/edu/uaskl/cpp/zweibruecken_way_no_meta.osm");
+    }
+    public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importFH(){
+    	return importClean(260070555l,"src/test/resources/edu/uaskl/cpp/FH_way_no_meta.osm");
+    }
+    public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importKL(){
+    	return importClean(281170640l,"src/test/resources/edu/uaskl/cpp/kl.osm");
+    }    
 
 }
