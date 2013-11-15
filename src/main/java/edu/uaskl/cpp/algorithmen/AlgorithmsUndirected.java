@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-import edu.uaskl.cpp.model.edge.EdgeCppOSM;
 import edu.uaskl.cpp.model.edge.EdgeExtended;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
 import edu.uaskl.cpp.model.node.NodeExtended;
@@ -31,6 +30,12 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
         return graph;
     }
 
+    /**
+     * Checks whether the graph is connected.
+     * Starts with one node and marks all connected node.
+     * If a unmarked node is found the graph is not connected.
+     * @return boolean whether the graph is connected
+     */
     public boolean isConnected() {
 
         graph.resetStates();
@@ -44,14 +49,20 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
         return allNodesVisited();
     }
 
+    /**
+     * @return boolean, whether all nodes are visited
+     */
     private boolean allNodesVisited() {
         for (final T node : graph.getNodes())
             if (!node.isVisited())
                 return false;
-
         return true;
     }
 
+    /**
+     * Recursively marks all connected nodes as visited.
+     * @param node start node
+     */
     public void visitAllEdgesFromStartNode(final T node) {
         node.setVisited();
 
@@ -60,6 +71,9 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
                 visitAllEdgesFromStartNode(edgeItem.getRelatedNode(node));
     }
 
+    /**
+     * @return boolean, whether the graph has an Eulerian circle
+     */
     public boolean hasEulerCircle() {
         for (final T node : graph.getNodes())
             if (node.isDegreeOdd())
@@ -67,7 +81,11 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
         return true;
     }
 
-    /** This method changes the current graph. (I guess) it adds a matching */
+    
+    /**
+     * Adds a matching to the graph.
+     * Inserting the new edges along the way.
+     */
     @Deprecated
     public void matchGraph() {
         T node1 = null;
@@ -89,7 +107,12 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
             }
         }
     }
-@Deprecated
+
+    /**
+     * Adds edges along the specified path.
+     * @param pathList the path to be added
+     */
+    @Deprecated
     private void matchBetweenNodes(final ArrayList<T> pathList) {
         for (int i = 0; i < (pathList.size() - 1); i++) {
             final T node1 = pathList.get(i);
@@ -98,6 +121,14 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
             node1.connectWithNode(node2);
         }
     }
+    
+/**
+ * Search a path by following an unvisited edge.
+ * If no unvisited edge exists, go back one node along the taken path.
+ * @param node start node
+ * @param destination destination node
+ * @return a list of nodes connecting the start node and the destination node, including the two
+ */
 @Deprecated
     public ArrayList<T> getPathBetween(T node, final T destination) {
         int i = 0;
@@ -134,34 +165,33 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
         return pathList;		//return the track
     }
 
- 
-    // TODO add javadoc with example and/or choose a better name -tbach
-    public ArrayList<T> connectCircles(final ArrayList<T> big, final ArrayList<T> little) 
-    { // TODO should be private? -tbach //needs to be public for tests. alternative: set on private and remove test (dont know whats better) -debeck
-    	//insert list "little" into list "big"
-        final ArrayList<T> list = new ArrayList<>();
-
-        for (int i = 0; i < big.size(); i++) 
+    /**
+     * @param originalCircle the circle in which to insert
+     * @param circleToInsert the circle which to insert
+     * @return a new circle, which is a concatenation of both
+     */
+    public ArrayList<T> connectCircles(final ArrayList<T> originalCircle, final ArrayList<T> circleToInsert) 
+    { // TODO should be private? -tbach //needs to be public for tests. alternative: set on private and remove test (don't know what's better) -debeck
+    	// make a copy
+    	ArrayList<T> newCircle = new ArrayList<>(originalCircle);
+        // find the first occurrence of circleToInsert's start node
+    	for (int i = 0; i < newCircle.size(); i++) 
         {
-            list.add(big.get(i));	//add all elements from big list...
-
-            if (big.get(i).equals(little.get(0))) //...until little list could be inserted
+            if (newCircle.get(i).equals(circleToInsert.get(0))) 
             {
-                list.remove(i); //remove doubled(shifted) element from big list because it will be added from little list again	
-
-                // TODO List provides a "addAll" method -tbach
-                list.addAll(little);
-                ++i;
-                for (; i < big.size(); i++)
-                    list.add(big.get(i));
-                return list;
+                newCircle.remove(i); // remove the insertion point, because it also occurs in the the circleToInser
+                newCircle.addAll(i,circleToInsert); // simply insert the circleToInser at the right position
+                return newCircle;
             }
-
         }
-        return list;
-
+        return newCircle;
     }
 
+    /**
+     * @param start start node where to start
+     * @return a Eulerian circle covering the whole graph starting at the specified node
+     * @throws Exception The graph is not Eulerian.
+     */
     public PathExtended<T> getEulerianCircle(final T start) throws Exception {
     	graph.resetStates();
     	if(!(isConnected() || hasEulerCircle()))
@@ -186,12 +216,16 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
                     eulerianList = connectCircles(eulerianList, subGraph);	//...and add it to the big list
 //                    i = 0; // beginne nochmal von vorn zu suchen
                     // TODO not a good style to change the loop variable.
-                    j--;
+                    i=0;
                 }
         }
         return new PathExtended<T>(eulerianList);
     }
 
+    /**
+     * @return a Eulerian circle covering the whole graph
+     * @throws Exception The graph is not Eulerian. 
+     */
     public PathExtended<T> getEulerianCircle() throws Exception {
     	graph.resetStates();
     	if(!(isConnected() || hasEulerCircle()))
@@ -200,6 +234,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     		throw new Exception("not eulerian");
     	} 
     	ArrayList<T> eulerList = new ArrayList<>(getCircle(graph.getNodes().iterator().next()));
+    	// as long as there are nodes with unvisited edges, add new circles starting at those nodes
     	boolean modified;
     	do{
     		modified = false;
@@ -215,10 +250,14 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     	}while(modified);	
     	return new PathExtended<T>(eulerList);
     }
+
+    /**
+     * @param startNode start node of the circle
+     * @return a circle starting at startNode
+     */
     private ArrayList<T> getCircle(final T startNode) {
         T currentNode = startNode;
         int i = 0;
-
         final ArrayList<T> pathList = new ArrayList<>();
         for (int j = 0; j < startNode.getEdges().size(); j++)
             if (!startNode.getEdges().get(j).isVisited()) 
@@ -230,8 +269,6 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
                 pathList.add(currentNode);
                 break;
             }
-        
-        
         do
             if (!currentNode.getEdges().get(i).isVisited()) 	//	search connection to next node
             {
@@ -242,12 +279,13 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
                 i = 0;
             } else
                 i++;
-        while (!currentNode.equals(startNode)); // go through the graph till you come back to the beginning (becaus its a circle)
-
+        while (!currentNode.equals(startNode)); // go through the graph till you come back to the beginning (because its a circle)
         return pathList;
-
     }
 
+    /**
+     * Creates the translation maps NodeId <-> index in dist|next
+     */
     private void createTanslation(){
     	id2index = new HashMap<>();
     	index2id = new HashMap<>();
@@ -261,11 +299,17 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     	}
     }
     
+    /**
+     * Initialises the distance matrix, setting the distance of 
+     * a node to itself as 0, 
+     * unconnected nodes to Infinity and 
+     * connected nodes to the minimal weight of their connecting edges.
+     * It also creates next.
+     */
     private void initDist(){
     	this.dist = new double[graph.getNumberOfNodes()][graph.getNumberOfNodes()];
-    	this.next = new Integer[graph.getNumberOfNodes()][graph.getNumberOfNodes()];
-
-    	// initialize the distances
+    	this.next = new Integer[graph.getNumberOfNodes()][graph.getNumberOfNodes()]; // no need to set it to null
+    	// initialise the distances
     	for(int i = 0; i < dist.length; ++i) {
     		for(int j = 0; j < dist.length; ++j) {
     			dist[i][j] = Double.POSITIVE_INFINITY;
@@ -285,11 +329,15 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     	}
     }
     
+    /**
+     * Uses the Floyd-Warshall-Algorithm (https://en.wikipedia.org/wiki/Floyd–Warshall_algorithm).
+     * If node i can reach node j better by going over node k, 
+     * update the distance and remember k as the next node on the way from i to j
+     */
     private void createDistNext() {
     	//based on Floyd-Warshall
     	createTanslation();
     	initDist();
-    	System.out.println("create dist");
     	// create the matrix
     	for(int k = 0; k < dist.length; ++k) {
     		for(int i = 0; i < dist.length; ++i) {
@@ -301,10 +349,15 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     			}
     		}
     	}
-    	System.out.println("dist created");
     	preprocessed = true;
     }
 
+    /**
+     * @param path1 first path
+     * @param path2 second path
+     * @return a path which is a concatenation of the first and the second path 
+     * without the duplicate node occurring at the end of the first path
+     */
     private ArrayList<T> connectPathsDeDup(PathExtended<T> path1,PathExtended<T> path2){
 		ArrayList<T> pathList = new ArrayList<>(path1.getNodes());
 		pathList.remove(pathList.size()-1); //prevent duplicate
@@ -312,6 +365,13 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 		return pathList;
     }
     
+    /**
+     * Uses the next matrix computed by Floyd-Warshall to recursively construct the shortest path from node1 to node2.
+     * @link createDistNext
+     * @param node1 start node
+     * @param node2 end node
+     * @return the shortest path from node1 to node2
+     */
     private PathExtended<T> getShortestPath(T node1, T node2){
     	if(!preprocessed) {
     		createDistNext();
@@ -322,19 +382,26 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     	}
     	Integer temp = next[id2index.get(node1.getId())][id2index.get(node2.getId())];
     	if(temp == null){
+    		// node1 and node 2 are directly connected via their shortes path
     		pathList.add(node1);
     		pathList.add(node2);
     		return new PathExtended<T>(pathList);
     	}
     	else {
+    		// get the two parts of the shortes path and connect them
     		PathExtended<T> path1 = getShortestPath(node1,graph.getNode(index2id.get(temp)));
     		PathExtended<T> path2 = getShortestPath(graph.getNode(index2id.get(temp)),node2);
     		pathList = connectPathsDeDup(path1,path2);
     	}
-    	
     	return new PathExtended<T>(pathList);
     }
 
+    /**
+     * This is a greedy version, taking a unmatched node and 
+     * matching it with the nearest other unmatched node, until all nodes are matched.
+     * @param oddNodes a list of nodes with odd degree, which should be matched
+     * @return a list of node pairs
+     */
     private ArrayList<ArrayList<T>> getPairsNaiveGreedy(ArrayList<T>oddNodes){
     	// naive version - not perfect but greedy
     	ArrayList<ArrayList<T>> pairs = new ArrayList<>();
@@ -362,8 +429,11 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     	return pairs;
     }
     
-    
-    public void matchPerfect() throws Exception {
+    /**
+     * Creates a matching for the graph and inserts the needed duplicate edges.
+     * Currently this uses a greedy matching.
+     */
+    public void matchPerfect() {
     	if(!preprocessed) {
     		createDistNext();
     	}
@@ -375,6 +445,11 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     	createDupEdges(pairs);
     }
 
+	/**
+	 * This function searches the shortest path for each of the pairs and then
+	 * creates all the duplicated edges.
+	 * @param pairs a list of node pars, for which to add their shortest paths
+	 */
 	private void createDupEdges(ArrayList<ArrayList<T>> pairs) {
 		for(ArrayList<T> pair : pairs) {
 			// for each pair, get their shortest path
@@ -403,6 +478,9 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     	}
 	}
 
+	/**
+	 * @return a list of all nodes in the graph with an odd degree
+	 */
 	private ArrayList<T> getOddNodes() {
 		Collection<T> nodes = graph.getNodes();
     	ArrayList<T> oddNodes = new ArrayList<T>();
