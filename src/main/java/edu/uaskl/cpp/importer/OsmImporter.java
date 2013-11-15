@@ -340,12 +340,4 @@ public class OsmImporter {
     public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importKL(){
     	return importClean(281170640l,"src/test/resources/edu/uaskl/cpp/kl.osm");
     } 
-    
-    /**
-     * @return connected graph of Rhineland-Palatinate
-     */
-    public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importRLP(){
-    	return importClean(281170640l,"src/test/resources/edu/uaskl/cpp/rlp.osm");
-    }  
-
 }
