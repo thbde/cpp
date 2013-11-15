@@ -22,7 +22,7 @@ public class ExportTest {
 
     @Test
     public void test() {
-        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(getClass().getResource("../fh_way_no_meta.osm").toString());
+        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importFH();
         final List<NodeCppOSM> nodes = new LinkedList<>();
         nodes.add(graph.getNode(280959081l));
         nodes.add(graph.getNode(267970528l));

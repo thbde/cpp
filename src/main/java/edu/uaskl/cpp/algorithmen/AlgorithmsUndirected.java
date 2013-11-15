@@ -289,6 +289,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     	//based on Floyd-Warshall
     	createTanslation();
     	initDist();
+    	System.out.println("create dist");
     	// create the matrix
     	for(int k = 0; k < dist.length; ++k) {
     		for(int i = 0; i < dist.length; ++i) {
@@ -300,6 +301,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     			}
     		}
     	}
+    	System.out.println("dist created");
     	preprocessed = true;
     }
 

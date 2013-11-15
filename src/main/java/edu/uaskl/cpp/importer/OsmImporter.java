@@ -1,7 +1,10 @@
 package edu.uaskl.cpp.importer;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -14,209 +17,298 @@ import edu.uaskl.cpp.model.edge.EdgeCppOSM;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
 import edu.uaskl.cpp.model.node.NodeCppOSM;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.DocumentBuilder;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
-import org.xml.sax.SAXException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import javax.xml.stream.*;
 
 public class OsmImporter {
 
+    /**
+     * Returns the distance between the two waypoints in meters base on the
+     * Spherical Law of Cosines.
+     * www.movable-type.co.uk/scripts/latlong.html
+     * @param a a waypoint
+     * @param b another waypoint
+     * @return distance in meter
+     */
     protected static double getDistance(final WayNodeOSM a, final WayNodeOSM b) {
-        // Spherical Law of Cosines
-    	return (Math.acos((Math.sin(a.getLatitude()/180*Math.PI) * Math.sin(b.getLatitude()/180*Math.PI)) + (Math.cos(a.getLatitude()/180*Math.PI) * Math.cos(b.getLatitude()/180*Math.PI) * Math.cos((b.getLongitude() - a.getLongitude())/180*Math.PI))) * 6367500);
+    	double latA = a.getLatitude()/180*Math.PI;
+    	double latB = b.getLatitude()/180*Math.PI;
+    	double lonDif = (b.getLongitude() - a.getLongitude())/180*Math.PI;
+    	return (Math.acos((Math.sin(latA) * Math.sin(latB)) + (Math.cos(latA) * Math.cos(latB) * Math.cos(lonDif))) * 6367500);
     }
-
-    protected static Document getDomFromFile(final String filename) {
-        final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance(); // TODO looks like this can be static? -tbach
-        Document document = null;
-        try {
-            final DocumentBuilder builder = factory.newDocumentBuilder();
-            document = builder.parse(filename);
-            document.getDocumentElement().normalize();
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            System.out.println("could not open the file");
-            e.printStackTrace();
-            System.exit(0);
-        }
-        return document;
-    }
-
-
-    protected static HashMap<Long, WayNodeOSM> getOsmNodes(final Document dom) {
-        final HashMap<Long, WayNodeOSM> osmNodes = new HashMap<>();
-        final Element documentElement = dom.getDocumentElement();
-        final NodeList nodes = documentElement.getElementsByTagName("node");
-        for (int i = 0; i < nodes.getLength(); ++i) {
-            final Element node = (Element) nodes.item(i);
-            final Long id = Long.parseLong(node.getAttribute("id"),10);
-            final double lat = Double.parseDouble(node.getAttribute("lat"));
-            final double lon = Double.parseDouble(node.getAttribute("lon"));
-            final WayNodeOSM osmNode = new WayNodeOSM(lat, lon, id);
-            osmNodes.put(id, osmNode);
-        }
-        return osmNodes;
-    }
-@Deprecated
-    protected GraphUndirected<NodeCppOSM, EdgeCppOSM> createNaive(final Document osmFile, final HashMap<String, WayNodeOSM> osmNodes) {
-        // add all waypoints to the graph
-        final GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph = new GraphUndirected<>();
-        final Collection<WayNodeOSM> wayPoints = osmNodes.values();
-        for (final WayNodeOSM wayPoint : wayPoints) {
-            final NodeCppOSM newNode = new NodeCppOSM(wayPoint.getID());
-            newNode.setName(wayPoint.getID()+"");
-            osmGraph.addNode(newNode);
-        }
-
-        // connect them
-        final Element documentElement = osmFile.getDocumentElement();
-        final NodeList ways = documentElement.getElementsByTagName("way");
-        for (int i = 0; i < ways.getLength(); ++i) { // TODO this should be simplified, probably with submethods -tbach
-            final NodeList childNodes = ways.item(i).getChildNodes();
-            Long lastWaypoint = null;
-            for (int j = 0; j < childNodes.getLength(); ++j) {
-                final Node cNode = childNodes.item(j);
-                if (cNode.getNodeType() == Node.ELEMENT_NODE) {
-                    final Element childNode = (Element) cNode;
-                    if ((lastWaypoint == null) && (childNode.getNodeName() == "nd")) {
-                        lastWaypoint = Long.parseLong(childNode.getAttribute("ref"), 10);
-                        if (!osmNodes.containsKey(lastWaypoint))
-                            lastWaypoint = null;
-                    } else if (childNode.getNodeName() == "nd") {
-                        final Long nodeId = Long.parseLong(childNode.getAttribute("ref"), 10);
-                        final NodeCppOSM node = osmGraph.getNode(nodeId);
-                        if (!(node == null)) {
-                            final double distance = getDistance(osmNodes.get(lastWaypoint), osmNodes.get(childNode.getAttribute("ref")));
-                            osmGraph.getNode(lastWaypoint).connectWithNodeAndWeigth(node, distance);
-                            lastWaypoint = Long.parseLong(childNode.getAttribute("ref"), 10);
-                        }
-                    }
-                    // for non naive: check for roundabout
-                }
-            }
-        }
-
-        return osmGraph;
-    }
-
-    protected static GraphUndirected<NodeCppOSM, EdgeCppOSM> createFiltered(final Document osmFile, final HashMap<Long, WayNodeOSM> osmNodes) {
-        final GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph = new GraphUndirected<>();
-
-        final Element documentElement = osmFile.getDocumentElement();
-        final NodeList ways = documentElement.getElementsByTagName("way");
-        // TODO this method should be simplified, probably with submethods -tbach
-        for (int i = 0; i < ways.getLength(); ++i) { // for each way
-            final NodeList childNodes = ways.item(i).getChildNodes();
-            Long lastWaypoint = null;
-            final List<Long> metaIds = new LinkedList<>();
-            int distance = 0;
-            Long currentWaypoint = null;
-            boolean roundabout = false;
-            String name = "";
-            for (int j = 0; j < childNodes.getLength(); ++j) { // go through the nodes
-                final Node cNode = childNodes.item(j);
-                if (cNode.getNodeType() == Node.ELEMENT_NODE) {
-                    final Element childNode = (Element) cNode;
-                    if (childNode.getNodeName() == "nd") {
-                        currentWaypoint = Long.parseLong(childNode.getAttribute("ref"), 10);
-                        if (osmNodes.containsKey(currentWaypoint)) {
-                            if (!(lastWaypoint == null))
-                                distance += getDistance(osmNodes.get(lastWaypoint), osmNodes.get(currentWaypoint));
-                            lastWaypoint = currentWaypoint;
-                            metaIds.add(currentWaypoint);
-
-                        }
-                    } else if (childNode.getNodeName() == "tag")
-                        if (childNode.hasAttribute("k") && childNode.getAttribute("k").equals("junction") && childNode.getAttribute("v").equals("roundabout")) {
-                            roundabout = true;
-                        }
-                        else {
-                        	if (childNode.hasAttribute("k") && childNode.getAttribute("k").equals("name")) {
-                                name = childNode.getAttribute("v");
-                            }
-                        }
-                }
-            }
-
-            if (roundabout) {
-                distance = 0;
-            }
-
-            for (int j = 1; j < metaIds.size(); ++j) {
-                final Long startNodeId = metaIds.get(j - 1);
-                final Long lastNodeId = metaIds.get(j);
-                if (osmGraph.getNode(startNodeId) == null) {
-                    final NodeCppOSM newNode = new NodeCppOSM(startNodeId);
-                    newNode.setName(""+startNodeId);
-                    osmGraph.addNode(newNode);
-                }
-                if (osmGraph.getNode(lastNodeId) == null) {
-                    final NodeCppOSM newNode = new NodeCppOSM(lastNodeId);
-                    newNode.setName(""+lastNodeId);
-                    osmGraph.addNode(newNode);
-                }
-                final List<WayNodeOSM> metaNodes = new LinkedList<>();
-                metaNodes.add(osmNodes.get(startNodeId));
-                metaNodes.add(osmNodes.get(lastNodeId));
-                // TODO: Handle way properly.
-                osmGraph.getNode(startNodeId).connectWithNodeWeigthAndMeta(osmGraph.getNode(lastNodeId), distance,
-                        new WayOSM(0, WayOSM.WayType.UNSPECIFIED, name, metaNodes));
-            }
-        }
-
-        final Iterator<NodeCppOSM> iteratorNodes = osmGraph.getNodes().iterator();
-        while (iteratorNodes.hasNext()) {
-            final NodeCppOSM node = iteratorNodes.next();
-            if (node.getDegree() == 2) {
-                final Long currentNodeId = node.getId();
-                final List<EdgeCppOSM> edges = node.getEdges();
-                final EdgeCppOSM edge1 = edges.get(0);
-                final EdgeCppOSM edge2 = edges.get(1);
-                final Long node1id = edge1.getNode1().getId() == (currentNodeId) ? edge1.getNode2().getId() : edge1.getNode1().getId();
-                final Long node2id = edge2.getNode1().getId() == (currentNodeId) ? edge2.getNode2().getId() : edge2.getNode1().getId();
-                if (currentNodeId == node1id){
-                	// we are in a loop and do not erase ourself
-                	continue;
-                }
-                // concat the list in the right way
-                final List<WayNodeOSM> newMetaNodes = edge1.getMetadata().getNodes(), metaNodes2 = edge2.getMetadata().getNodes();
-                // newMetaNodes = metaNodes1.get(0).id==node1id ? metaNodes1 : Collections.reverse(metaNodes1);
-                if (((Long) newMetaNodes.get(0).getID()).equals(currentNodeId)){
-                    Collections.reverse(newMetaNodes);
-                }
-                newMetaNodes.remove(newMetaNodes.size() - 1);
-                if (!((Long) metaNodes2.get(0).getID()).equals(currentNodeId)) {
-                    Collections.reverse(metaNodes2);
-                }
-                newMetaNodes.addAll(metaNodes2);
-                // add a new edge
-                // TODO: Handle way properly - what would name be in this context?
-                osmGraph.getNode(node1id).connectWithNodeWeigthAndMeta(osmGraph.getNode(node2id), edge1.getWeight() + edge2.getWeight(),
-                        new WayOSM(0, WayOSM.WayType.UNSPECIFIED, "unknown", newMetaNodes));
-                // remove the old node
-                node.removeAllEdges();
-                iteratorNodes.remove();
-            }
-        }
-
-        return osmGraph;
-    }
-
+    
+    /**
+     * Returns the potentially unconnected graph based on the specified osm file.
+     * @param filename filename including the path to the osm file
+     * @return potentially unconnected graph
+     */
     public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importOsmUndirected(final String filename) {
-        final Document osmFile = getDomFromFile(filename);
-        final HashMap<Long, WayNodeOSM> osmNodes = getOsmNodes(osmFile);
-        final GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph = createFiltered(osmFile, osmNodes);
+    	// setting up
+    	GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph = new GraphUndirected<>();
+    	FileReader fis = null;
+    	HashMap<Long, WayNodeOSM> osmNodes = new HashMap<>();
+    	try {
+    		// create a StAX XML parser
+    		fis = new FileReader(filename);
+    		XMLInputFactory factory = XMLInputFactory.newInstance();
+    	    XMLStreamReader parser = factory.createXMLStreamReader(fis);
+    	    // go through all events
+    	    for (int event = parser.next();  
+    	    	       event != XMLStreamConstants.END_DOCUMENT;
+    	    	       event = parser.next()){
+    	    	if (event == XMLStreamConstants.START_ELEMENT) {
+    	    		//we are only interested in node|way elements
+    	    		if (parser.getLocalName().equals("node")) {
+    	    			// get the node and store it
+    	    			WayNodeOSM node = processNode(parser);
+    	    			osmNodes.put(node.getID(), node);
+    	    		}
+    	    		else {
+    	    			if (parser.getLocalName().equals("way")) {
+    	    				// get the way and add it to the graph
+    	    				// this also creates all the included nodes
+    	    				OSMWay way = processWay(parser,osmNodes);
+    	    				addWay(osmGraph,osmNodes,way);
+    	    			}
+    	    		}
+    	    	}
+    	    }
+    	    // tear down the parser
+    	    parser.close();
+    	    parser = null;
+    	    factory = null;
+    	}
+    	catch (IOException e){
+    		System.out.println("IOExcpetions");
+    		System.exit(0);
+    	} catch (XMLStreamException e) {
+    		System.out.println("XMLStreamExcpetions");
+    		System.exit(0);
+		}
+    	if(fis!=null){
+    		try {
+				fis.close();
+			} catch (IOException e) {
+				System.exit(0);
+			} 
+    	}
+    	// reduce the number of nodes
+    	simplify(osmGraph);
         return osmGraph;
     }
     
-    public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importClean(long nodeId,String fileName){
-    	// TODO get the right filename
+    /**
+     * Simplifies the graph in place by removing all nodes with degree 2 and adding them as metanodes to the edges.
+     * @param osmGraph the graph to modify
+     */
+    private static void simplify (GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph) {
+    	final Iterator<NodeCppOSM> iteratorNodes = osmGraph.getNodes().iterator();
+    	while (iteratorNodes.hasNext()) {
+    		final NodeCppOSM node = iteratorNodes.next();
+    		if (node.getDegree() == 2) {
+    			// get the ids of the two connected nodes
+    			final Long currentNodeId = node.getId();
+    			final List<EdgeCppOSM> edges = node.getEdges();
+    			final EdgeCppOSM edge1 = edges.get(0);
+    			final EdgeCppOSM edge2 = edges.get(1);
+    			final Long node1id = edge1.getNode1().getId() == (currentNodeId) ? edge1.getNode2().getId() : edge1.getNode1().getId();
+    			final Long node2id = edge2.getNode1().getId() == (currentNodeId) ? edge2.getNode2().getId() : edge2.getNode1().getId();
+    			if (currentNodeId == node1id){
+    				// we are in a loop and do not erase ourself
+    				continue;
+    			}
+    			// concat the list in the right way
+    			List<WayNodeOSM> newMetaNodes = concatMetanodes(edge1.getMetadata().getNodes(), edge2.getMetadata().getNodes(), currentNodeId);
+    			// add a new edge
+    			// TODO: Handle way properly - what would name be in this context?
+    			osmGraph.getNode(node1id).connectWithNodeWeigthAndMeta(osmGraph.getNode(node2id), edge1.getWeight() + edge2.getWeight(),
+                      new WayOSM(0, WayOSM.WayType.UNSPECIFIED, "unknown", newMetaNodes));
+    			// remove the old node
+    			// do this manually because we otherwise corrupt the iterator
+    			node.removeAllEdges();
+    			iteratorNodes.remove();
+    		}
+    	}
+    }
+
+
+    /**
+     * Concats the meta nodes of the two edged to be merged.
+     * @param metaNodes1 meta nodes from the first edge
+     * @param metaNodes2 meta nodes from the second edge
+     * @param duplicateNode the node id of the node connected to both edges
+     * @return the meta nodes of the new edge
+     */
+    private static List<WayNodeOSM> concatMetanodes(List<WayNodeOSM>metaNodes1, List<WayNodeOSM>metaNodes2, long duplicateNode) {
+    	// turn the lists the right way round
+    	if ( metaNodes1.get(0).getID() == duplicateNode){
+			Collections.reverse(metaNodes1);
+		}
+		if (!( metaNodes2.get(0).getID() == duplicateNode)) {
+			Collections.reverse(metaNodes2);
+		}
+		// remove the duplicate, then concat
+    	metaNodes1.remove(metaNodes1.size() - 1);
+		metaNodes1.addAll(metaNodes2);
+		return metaNodes1;
+    }
+
+	/**
+	 * Adds the way to the graph by connecting all nodes specified in the way.
+	 * @param osmGraph graph to modify
+	 * @param osmNodes hashmap of id->node
+	 * @param way a way carrying a list of ids
+	 */
+	private static void addWay(GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph,HashMap<Long, WayNodeOSM> osmNodes, OSMWay way) {
+	  for (int j = 1; j < way.nodes.size(); ++j) {
+		  // get the star and end node of this segment of the way 
+	      final Long startNodeId = way.nodes.get(j - 1);
+	      final Long endNodeId = way.nodes.get(j);
+	      createNodeIfNonexisting(osmGraph, startNodeId);
+	      createNodeIfNonexisting(osmGraph, endNodeId);
+	      // create the meta nodes for this segment
+	      final List<WayNodeOSM> metaNodes = new LinkedList<>();
+	      metaNodes.add(osmNodes.get(startNodeId));
+	      metaNodes.add(osmNodes.get(endNodeId));
+	      // for roundabouts use distance 0, so we can run around in circles at no cost
+	      double distance = way.roundabout ? 0 : getDistance(osmNodes.get(startNodeId),osmNodes.get(endNodeId));
+	      osmGraph.getNode(startNodeId).connectWithNodeWeigthAndMeta(osmGraph.getNode(endNodeId), distance,
+	              new WayOSM(0, WayOSM.WayType.UNSPECIFIED, way.name, metaNodes));
+	  }
+	}
+
+	/**
+	 * Makes sure that the specified node is existing.
+	 * @param osmGraph graph to be modified
+	 * @param nodeId id of the node to possibly create
+	 */
+	private static void createNodeIfNonexisting(
+			GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph,
+			final Long nodeId) {
+		if (osmGraph.getNode(nodeId) == null) {
+	          final NodeCppOSM newNode = new NodeCppOSM(nodeId);
+	          newNode.setName(""+nodeId);
+	          osmGraph.addNode(newNode);
+	      }
+	}
+
+
+	/**
+	 * During parsing, processes a way element by adding all nodes, the name and whether it is a roundabout to a OSMWay.
+	 * @param parser XML parser
+	 * @param osmNodes hashmap of id->node
+	 * @return the OSMWay (list of ids) specified in this XML element
+	 * @throws XMLStreamException
+	 */
+	private static OSMWay processWay(XMLStreamReader parser,HashMap<Long, WayNodeOSM>  osmNodes) throws XMLStreamException {
+    	List<Long> nodeIds = new ArrayList<>();
+    	boolean  roundabout = false;
+		String name = "";
+    	while(true){
+    		int event = parser.next();
+    		if ( event == XMLStreamConstants.END_ELEMENT && parser.getLocalName().equals("way")) {
+    			// the XML way elements ends, so create the OSMWay and let the caller resume
+    			break;
+    		}
+    		if (event == XMLStreamConstants.START_ELEMENT){
+    			Long id;
+				switch(parser.getLocalName()){
+    			case "nd":
+    				// get the referenced node and if it exists in the data set add it to the way
+    				id = getNdId(parser);
+    				if(osmNodes.containsKey(id)){
+        				nodeIds.add(id);
+    				}
+    				break;
+    			case "tag":
+    				// search the tag
+    				boolean j = false; // no junction 
+    				boolean n = false; // no name
+    				for ( int i = 0; i < parser.getAttributeCount(); i++ ) {
+    		            if (parser.getAttributeLocalName( i ).equals("k")) {
+    		            	// check whether the key is either junction|name
+    		            	if (parser.getAttributeValue(i).equals("junction")){
+    		            		j = true;
+    		            	}
+    		            	if (parser.getAttributeValue(i).equals("name")) {
+    		            		n = true;
+    		            	}
+    		            }
+    		            // if the key was junction|name, get the value
+    		            if (j) {
+    		            	if (parser.getAttributeLocalName( i ).equals("v")) {
+    		            		roundabout = parser.getAttributeValue(i) == "roundabout";
+    		            		break;
+    		            	}
+    		            }
+    		            if (n) {
+    		            	if (parser.getAttributeLocalName( i ).equals("v")) {
+    		            		name = parser.getAttributeValue(i);
+    		            		break;
+    		            	}
+    		            }
+    		        }
+    				break;
+    			}
+    		}
+    	}   	
+		return new OSMWay(nodeIds, roundabout,name);
+	}
+
+	/**
+	 * During parsing, in a nd element get the referenced node id. 
+	 * @param parser XML parser
+	 * @return the referenced node id
+	 */
+	private static Long getNdId(XMLStreamReader parser) {
+		for ( int i = 0; i < parser.getAttributeCount(); i++ ) {
+            if(parser.getAttributeLocalName( i ).equals("ref")){	
+            	return Long.parseLong(parser.getAttributeValue(i), 10);
+            }
+        }
+		return null;
+	}
+
+	/**
+	 * Parses a node element in the xml file.
+	 * @param parser XML parser
+	 * @return WayNodeOsm with id,lat,lon
+	 * @throws XMLStreamException
+	 */
+	private static WayNodeOSM processNode(XMLStreamReader parser) throws XMLStreamException {
+    	long id=0l;
+    	double lat=0, lon=0;
+        for ( int i = 0; i < parser.getAttributeCount(); i++ ) {
+            switch(parser.getAttributeLocalName( i )){
+            	case "id":
+            		id = Long.parseLong(parser.getAttributeValue(i), 10);
+            		break;
+            	case "lat":
+            		lat = Double.parseDouble(parser.getAttributeValue(i));
+            		break;
+            	case "lon":
+            		lon = Double.parseDouble(parser.getAttributeValue(i));
+            		break;
+            }
+        }
+        return new WayNodeOSM(lat, lon, id);
+    }
+
+	/**
+	 * @param nodeId a nodeId from the connected subgraph
+	 * @param fileName file name including path to the osm file to import
+	 * @return a connected subgraph imported from the osm file including the specified node
+	 */
+	public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importClean(long nodeId,String fileName){
     	GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(fileName);
+    	// mark all nodes connected to the specified node
     	graph.getAlgorithms().visitAllEdgesFromStartNode(graph.getNode(nodeId));
+    	// remove all unmarked=unconnected nodes
     	Iterator<NodeCppOSM> iter = graph.getNodes().iterator();
     	while(iter.hasNext()){
     		NodeCppOSM node = iter.next();
@@ -227,14 +319,25 @@ public class OsmImporter {
     	}
     	return graph;
     }
+	
+    /**
+     * @return connected graph of Zweibrücken
+     */
     public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importZW(){
     	return importClean(260070555l,"src/test/resources/edu/uaskl/cpp/zweibruecken_way_no_meta.osm");
     }
+    
+    /**
+     * @return  connected graph of the FH area
+     */
     public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importFH(){
     	return importClean(260070555l,"src/test/resources/edu/uaskl/cpp/fh_way_no_meta.osm");
     }
+    
+    /**
+     * @return connected graph of Kaiserslautern
+     */
     public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importKL(){
     	return importClean(281170640l,"src/test/resources/edu/uaskl/cpp/kl.osm");
-    }    
-
+    } 
 }
