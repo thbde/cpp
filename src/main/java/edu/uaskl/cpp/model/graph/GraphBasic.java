@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.uaskl.cpp.algorithmen.Algorithms;
+import edu.uaskl.cpp.algorithms.Algorithms;
 import edu.uaskl.cpp.model.edge.EdgeExtended;
 import edu.uaskl.cpp.model.graph.interfaces.Graph;
 import edu.uaskl.cpp.model.node.NodeExtended;

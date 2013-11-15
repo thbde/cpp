@@ -1,7 +1,8 @@
 package edu.uaskl.cpp.model.graph.interfaces;
 
 import java.util.Collection;
-import edu.uaskl.cpp.algorithmen.Algorithms;
+
+import edu.uaskl.cpp.algorithms.Algorithms;
 import edu.uaskl.cpp.model.edge.interfaces.Edge;
 import edu.uaskl.cpp.model.node.interfaces.Node;
 

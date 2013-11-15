@@ -1,6 +1,6 @@
 package edu.uaskl.cpp.model.graph;
 
-import edu.uaskl.cpp.algorithmen.AlgorithmsUndirected;
+import edu.uaskl.cpp.algorithms.AlgorithmsUndirected;
 import edu.uaskl.cpp.model.edge.EdgeExtended;
 import edu.uaskl.cpp.model.node.NodeExtended;
 

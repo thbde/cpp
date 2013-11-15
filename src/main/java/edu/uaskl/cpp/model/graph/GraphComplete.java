@@ -35,8 +35,8 @@ public class GraphComplete extends GraphUndirected<NodeCpp, EdgeCpp> {
         }
     }
 
-    private void connectNodeWithAllOthers(final NodeCpp neuerKnoten) {
+    private void connectNodeWithAllOthers(final NodeCpp newNode) {
         for (final NodeCpp nodesItem : getNodes())
-            neuerKnoten.addEdge(new EdgeCpp(neuerKnoten, nodesItem));
+            newNode.addEdge(new EdgeCpp(newNode, nodesItem));
     }
 }

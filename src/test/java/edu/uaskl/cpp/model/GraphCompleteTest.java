@@ -11,7 +11,7 @@ import edu.uaskl.cpp.model.graph.GraphComplete;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
 import edu.uaskl.cpp.model.node.NodeCpp;
 
-public class GraphVollstaendigTest { // TODO this is not the right class for all of this tests. was initially my fault :/ (+has german name) -tbach
+public class GraphCompleteTest { // TODO this is not the right class for all of this tests. was initially my fault :/ -tbach
 
     @Test
     public void hasEulerCircleTrue() {

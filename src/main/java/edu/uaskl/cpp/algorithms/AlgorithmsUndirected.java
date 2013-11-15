@@ -1,4 +1,4 @@
-package edu.uaskl.cpp.algorithmen;
+package edu.uaskl.cpp.algorithms;
 
 import java.util.ArrayList;
 import java.util.Collection;

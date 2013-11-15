@@ -1,4 +1,4 @@
-package edu.uaskl.cpp.algorithmen;
+package edu.uaskl.cpp.algorithms;
 
 import edu.uaskl.cpp.model.edge.interfaces.Edge;
 import edu.uaskl.cpp.model.graph.interfaces.Graph;
