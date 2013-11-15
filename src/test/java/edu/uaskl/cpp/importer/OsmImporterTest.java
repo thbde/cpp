@@ -19,7 +19,7 @@ public class OsmImporterTest {
 
     @Test
     public void testImportOsmUndirected() {
-    	final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected("target/test-classes/edu/uaskl/cpp/fh_way_no_meta.osm");
+    	final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected("src/test/resources/edu/uaskl/cpp/fh_way_no_meta.osm");
 //    	final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(getClass().getResource("../fh_way_no_meta.osm").toString());
         assertNotEquals("Graph should have nodes", graph.getNumberOfNodes(), 0); // TODO use assertThat -tbach
         assertNotEquals("Graph should have edges", graph.getGetNumberOfEdges(), 0);
@@ -30,7 +30,7 @@ public class OsmImporterTest {
     @Test
     public void testImportLine() {
         // GraphUndirected graph = testImporter.importOsmUndirected("zweibruecken_way_no_meta.osm");
-    	final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected("target/test-classes/edu/uaskl/cpp/testLine.osm");
+    	final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected("src/test/resources/edu/uaskl/cpp/testLine.osm");
 //        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(getClass().getResource("../testLine.osm").toString());
         assertEquals("Graph should have 2 nodes", 2, graph.getNumberOfNodes()); // TODO use assertThat -tbach
         assertEquals("Graph should have 1 edge", 1, graph.getGetNumberOfEdges());
@@ -42,7 +42,7 @@ public class OsmImporterTest {
     @Test
     public void testImportCircle() {
         // GraphUndirected graph = testImporter.importOsmUndirected("zweibruecken_way_no_meta.osm");
-    	final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected("target/test-classes/edu/uaskl/cpp/testCircle.osm");
+    	final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected("src/test/resources/edu/uaskl/cpp/testCircle.osm");
 //        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importOsmUndirected(getClass().getResource("../testCircle.osm").toString());
         assertEquals("Graph should have 1 nodes", 1, graph.getNumberOfNodes()); // TODO use assertThat -tbach
         assertEquals("Graph should have 1 edge", 1, graph.getGetNumberOfEdges());

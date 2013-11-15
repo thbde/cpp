@@ -324,28 +324,28 @@ public class OsmImporter {
      * @return connected graph of Zweibrücken
      */
     public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importZW(){
-    	return importClean(260070555l,"target/test-classes/edu/uaskl/cpp/zweibruecken_way_no_meta.osm");
+    	return importClean(260070555l,"src/test/resources/edu/uaskl/cpp/zweibruecken_way_no_meta.osm");
     }
     
     /**
      * @return  connected graph of the FH area
      */
     public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importFH(){
-    	return importClean(260070555l,"target/test-classes/edu/uaskl/cpp/fh_way_no_meta.osm");
+    	return importClean(260070555l,"src/test/resources/edu/uaskl/cpp/fh_way_no_meta.osm");
     }
     
     /**
      * @return connected graph of Kaiserslautern
      */
     public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importKL(){
-    	return importClean(281170640l,"target/test-classes/edu/uaskl/cpp/kl.osm");
+    	return importClean(281170640l,"src/test/resources/edu/uaskl/cpp/kl.osm");
     } 
     
     /**
      * @return connected graph of Rhineland-Palatinate
      */
     public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importRLP(){
-    	return importClean(281170640l,"target/test-classes/edu/uaskl/cpp/rlp.osm");
+    	return importClean(281170640l,"src/test/resources/edu/uaskl/cpp/rlp.osm");
     }  
 
 }
