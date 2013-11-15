@@ -169,7 +169,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     		//TODO throw better exception
     		throw new Exception("not eulerian");
     	}    	
-    	T temp;
+    	T currentNode;
         ArrayList<T> eulerianList = new ArrayList<>(getCircle(start));	//get the first subgraph
         
         if(graph.getNumberOfNodes()==1)
@@ -178,11 +178,11 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
         }
         for (int i = 0; i < eulerianList.size(); i++) 
         {
-            temp = eulerianList.get(i);						//go through every node of the first subgraph...
-            for (int j = 0; j < temp.getEdges().size(); j++)
-                if (!temp.getEdges().get(j).isVisited())	//... and have a look if there could be an other subgraph
+            currentNode = eulerianList.get(i);						//go through every node of the first subgraph...
+            for (int j = 0; j < currentNode.getEdges().size(); j++)
+                if (!currentNode.getEdges().get(j).isVisited())	//... and have a look if there could be an other subgraph
                 {
-                    final ArrayList<T> subGraph = new ArrayList<>(getCircle(temp));	//so get that new subgraph...
+                    final ArrayList<T> subGraph = new ArrayList<>(getCircle(currentNode));	//so get that new subgraph...
                     eulerianList = connectCircles(eulerianList, subGraph);	//...and add it to the big list
 //                    i = 0; // beginne nochmal von vorn zu suchen
                     // TODO not a good style to change the loop variable.
@@ -192,36 +192,57 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
         return new PathExtended<T>(eulerianList);
     }
 
-    private ArrayList<T> getCircle(final T node) {
-        T node1 = node;
+    public PathExtended<T> getEulerianCircle() throws Exception {
+    	graph.resetStates();
+    	if(!(isConnected() || hasEulerCircle()))
+    	{
+    		//TODO throw better exception
+    		throw new Exception("not eulerian");
+    	} 
+    	ArrayList<T> eulerList = new ArrayList<>(getCircle(graph.getNodes().iterator().next()));
+    	boolean modified;
+    	do{
+    		modified = false;
+    		for (T node : eulerList){
+    			for (V edge : node.getEdges()) {
+    				if ( !edge.isVisited()) {
+    					eulerList = connectCircles(eulerList,getCircle(node));
+    					modified = true;
+    				}
+    			}
+    		}
+    		
+    	}while(modified);	
+    	return new PathExtended<T>(eulerList);
+    }
+    private ArrayList<T> getCircle(final T startNode) {
+        T currentNode = startNode;
         int i = 0;
 
         final ArrayList<T> pathList = new ArrayList<>();
- 
-        //add the startnode to the list and go to the next (connected) node. TODO Will be changed at optimizationstage
-        for (int j = 0; j < node.getEdges().size(); j++)
-            if (!node.getEdges().get(j).isVisited()) 
+        for (int j = 0; j < startNode.getEdges().size(); j++)
+            if (!startNode.getEdges().get(j).isVisited()) 
             {
-                node1.getEdges().get(j).setVisited();
-                pathList.add(node1);
-                node1 = node1.getEdges().get(j).getRelatedNode(node1);
-
+            	// add the startNode and the next node to the list
+                currentNode.getEdges().get(j).setVisited();
+                pathList.add(currentNode);
+                currentNode = currentNode.getEdges().get(j).getRelatedNode(currentNode);
+                pathList.add(currentNode);
                 break;
             }
         
         
         do
-            if (!node1.getEdges().get(i).isVisited()) 	//	search connection to next node
+            if (!currentNode.getEdges().get(i).isVisited()) 	//	search connection to next node
             {
-                node1.getEdges().get(i).setVisited();
-                pathList.add(node1);							//add node to list...
-                node1 = node1.getEdges().get(i).getRelatedNode(node1);	//... and go to next/connected node
+            	// mark the used edge, go to the next node and add it to the list
+                currentNode.getEdges().get(i).setVisited();							
+                currentNode = currentNode.getEdges().get(i).getRelatedNode(currentNode);
+                pathList.add(currentNode);
                 i = 0;
             } else
                 i++;
-        while (!node1.equals(node)); // go through the graph till you come back to the beginning (becaus its a circle)
-
-        pathList.add(node1);	//add last node
+        while (!currentNode.equals(startNode)); // go through the graph till you come back to the beginning (becaus its a circle)
 
         return pathList;
 

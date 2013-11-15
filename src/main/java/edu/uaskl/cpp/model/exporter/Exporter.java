@@ -41,6 +41,7 @@ public class Exporter {
 		
 	/**
 	 * Exports the needed overlay.js for index.html and others.
+	 * The underlying graph must be reset before calling this function.
 	 * @param path path to be exported to the map
 	 * @param folder folder wherein to place overlay.js
 	 */
@@ -56,7 +57,7 @@ public class Exporter {
 				currentNode = nodes.get(index);
 				final EdgeCppOSM edge = getUnvisitedEdge(previousNode, currentNode);
 				final List<WayNodeOSM> metaNodes = edge.getMetadata().getNodes();
-				if (((Long)metaNodes.get(0).getID()).equals(currentNode.getId())){
+				if ((metaNodes.get(0).getID()) == currentNode.getId()){
 					Collections.reverse(metaNodes);
 				}
 				if(first){
@@ -82,8 +83,11 @@ public class Exporter {
 	 * @return an unvisited from nodeFrom to nodeTo edge or null;
 	 */
 	private static EdgeCppOSM getUnvisitedEdge(NodeCppOSM nodeFrom, NodeCppOSM nodeTo) {
+		long nodeToId = nodeTo.getId();
+		long nodeFromId = nodeFrom.getId();
 		for(EdgeCppOSM edge : nodeFrom.getEdges()) {
-			if (edge.getNode1().getId().equals(nodeTo.getId()) || edge.getNode2().getId().equals(nodeTo.getId())) {
+			// check both nodes due to loops
+			if ((edge.getNode2().getId() == nodeToId && edge.getNode1().getId() == nodeFromId) || (edge.getNode1().getId() == nodeToId && edge.getNode2().getId() == nodeFromId)) {
 				if (!edge.isVisited()){
 					edge.setVisited();
 					if(edge.getMetadata()==null){
@@ -95,13 +99,7 @@ public class Exporter {
 			}
 		}
 		System.out.println("Error "+ nodeFrom.getName() + " "+nodeTo.getName());
-		for(EdgeCppOSM edge : nodeFrom.getEdges()) {
-			if (edge.getNode1().getId().equals(nodeTo.getId()) || edge.getNode2().getId().equals(nodeTo.getId())) {
-				if(edge.getMetadata()!=null) {
-					return edge;
-				}
-			}
-		}
+		System.exit(0);
 		return null;
 	}
 	
