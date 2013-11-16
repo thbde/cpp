@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import edu.uaskl.cpp.model.edge.EdgeExtended;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
@@ -14,12 +19,15 @@ import edu.uaskl.cpp.model.path.PathExtended;
 
 public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeExtended<T, V>> implements Algorithms<T, V> {
 
+	private static final int THREADS = 4;
     private final GraphUndirected<T, V> graph;
-    private double[][] dist;
+    private double[] dist;
+    private double[] distTmp;
     private Integer[][] next;
     private HashMap<Long,Integer> id2index;
     private HashMap<Integer,Long> index2id;
     private boolean preprocessed = false;
+    private int tmpNumberOfNodes;
 
     public AlgorithmsUndirected(final GraphUndirected<T, V> graph) {
         this.graph = graph;
@@ -307,26 +315,32 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
      * It also creates next.
      */
     private void initDist(){
-    	this.dist = new double[graph.getNumberOfNodes()][graph.getNumberOfNodes()];
-    	this.next = new Integer[graph.getNumberOfNodes()][graph.getNumberOfNodes()]; // no need to set it to null
+    	int numberOfNodes = tmpNumberOfNodes;
+    	this.dist = new double[numberOfNodes * numberOfNodes];
+    	this.distTmp = new double[numberOfNodes * numberOfNodes];
+    	this.next = new Integer[numberOfNodes][numberOfNodes]; // no need to set it to null
     	// initialise the distances
-    	for(int i = 0; i < dist.length; ++i) {
-    		for(int j = 0; j < dist.length; ++j) {
-    			dist[i][j] = Double.POSITIVE_INFINITY;
+    	for(int i = 0; i < numberOfNodes; ++i) {
+    		for(int j = 0; j < numberOfNodes; ++j) {
+    			setDist(i,j, Double.POSITIVE_INFINITY);
     		}
-    		dist[i][i] = 0;
+    		setDist(i,i,0);
     	}
     	Collection<T> nodes = graph.getNodes();
     	for(T node : nodes) {
     		for(V edge : node.getEdges()) {
     			// TODO fix this for directed
     			// use the edge with minimum weight
-    			if(edge.getWeight() < dist[id2index.get(edge.getNode1().getId())][id2index.get(edge.getNode2().getId())]) {
-    				dist[id2index.get(edge.getNode1().getId())][id2index.get(edge.getNode2().getId())] = edge.getWeight();
-    				dist[id2index.get(edge.getNode2().getId())][id2index.get(edge.getNode1().getId())] = edge.getWeight();
+    			if(edge.getWeight() < getDist(id2index.get(edge.getNode1().getId()), id2index.get(edge.getNode2().getId()))) {
+    				setDist(id2index.get(edge.getNode1().getId()),id2index.get(edge.getNode2().getId()), edge.getWeight());
+    				setDist(id2index.get(edge.getNode2().getId()),id2index.get(edge.getNode1().getId()), edge.getWeight());
     			}
     		}
     	}
+    }
+    
+    private void setDist(int i,int j,double value) {
+    	dist[i*graph.getNumberOfNodes()+j]=value;
     }
     
     /**
@@ -336,22 +350,86 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
      */
     private void createDistNext() {
     	//based on Floyd-Warshall
+    	if (preprocessed) {
+    		return;
+    	}
+    	tmpNumberOfNodes = graph.getNumberOfNodes();
     	createTanslation();
     	initDist();
     	// create the matrix
-    	for(int k = 0; k < dist.length; ++k) {
-    		for(int i = 0; i < dist.length; ++i) {
-    			for(int j = 0; j < dist.length; ++j) {
-    				if(dist[i][k] + dist[k][j] < dist[i][j]) {
-    					dist[i][j] = dist[i][k] + dist[k][j];
-    					next[i][j] = k;
-    				}
-    			}
+//    	ExecutorService exec = Executors.newFixedThreadPool(THREADS);
+    	ExecutorService exec = Executors.newCachedThreadPool();
+    	for(int k = 0; k < tmpNumberOfNodes; ++k) {
+    		List<Callable<Boolean>> tasks = new ArrayList<Callable<Boolean>>();
+    		if(tmpNumberOfNodes < THREADS) {
+    			tasks.add(new floydWarshallJob(0,tmpNumberOfNodes,k));
     		}
+    		else {
+	    		for(int i = 1; i <=THREADS; ++i) {
+	    			int upperBound = (i== (THREADS)) ? tmpNumberOfNodes*tmpNumberOfNodes:(i)*(tmpNumberOfNodes*tmpNumberOfNodes/THREADS);
+	    			tasks.add(new floydWarshallJob((i-1)*(tmpNumberOfNodes*tmpNumberOfNodes/THREADS),upperBound,k));
+	    		}
+    		}
+    		try {
+    			List<Future<Boolean>> results = exec.invokeAll(tasks);
+    			for(Future<Boolean> result : results){
+    		          if(!result.get().booleanValue()){
+    		            throw new RuntimeException();
+    		          }
+    			}
+			} catch (InterruptedException e) {
+				System.out.println("Interrupted in Floyd-Warshall");
+				System.exit(0);
+			} catch (ExecutionException e) {
+				System.out.println("Execution error in Floyd-Warshall");
+				System.exit(0);
+			}
+    		// swap the current and the next distances
+    		double[] tmp = dist;
+    		dist = distTmp;
+    		distTmp = tmp;
     	}
+    	distTmp = null;
     	preprocessed = true;
     }
 
+    private class floydWarshallJob implements Callable<Boolean> {
+    	private int start,upperBound,k;
+    	public floydWarshallJob(int start,int upperBound,int k) {
+    		this.start = start;
+    		this.k = k;
+    		this.upperBound = upperBound;
+    	}
+		@Override
+		public Boolean call() throws Exception {
+			for(int index = start; index < upperBound;++index) {
+				int i = index/tmpNumberOfNodes;
+				int j = index%tmpNumberOfNodes;
+				double alternative = dist[getIndex(i,k)] + dist[getIndex(k,j)];
+				if(alternative < dist[index]) {
+					next[i][j] = k;
+					distTmp[index] = alternative;
+				}
+				else {
+					distTmp[index] = dist[index];
+				}
+			}
+			
+			return true;
+		}
+    	
+    }
+    
+    
+    private int getIndex(int i, int j){
+    	return i*tmpNumberOfNodes+j;
+    }
+    private int getI(int index) {
+    	return index/graph.getNumberOfNodes();
+    }
+    private int getJ(int index) {
+    	return index%graph.getNumberOfNodes();
+    }
     /**
      * @param path1 first path
      * @param path2 second path
@@ -377,7 +455,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     		createDistNext();
     	}
     	ArrayList<T> pathList = new ArrayList<T>();
-    	if(dist[id2index.get(node1.getId())][id2index.get(node2.getId())] == Double.POSITIVE_INFINITY){
+    	if(getDist(id2index.get(node1.getId()),id2index.get(node2.getId())) == Double.POSITIVE_INFINITY){
     		throw new IllegalStateException("no path");
     	}
     	Integer temp = next[id2index.get(node1.getId())][id2index.get(node2.getId())];
@@ -415,7 +493,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     		T nextNode = oddNodes.get(0);
     		double minDist = Double.POSITIVE_INFINITY;
     		for(T node : oddNodes) {
-    			double distToI = dist[id2index.get(firstNode.getId())][id2index.get(node.getId())];
+    			double distToI = getDist(id2index.get(firstNode.getId()),id2index.get(node.getId()));
     			if(distToI < minDist) {
     				minDist = distToI;
     				nextNode = node;
@@ -461,7 +539,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     			// for each link, find the correct edge
     			T nextNode = nodesInPath.get(i);
 //    			V edgeToCopy;
-    			double weight = dist[id2index.get(startNode.getId())][id2index.get(nextNode.getId())];
+    			double weight = getDist(id2index.get(startNode.getId()),id2index.get(nextNode.getId()));
     			//if we have a "copy" method find the right edge
 //    			for(V edge : startNode.getEdges()) {
 //    				if(edge.getWeight() == weight && (edge.getNode1() == nextNode || edge.getNode2() == nextNode)) {
@@ -476,6 +554,10 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     			
     		}
     	}
+	}
+
+	private double getDist(Integer i, Integer j) {
+		return dist[i*graph.getNumberOfNodes()+j];
 	}
 
 	/**

@@ -104,8 +104,10 @@ public class Exporter {
 	}
 	
 	private static WayOSM getMissingMetadata(NodeExtended<NodeCppOSM,EdgeCppOSM> node1,NodeExtended<NodeCppOSM,EdgeCppOSM> node2, double weight) {
+		long nodeFromId = node1.getId();
+		long nodeToId = node2.getId();
 		for(EdgeCppOSM edge : node1.getEdges()) {
-			if(edge.getWeight() == weight && (edge.getMetadata() != null) &&(edge.getNode1().equals(node2) || edge.getNode2().equals(node2))) {
+			if(edge.getWeight() == weight && (edge.getMetadata() != null) &&(edge.getNode2().getId() == nodeToId && edge.getNode1().getId() == nodeFromId) || (edge.getNode1().getId() == nodeToId && edge.getNode2().getId() == nodeFromId)) {
 				return edge.getMetadata();
 			}
 		}
