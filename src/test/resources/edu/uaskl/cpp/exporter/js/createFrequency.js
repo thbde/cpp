@@ -13,10 +13,9 @@ var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.www.toolserver.org/til
 var mapLayer = OpenStreetMap_BlackAndWhite;
 map.addLayer(mapLayer);
 
-function createSegment(pointList,numberOfOccurrences){
-	console.log(numberOfOccurrences);
-	var colors = ['#FFC0BF','#FF0600','#A80400','#500200','#2E0B0A','#401E1E'];
-	var line = L.polyline(pointList,{weight:5,opacity:1,color:colors[(numberOfOccurrences-1) % colors.length]});
+function createSegment(pointList,numberOfOccurrences,maxIndex){
+	var col = "hsl(230,50%,"+(90-80*(numberOfOccurrences-1)/(maxIndex-1))+"%)";
+	var line = L.polyline(pointList,{weight:5,opacity:1,color:col});
 	line.addTo(map);
 };
 
@@ -65,6 +64,7 @@ function createOccurrenceMap(listOfSegments){
 	var dictOcc = {};
 	var dictSeg = {};
 	var listOfHashs = [];
+        var maxIndex = 1;
 	for(var i = 0; i < numberOfSegments; ++i){
 		var segment = listOfSegments[i];
 		var hash = hashSegment(segment);
@@ -75,13 +75,16 @@ function createOccurrenceMap(listOfSegments){
 			dictSeg[hash]=segment;
 		}
 		dictOcc[hash]=occ+1;
+                if(occ+1 > maxIndex){
+                        maxIndex=occ+1;
+                }
 	}
 	
 	for(var i = 0; i< listOfHashs.length;++i){
 		var hash = listOfHashs[i];
 		var segment = dictSeg[hash];
 		var occ = dictOcc[hash];
-		createSegment(segment,occ);
+		createSegment(segment,occ,maxIndex);
 	}
 };
 
