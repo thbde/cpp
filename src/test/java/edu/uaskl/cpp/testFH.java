@@ -41,12 +41,13 @@ public class testFH {
 //        }
     	assertTrue("FH graph should be connected", graph.getAlgorithms().isConnected());
 //        assertFalse("FH graph has no Euler circle", graph.getAlgorithms().hasEulerCircle());
-//    	NodeCppOSMDirected node = graph.getNode(267970528L);
+    	NodeCppOSMDirected node = graph.getNode(281678042L);
         assertThat(graph.getNumberOfNodes()).isGreaterThan(0);
         graph.getAlgorithms().matchPerfect();
         System.out.println("matched");
         
-
+//		  <node id="298114929" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2340166" lon="7.4021832"/>
+//        <node id="260070509" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2538969" lon="7.3649591"/>
         
 //        assertTrue("matched graph", graph.getAlgorithms().hasEulerCircle());
         final PathExtended<NodeCppOSMDirected> path = graph.getAlgorithms().getEulerianCircle();

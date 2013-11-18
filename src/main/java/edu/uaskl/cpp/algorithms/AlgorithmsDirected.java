@@ -47,7 +47,7 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
      * @return boolean whether the graph is connected
      */
     public boolean isConnected() {
-
+    	//FIXME
         graph.resetStates();
 
         if (graph.getNodes().size() == 0)
@@ -85,9 +85,16 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
      * @return boolean, whether the graph has an Eulerian circle
      */
     public boolean hasEulerCircle() {
-        for (final T node : graph.getNodes())
-            if (node.getDegree() != 0) //FIXME 
+    	if(!isConnected()){
+    		return false;
+    	}
+        NodeCppOSMDirected node1;
+		for (final T node : graph.getNodes()){
+        	node1 = (NodeCppOSMDirected)node;
+            if (node1.getDegree() != 0){
                 return false;
+            }
+		}
         return true;
     }
     

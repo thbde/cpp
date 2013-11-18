@@ -252,6 +252,12 @@ public class OsmImporter {
     				if(!outgoingEdges.get(1).getNode2().equals(incomingEdges.get(1).getNode1())){
     					continue;
     				}
+    				if(outgoingEdges.get(0).getWeight() != incomingEdges.get(0).getWeight()){
+    					continue;
+    				}
+    				if(outgoingEdges.get(1).getWeight() != incomingEdges.get(1).getWeight()){
+    					continue;
+    				}
     			}
     			else {
     				//out0 should be in1
@@ -262,15 +268,21 @@ public class OsmImporter {
     				if(!outgoingEdges.get(1).getNode2().equals(incomingEdges.get(0).getNode1())){
     					continue;
     				}
+    				if(outgoingEdges.get(0).getWeight() != incomingEdges.get(1).getWeight()){
+    					continue;
+    				}
+    				if(outgoingEdges.get(1).getWeight() != incomingEdges.get(0).getWeight()){
+    					continue;
+    				}
     			}
     			
     			// get the ids of the two connected nodes
     			final NodeCppOSMDirected node1 = incomingEdges.get(0).getNode1();
     			final NodeCppOSMDirected node2 = incomingEdges.get(1).getNode1();
-    			if (node1.equals(node2)){
-    				// we are in a loop and do not erase ourself
-    				continue;
-    			}
+//    			if (node1.equals(node2)){
+//    				// we are in a loop and do not erase ourself
+//    				continue;
+//    			}
     			// concat the list in the right way
     			List<WayNodeOSM> metaNodes1 = incomingEdges.get(0).getMetadata().getNodes();
     			List<WayNodeOSM> metaNodes2 = incomingEdges.get(1).getMetadata().getNodes();
@@ -286,7 +298,6 @@ public class OsmImporter {
     			// do this manually because we otherwise corrupt the iterator
     			node.removeAllEdges();
     			iteratorNodes.remove();
-    			continue;
     		}
     	}
     }
@@ -347,9 +358,6 @@ public class OsmImporter {
 		  // get the star and end node of this segment of the way 
 	      final Long startNodeId = way.nodes.get(j - 1);
 	      final Long endNodeId = way.nodes.get(j);
-	      if(startNodeId==267970528 || endNodeId==267970528){
-  			System.out.println("267970528");
-  		}
 	      createNodeIfNonexisting(osmGraph, startNodeId);
 	      createNodeIfNonexisting(osmGraph, endNodeId);
 	      // create the meta nodes for this segment
@@ -448,6 +456,7 @@ public class OsmImporter {
     		            if (j) {
     		            	if (parser.getAttributeLocalName( i ).equals("v")) {
     		            		roundabout = parser.getAttributeValue(i) == "roundabout";
+    		            		directed = true;
     		            		break;
     		            	}
     		            }
