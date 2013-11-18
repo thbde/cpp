@@ -44,7 +44,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
             return true;
 
         final T start = graph.getNodes().iterator().next();
-        visitAllEdgesFromStartNode(start);
+        visitAllNodesFromStartNode(start);
 
         return allNodesVisited();
     }
@@ -63,12 +63,12 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
      * Recursively marks all connected nodes as visited.
      * @param node start node
      */
-    public void visitAllEdgesFromStartNode(final T node) {
+    public void visitAllNodesFromStartNode(final T node) {
         node.setVisited();
 
         for (final V edgeItem : node.getEdges())
             if (!edgeItem.getRelatedNode(node).isVisited() == true)
-                visitAllEdgesFromStartNode(edgeItem.getRelatedNode(node));
+                visitAllNodesFromStartNode(edgeItem.getRelatedNode(node));
     }
 
     /**
