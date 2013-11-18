@@ -44,13 +44,13 @@ class UIGraph {
         leftVisViewer.getRenderContext().setEdgeLabelTransformer(new Transformer<Integer, String>() {
             @Override
             public String transform(final Integer e) {
-                return "Stub";
+                return "";
             }
         });
         rightVisViewer.getRenderContext().setEdgeLabelTransformer(new Transformer<Integer, String>() {
             @Override
             public String transform(final Integer e) {
-                return "Stub";
+                return "";
             }
         });
 
@@ -63,14 +63,14 @@ class UIGraph {
         // Colors
         leftVisViewer.setBackground(Color.white);
         leftVisViewer.getRenderContext().setEdgeDrawPaintTransformer(
-                new PickableEdgePaintTransformer<>(leftVisViewer.getPickedEdgeState(), Color.black, Color.cyan));
+                new PickableEdgePaintTransformer<>(leftVisViewer.getPickedEdgeState(), Color.gray, Color.red));
         leftVisViewer.getRenderContext().setVertexFillPaintTransformer(
-                new PickableVertexPaintTransformer<>(leftVisViewer.getPickedVertexState(), Color.red, Color.yellow));
+                new PickableVertexPaintTransformer<>(leftVisViewer.getPickedVertexState(), Color.gray, Color.red));
         rightVisViewer.setBackground(Color.white);
         rightVisViewer.getRenderContext().setEdgeDrawPaintTransformer(
-                new PickableEdgePaintTransformer<>(rightVisViewer.getPickedEdgeState(), Color.black, Color.cyan));
+                new PickableEdgePaintTransformer<>(rightVisViewer.getPickedEdgeState(), Color.gray, Color.red));
         rightVisViewer.getRenderContext().setVertexFillPaintTransformer(
-                new PickableVertexPaintTransformer<>(rightVisViewer.getPickedVertexState(), Color.red, Color.yellow));
+                new PickableVertexPaintTransformer<>(rightVisViewer.getPickedVertexState(), Color.gray, Color.red));
 
         // Tool tip displaying node number
         leftVisViewer.setVertexToolTipTransformer(new ToStringLabeller<Integer>());
@@ -94,6 +94,11 @@ class UIGraph {
     }
     
     public void createGraphFromOSMFile(String file) {
+        createImportGraph(file);
+        createFinalGraph(file);
+    }
+    
+    private void createImportGraph(String file) {
         final SparseMultigraph<Integer, Integer> graph = new SparseMultigraph<>();
     
         GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph;
@@ -120,8 +125,39 @@ class UIGraph {
                 }
             processedNodes.add(node.hashCode());
         }
+        leftVisViewer.setGraphLayout(new KKLayout<>(graph));
+    }
+    
+    private void createFinalGraph(String file) {
+        final SparseMultigraph<Integer, Integer> graph = new SparseMultigraph<>();
         
-        leftVisViewer.setGraphLayout(new ISOMLayout<>(graph));
+        GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph;
+        osmGraph = OsmImporter.importOsmUndirected(file);
+        osmGraph.getAlgorithms().matchPerfect();
+    
+        final Collection<NodeCppOSM> nodes = osmGraph.getNodes();
+        final Iterator<NodeCppOSM> iterator = nodes.iterator();
+    
+        int edgeNumber = 0;
+        final List<Integer> processedNodes = new ArrayList<>(); // you should use a hash* here, probably a hashset -tbach
+    
+        while (iterator.hasNext()) { // TODO you could use a foreach loop here -tbach
+            final NodeCppOSM node = iterator.next();
+            graph.addVertex(node.hashCode()); // TODO the id could be more interesting? -tbach
+    
+            final List<EdgeCppOSM> edges = node.getEdges();
+    
+            for (final EdgeCppOSM edge : edges)
+                // TODO the contains is a linear search with the arraylist -tbach
+                if (!processedNodes.contains(edge.getNode1().hashCode()) && !processedNodes.contains(edge.getNode2().hashCode())) {
+                    graph.addEdge(edgeNumber, edge.getNode1().hashCode(), edge.getNode2().hashCode());
+    
+                    edgeNumber++;
+                }
+            processedNodes.add(node.hashCode());
+        }
+
+        rightVisViewer.setGraphLayout(new KKLayout<>(graph));
     }
 
 }
