@@ -276,7 +276,7 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
     	int id1 = id2index.get(node1.getId());
     	int id2 = id2index.get(node2.getId());
     	if(dist[id2index.get(node1.getId())][id2index.get(node2.getId())] == Double.POSITIVE_INFINITY){
-    		throw new IllegalStateException("no path");
+    		throw new IllegalStateException("no path from "+node1.getName()+" to "+node2.getName());
     	}
     	Integer temp = next[id2index.get(node1.getId())][id2index.get(node2.getId())];
     	if(temp == null){

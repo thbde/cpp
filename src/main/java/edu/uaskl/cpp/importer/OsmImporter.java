@@ -597,4 +597,11 @@ public class OsmImporter {
     public static GraphUndirected<NodeCppOSM, EdgeCppOSM> importKL(){
     	return importClean(281170640l,"src/test/resources/edu/uaskl/cpp/kl.osm");
     } 
+    
+    /**
+     * @return connected graph of Kaiserslautern
+     */
+    public static GraphDirected<NodeCppOSMDirected, EdgeCppOSMDirected> importKLDirected(){
+    	return importCleanDirected(281170640l,"src/test/resources/edu/uaskl/cpp/kl.osm");
+    } 
 }

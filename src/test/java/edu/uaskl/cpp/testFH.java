@@ -6,6 +6,7 @@ import static edu.uaskl.cpp.importer.OsmImporter.importClean;
 import static edu.uaskl.cpp.importer.OsmImporter.importZW;
 import static edu.uaskl.cpp.importer.OsmImporter.importZWDirected;
 import static edu.uaskl.cpp.importer.OsmImporter.importKL;
+import static edu.uaskl.cpp.importer.OsmImporter.importKLDirected;
 import static edu.uaskl.cpp.importer.OsmImporter.importFH;
 import static edu.uaskl.cpp.importer.OsmImporter.importFHDirected;
 import static edu.uaskl.cpp.importer.OsmImporter.importOsmUndirected;
