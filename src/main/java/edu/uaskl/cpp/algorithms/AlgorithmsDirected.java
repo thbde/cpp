@@ -365,7 +365,7 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
     	}
     	// match their shortest path
     	 getPairsNaiveGreedy();
-//    	 removeRedundantEdges();
+    	 removeRedundantEdges();
     	 simplify();
     }
     
@@ -376,13 +376,33 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
 	 */
 	private void removeRedundantEdges() {
 		for(T n : graph.getNodes()) {
-			NodeCppOSMDirected node = (NodeCppOSMDirected) n;
-			if(node.getOutDegree() < 3 || node.getInDegree() < 3) {
-				continue;
-			}
-			//TODO find edges that are at least twice each direction
-
-			
+			boolean modified;
+			do {
+				modified = false;
+				graph.resetStates(); //TODO could be done more locally
+				NodeCppOSMDirected node = (NodeCppOSMDirected) n;
+				if(node.getOutDegree() < 3 || node.getInDegree() < 3) {
+					break;
+				}
+				//TODO find edges that are at least twice each direction
+				for(EdgeCppOSMDirected edge : node.getEdges()) {
+					edge.setVisited();
+					EdgeCppOSMDirected inverseEdge = getUnvisitedConnection(edge.getNode2(),edge.getNode1(),edge.getWeight());
+					if(inverseEdge != null) {
+						//we have at least one edge in each direction
+						inverseEdge.setVisited();
+						EdgeCppOSMDirected dupEdge = getUnvisitedConnection(edge.getNode1(),edge.getNode2(),edge.getWeight());
+						edge.resetState();
+						if(dupEdge != null ) {
+							edge.getNode1().removeEdge(dupEdge);
+							edge.getNode1().removeEdge(inverseEdge);
+							modified = true;
+							break;
+						}
+						inverseEdge.resetState();
+					}
+				}
+			}while(modified);
 			
 		}
 		
@@ -490,6 +510,16 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
 			}
 		}
 		return false;
+	}
+	
+	private EdgeCppOSMDirected getUnvisitedConnection(NodeCppOSMDirected node1,
+			NodeCppOSMDirected node2, double weight) {
+		for(EdgeCppOSMDirected edge : node1.getEdges()) {
+			if(!edge.isVisited() && edge.getNode1().equals(node1) && edge.getNode2().equals(node2) && edge.getWeight() == weight) {
+				return edge;
+			}
+		}
+		return null;
 	}
 	
 	private boolean hasConnection(NodeCppOSMDirected node1,
