@@ -101,6 +101,14 @@ public class NodeCppOSMDirected extends NodeExtended<NodeCppOSMDirected, EdgeCpp
     	return false;
     }
     
+    public boolean removeEdge(EdgeCppOSMDirected edge) {
+    	NodeCppOSMDirected otherNode = edge.getNode1().equals(this) ? edge.getNode2() : edge.getNode1();
+    	return otherNode.removeEdgeThis(edge) & edges.remove(edge);
+    }
+    
+    public boolean removeEdgeThis(EdgeCppOSMDirected edge) {
+    	return edges.remove(edge);
+    }
     
     
     public boolean removeEdgeTo(final NodeCppOSMDirected otherNode) {

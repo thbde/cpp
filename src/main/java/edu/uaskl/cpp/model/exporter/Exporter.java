@@ -146,7 +146,7 @@ public class Exporter {
 		long nodeFromId = nodeFrom.getId();
 		for(EdgeCppOSMDirected edge : nodeFrom.getEdges()) {
 			// check both nodes due to loops
-			if ((edge.getNode2().getId() == nodeToId && edge.getNode1().getId() == nodeFromId)) {
+			if ((edge.getNode2().getId() == nodeToId && edge.getNode1().getId() == nodeFromId) && !edge.isVisited()) {
 					edge.setVisited();
 					if(edge.getMetadata()==null){
 						WayOSM metaData = getMissingMetadata(nodeFrom,nodeTo,edge.getWeight());

@@ -365,9 +365,28 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
     	}
     	// match their shortest path
     	 getPairsNaiveGreedy();
+//    	 removeRedundantEdges();
     	 simplify();
     }
     
+
+	/**
+	 * Shortest path may have added duplicate edges.
+	 * So if you have 2 edges in the one direction and 2 matching ones in the other, delete one for each direction.
+	 */
+	private void removeRedundantEdges() {
+		for(T n : graph.getNodes()) {
+			NodeCppOSMDirected node = (NodeCppOSMDirected) n;
+			if(node.getOutDegree() < 3 || node.getInDegree() < 3) {
+				continue;
+			}
+			//TODO find edges that are at least twice each direction
+
+			
+			
+		}
+		
+	}
 
 	/**
 	 * searches for circles that have an inverse circle and removes them
@@ -397,19 +416,19 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
 	private boolean findDuplicateCircles(NodeCppOSMDirected startNode) {
 		graph.resetStates();
 		NodeCppOSMDirected currentNode = startNode;
-		int i = 0;
         final ArrayList<NodeCppOSMDirected> pathList = new ArrayList<>();
         for (int j = 0; j < startNode.getEdges().size(); j++) {
-            if (currentNode.getEdges().get(j).getNode1()==currentNode && !startNode.getEdges().get(j).isVisited()) 
+        	EdgeCppOSMDirected currentEdge = currentNode.getEdges().get(j);
+            if (currentEdge.getNode1()==currentNode && !currentEdge.isVisited()) 
             {
-            	if(!hasConnection(currentNode.getEdges().get(j).getNode2(),currentNode.getEdges().get(j).getNode1(),currentNode.getEdges().get(j).getWeight())) {
-            		currentNode.getEdges().get(j).setVisited();
+            	if(!hasUnvisitedConnection(currentEdge.getNode2(),currentEdge.getNode1(),currentEdge.getWeight())) {
+            		currentEdge.setVisited();
             		continue;
             	}
             	// add the startNode and the next node to the list
-                currentNode.getEdges().get(j).setVisited();
+            	currentEdge.setVisited();
                 pathList.add(currentNode);
-                currentNode = currentNode.getEdges().get(j).getRelatedNode(currentNode);
+                currentNode = currentEdge.getRelatedNode(currentNode);
                 pathList.add(currentNode);
                 break;
             }
@@ -425,7 +444,7 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
         	for(EdgeCppOSMDirected edge : currentNode.getEdges()) {
         		if(!edge.isVisited() && edge.getNode1().equals(currentNode)) {
     				edge.setVisited();
-        			if(!hasConnection(edge.getNode2(),edge.getNode1(),edge.getWeight())) {
+        			if(!hasUnvisitedConnection(edge.getNode2(),edge.getNode1(),edge.getWeight())) {
         				continue;
         			}
         			found = true;
@@ -450,13 +469,20 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
         for(int index = 1; index < pathList.size(); ++index) {
         	NodeCppOSMDirected node1 = pathList.get(index -1);
         	NodeCppOSMDirected node2 = pathList.get(index);
-        	node1.removeEdgeTo(node2);
+        	//find the right edge
+        	for(EdgeCppOSMDirected edge : node1.getEdges()) {
+        		if(edge.getNode1().equals(node1) && edge.getNode2().equals(node2) && hasConnection(node2,node1,edge.getWeight())) {
+        			//remove the edge
+        			node1.removeEdge(edge);
+        			break;
+        		}
+        	}
         }
         return true;
 	}
 	
 
-	private boolean hasConnection(NodeCppOSMDirected node1,
+	private boolean hasUnvisitedConnection(NodeCppOSMDirected node1,
 			NodeCppOSMDirected node2, double weight) {
 		for(EdgeCppOSMDirected edge : node1.getEdges()) {
 			if(!edge.isVisited() && edge.getNode1().equals(node1) && edge.getNode2().equals(node2) && edge.getWeight() == weight) {
@@ -465,6 +491,17 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
 		}
 		return false;
 	}
+	
+	private boolean hasConnection(NodeCppOSMDirected node1,
+			NodeCppOSMDirected node2, double weight) {
+		for(EdgeCppOSMDirected edge : node1.getEdges()) {
+			if(edge.getNode1().equals(node1) && edge.getNode2().equals(node2) && edge.getWeight() == weight) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 
 	/**
 	 * @return all nodes with more outgoing edges than incoming ones
