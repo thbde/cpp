@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.uaskl.cpp.model.edge.EdgeCppOSMDirected;
 import edu.uaskl.cpp.model.edge.EdgeExtended;
 import edu.uaskl.cpp.model.graph.GraphDirected;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
@@ -28,9 +29,7 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
     private HashMap<Long,Integer> id2index;
     private HashMap<Integer,Long> index2id;
     private boolean preprocessed = false;
-	/**
-	 * 
-	 */
+
 	public AlgorithmsDirected(final GraphDirected<T, V> graph) {
 		this.graph = graph;
 	}
@@ -70,7 +69,7 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
     }
     
     /**
-     * Recursively marks all connected nodes as visited.
+     * Recursively marks all following nodes as visited.
      * @param node start node
      */
     public void visitAllNodesFromStartNode(final T node) {
@@ -103,8 +102,8 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
      * @param circleToInsert the circle which to insert
      * @return a new circle, which is a concatenation of both
      */
-    public ArrayList<T> connectCircles(final ArrayList<T> originalCircle, final ArrayList<T> circleToInsert) 
-    { // TODO should be private? -tbach //needs to be public for tests. alternative: set on private and remove test (don't know what's better) -debeck
+    private ArrayList<T> connectCircles(final ArrayList<T> originalCircle, final ArrayList<T> circleToInsert) 
+    {
     	// make a copy
     	ArrayList<T> newCircle = new ArrayList<>(originalCircle);
         // find the first occurrence of circleToInsert's start node
@@ -112,7 +111,7 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
         {
             if (newCircle.get(i).equals(circleToInsert.get(0))) 
             {
-                newCircle.remove(i); // remove the insertion point, because it also occurs in the the circleToInser
+                newCircle.remove(i); // remove the insertion point, because it also occurs in the the circleToInsert
                 newCircle.addAll(i,circleToInsert); // simply insert the circleToInser at the right position
                 return newCircle;
             }
@@ -298,8 +297,6 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
     /**
      * This is a greedy version, taking a unmatched node and 
      * matching it with the nearest other unmatched node, until all nodes are matched.
-     * @param oddNodes a list of nodes with odd degree, which should be matched
-     * @return a list of node pairs
      */
     private void getPairsNaiveGreedy(){
     	// naive version - not perfect but greedy
@@ -339,17 +336,18 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
 		for(int i = 1; i < path.getLength(); ++i) {
 			// for each link, find the correct edge
 			NodeCppOSMDirected nextNode = nodesInPath.get(i);
-//			V edgeToCopy;
+			EdgeCppOSMDirected edgeToCopy = null;
 			double weight = dist[id2index.get(startNode.getId())][id2index.get(nextNode.getId())];
 			//if we have a "copy" method find the right edge
-//			for(V edge : startNode.getEdges()) {
-//				if(edge.getWeight() == weight && (edge.getNode1() == nextNode || edge.getNode2() == nextNode)) {
-//					edgeToCopy = edge;
-//					break;
-//				}
-//			}
+			for(EdgeCppOSMDirected edge : startNode.getEdges()) {
+				if(edge.getWeight() == weight && edge.getNode2() == nextNode) {
+					edgeToCopy = edge;
+					break;
+				}
+			}
+			
 			// create the edge
-			startNode.connectWithNodeAndWeigth(nextNode, weight);
+			startNode.connectWithNodeWeigthAndMeta(nextNode, weight, edgeToCopy.getMetadata());
 			// move startNode to the next node
 			startNode = nextNode;
 			
@@ -367,23 +365,125 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
     	}
     	// match their shortest path
     	 getPairsNaiveGreedy();
+    	 simplify();
     }
     
 
+	/**
+	 * searches for circles that have an inverse circle and removes them
+	 */
+	private void simplify() {
+		boolean modified;
+		do{
+			modified = false;
+			for(T n : graph.getNodes()) {
+				NodeCppOSMDirected node = (NodeCppOSMDirected) n;
+				if(findDuplicateCircles(node)) {
+					modified = true;
+					break;
+				}
+			}
+			
+		}while(modified);
+	}
+	
+	
+
+	/**
+	 * Tries to find a circle which has a inverse and deletes it
+	 * @param startNode start node
+	 * @return boolean, whether a duplicate circle/invere was removed
+	 */
+	private boolean findDuplicateCircles(NodeCppOSMDirected startNode) {
+		graph.resetStates();
+		NodeCppOSMDirected currentNode = startNode;
+		int i = 0;
+        final ArrayList<NodeCppOSMDirected> pathList = new ArrayList<>();
+        for (int j = 0; j < startNode.getEdges().size(); j++) {
+            if (currentNode.getEdges().get(j).getNode1()==currentNode && !startNode.getEdges().get(j).isVisited()) 
+            {
+            	if(!hasConnection(currentNode.getEdges().get(j).getNode2(),currentNode.getEdges().get(j).getNode1(),currentNode.getEdges().get(j).getWeight())) {
+            		currentNode.getEdges().get(j).setVisited();
+            		continue;
+            	}
+            	// add the startNode and the next node to the list
+                currentNode.getEdges().get(j).setVisited();
+                pathList.add(currentNode);
+                currentNode = currentNode.getEdges().get(j).getRelatedNode(currentNode);
+                pathList.add(currentNode);
+                break;
+            }
+        }
+        // no edge to leave the start node
+        if(pathList.size() == 0){
+        	return false;
+        }
+        
+        do {
+        	//try to find a next node, otherwise go back one node
+        	boolean found = false;
+        	for(EdgeCppOSMDirected edge : currentNode.getEdges()) {
+        		if(!edge.isVisited() && edge.getNode1().equals(currentNode)) {
+    				edge.setVisited();
+        			if(!hasConnection(edge.getNode2(),edge.getNode1(),edge.getWeight())) {
+        				continue;
+        			}
+        			found = true;
+        			currentNode = edge.getNode2();
+        			pathList.add(currentNode);
+        			break;
+        		}
+        	}
+        	
+        	if(!found) {
+        		int lastIndex = pathList.size()-1;
+        		currentNode = pathList.get(lastIndex-1);
+        		pathList.remove(lastIndex);
+        	}
+        }
+        while (!currentNode.equals(startNode));
+        if(pathList.size() == 1){
+        	return false;
+        }
+        
+        //remove the edges
+        for(int index = 1; index < pathList.size(); ++index) {
+        	NodeCppOSMDirected node1 = pathList.get(index -1);
+        	NodeCppOSMDirected node2 = pathList.get(index);
+        	node1.removeEdgeTo(node2);
+        }
+        return true;
+	}
+	
+
+	private boolean hasConnection(NodeCppOSMDirected node1,
+			NodeCppOSMDirected node2, double weight) {
+		for(EdgeCppOSMDirected edge : node1.getEdges()) {
+			if(!edge.isVisited() && edge.getNode1().equals(node1) && edge.getNode2().equals(node2) && edge.getWeight() == weight) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * @return all nodes with more outgoing edges than incoming ones
+	 */
 	private ArrayList<NodeCppOSMDirected> getPositiveNodes() {
 		Collection<T> nodes = graph.getNodes();
     	ArrayList<NodeCppOSMDirected> oddNodes = new ArrayList<>();
     	for(T node : nodes) {
     		NodeCppOSMDirected node1 = (NodeCppOSMDirected)node;
-    		if(node1.getId()==267970528){
-    			System.out.println("267970528");
-    		}
     		if(node1.getDegree()>0){
     			oddNodes.add(node1);
     		}
     	}
 		return oddNodes;
 	}
+	
+	/**
+	 * @return all nodes with more incoming edges than outgoing ones
+	 */
 	private ArrayList<NodeCppOSMDirected> getNegativeNodes() {
 		Collection<T> nodes = graph.getNodes();
     	ArrayList<NodeCppOSMDirected> oddNodes = new ArrayList<>();
@@ -396,5 +496,4 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
 		return oddNodes;
 	}
 	
-//	private getDegree(node)
 }

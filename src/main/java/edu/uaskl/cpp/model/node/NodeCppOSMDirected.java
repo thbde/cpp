@@ -11,7 +11,9 @@ import edu.uaskl.cpp.model.edge.EdgeCppOSM;
 import edu.uaskl.cpp.model.edge.EdgeCppOSMDirected;
 import edu.uaskl.cpp.model.edge.EdgeCreatorCppOSM;
 import edu.uaskl.cpp.model.edge.EdgeCreatorCppOSMDirected;
+import edu.uaskl.cpp.model.edge.interfaces.Edge;
 import edu.uaskl.cpp.model.edge.interfaces.EdgeCreator;
+import edu.uaskl.cpp.model.node.interfaces.Node;
 
 /**
  * @author malte
@@ -97,6 +99,20 @@ public class NodeCppOSMDirected extends NodeExtended<NodeCppOSMDirected, EdgeCpp
     	System.out.println("even degree for directed graph?");
     	System.exit(0);
     	return false;
+    }
+    
+    
+    
+    public boolean removeEdgeTo(final NodeCppOSMDirected otherNode) {
+        Edge<NodeCppOSMDirected, EdgeCppOSMDirected> edgeToRemove = null;
+        for (final Edge<NodeCppOSMDirected, EdgeCppOSMDirected> edgesItem : edges)
+            if (edgesItem.getNode2().equals(otherNode)) {
+                edgeToRemove = edgesItem;
+                break;
+            }
+        if (edgeToRemove == null)
+            throw new IllegalArgumentException("There is no edge from this node (" + this + " ) to node: " + otherNode);
+        return edges.remove(edgeToRemove);
     }
 
 }
