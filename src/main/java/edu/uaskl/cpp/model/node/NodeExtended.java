@@ -1,5 +1,6 @@
 package edu.uaskl.cpp.model.node;
 
+import edu.uaskl.cpp.model.edge.EdgeCppOSMDirected;
 import edu.uaskl.cpp.model.edge.EdgeExtended;
 import edu.uaskl.cpp.model.edge.interfaces.EdgeCreator;
 
@@ -62,4 +63,14 @@ public class NodeExtended<T extends NodeExtended<T, V>, V extends EdgeExtended<T
         addEdge(getEdgeCreator().create((T)this, otherNode, weight));
         return this;
     }
+    
+    public boolean removeEdge(V edge) {
+    	T otherNode = edge.getNode1().equals(this) ? edge.getNode2() : edge.getNode1();
+    	return otherNode.removeEdgeThis(edge) & edges.remove(edge);
+    }
+    
+    public boolean removeEdgeThis(V edge) {
+    	return edges.remove(edge);
+    }
+    
 }

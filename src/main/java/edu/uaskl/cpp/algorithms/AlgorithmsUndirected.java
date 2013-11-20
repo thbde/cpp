@@ -5,8 +5,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.uaskl.cpp.model.edge.EdgeCppOSMDirected;
 import edu.uaskl.cpp.model.edge.EdgeExtended;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
+import edu.uaskl.cpp.model.node.NodeCppOSMDirected;
 import edu.uaskl.cpp.model.node.NodeExtended;
 import edu.uaskl.cpp.model.path.PathExtended;
 
@@ -443,6 +445,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     	ArrayList<ArrayList<T>> pairs = getPairsNaiveGreedy(oddNodes);
     	// create the paths
     	createDupEdges(pairs);
+    	removeRedundantEdges();
     }
 
 	/**
@@ -490,6 +493,51 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     		}
     	}
 		return oddNodes;
+	}
+	
+	/**
+	 * Shortest path may have added duplicate edges.
+	 * So if you have 2 edges in the one direction and 2 matching ones in the other, delete one for each direction.
+	 */
+	private void removeRedundantEdges() {
+		for(T node : graph.getNodes()) {
+			boolean modified;
+			do {
+				modified = false;
+				graph.resetStates(); //TODO could be done more locally
+				//NodeCppOSMDirected node = (NodeCppOSMDirected) n;
+				//TODO find edges that are at least twice each direction
+				for(V edge : node.getEdges()) {
+					edge.setVisited();
+					V inverseEdge = getUnvisitedConnection(edge.getNode2(),edge.getNode1(),edge.getWeight());
+					if(inverseEdge != null) {
+						//we have at least one edge in each direction
+						inverseEdge.setVisited();
+						V dupEdge = getUnvisitedConnection(edge.getNode1(),edge.getNode2(),edge.getWeight());
+						edge.resetState();
+						if(dupEdge != null ) {
+							edge.getNode1().removeEdge(dupEdge);
+							edge.getNode1().removeEdge(inverseEdge);
+							modified = true;
+							break;
+						}
+						inverseEdge.resetState();
+					}
+				}
+			}while(modified);
+			
+		}
+		
+	}
+	
+	private V getUnvisitedConnection(T node1,
+			T node2, double weight) {
+		for(V edge : node1.getEdges()) {
+			if(!edge.isVisited() && ((edge.getNode1().equals(node1) && edge.getNode2().equals(node2))||(edge.getNode1().equals(node2) && edge.getNode2().equals(node1))) && edge.getWeight() == weight) {
+				return edge;
+			}
+		}
+		return null;
 	}
     
 }
