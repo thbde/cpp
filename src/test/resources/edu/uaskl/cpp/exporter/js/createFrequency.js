@@ -14,7 +14,7 @@ var mapLayer = OpenStreetMap_BlackAndWhite;
 map.addLayer(mapLayer);
 
 function createSegment(pointList,numberOfOccurrences,maxIndex){
-	var col = "hsl(230,50%,"+(90-80*(numberOfOccurrences-1)/(maxIndex-1))+"%)";
+	var col = "hsl(230,50%,"+(90-80*(numberOfOccurrences-1)/(6-1))+"%)";
 	var line = L.polyline(pointList,{weight:5,opacity:1,color:col});
 	line.addTo(map);
 };

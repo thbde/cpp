@@ -19,7 +19,7 @@ public class NodeBasic<T extends NodeBasic<T, V>, V extends EdgeBasic<T, V>> imp
     private final static AtomicInteger counter = new AtomicInteger(0);
     protected Long nodeId = (long) (counter.getAndIncrement());
     private String name;
-    private List<V> edges = new ArrayList<>();
+    protected List<V> edges = new ArrayList<>();
     private final EdgeCreator<T, V> edgeCreator;
   
     protected NodeBasic(final String name, final EdgeCreator<T, V> edgeCreator) {

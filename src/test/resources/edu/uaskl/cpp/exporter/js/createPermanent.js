@@ -22,9 +22,9 @@ function createSegment(pointList,index){
     return line;
 };
 function updateInLoop() {
-    var i = segments.length-1;
+    var i = -1;
     return function up(){
-          if((i+1)% segments.lengt < i) {
+          if((i+1)% segments.length < i) {
               clearInterval(loop);
           }
           else {
