@@ -21,7 +21,29 @@ public class NodeBasic<T extends NodeBasic<T, V>, V extends EdgeBasic<T, V>> imp
     private String name;
     protected List<V> edges = new ArrayList<>();
     private final EdgeCreator<T, V> edgeCreator;
-  
+    private double distance;
+    private T previous;
+    
+    public double getDistance()
+    {
+    	return distance;
+    }
+    
+    public void setDistance(double d)
+    {
+    	this.distance = d;
+    }
+    
+    public T getPrevious()
+    {
+    	return previous;
+    }
+    
+    public void setPrevious(T p)
+    {
+    	this.previous = p;
+    }
+    
     protected NodeBasic(final String name, final EdgeCreator<T, V> edgeCreator) {
         this.name = name.isEmpty() ? nodeId.toString() : name;
         this.edgeCreator = edgeCreator;

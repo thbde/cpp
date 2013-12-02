@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import edu.uaskl.cpp.model.edge.EdgeCppOSMDirected;
 import edu.uaskl.cpp.model.edge.EdgeExtended;
@@ -22,7 +23,9 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     private HashMap<Long,Integer> id2index;
     private HashMap<Integer,Long> index2id;
     private boolean preprocessed = false;
-
+	private ArrayList<T> unvisitedNodes = new ArrayList<T>();
+	
+	
     public AlgorithmsUndirected(final GraphUndirected<T, V> graph) {
         this.graph = graph;
     }
@@ -539,5 +542,80 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 		}
 		return null;
 	}
-    
+	
+	
+	private void Dijkstra (T start)
+	{
+		initialize(start);
+		while(unvisitedNodes.size() != 0)
+		{
+			T smallestNode = getNodeWithSmallesDistance();
+			unvisitedNodes.remove(smallestNode);
+			for (int i = 0; i<start.getEdges().size(); i++)
+			{
+				T neighbour = start.getEdges().get(i).getRelatedNode(start);
+				if(unvisitedNodes.contains(neighbour))
+				{
+					distanceUpdate(start,neighbour);
+				}
+				
+			}
+		}
+	}
+	
+	private void initialize(T start)
+	{
+		ArrayList<T> nodes = (ArrayList<T>) graph.getNodes();
+		for (int i = 0; i < graph.getNumberOfNodes(); i++)
+		{
+			nodes.get(i).setDistance(Double.MAX_VALUE);
+			nodes.get(i).setPrevious(null);
+		}
+		start.setDistance(0);
+		unvisitedNodes = nodes;
+	}
+	
+	private void distanceUpdate(T start, T neighbour)
+	{
+		double alternative = start.getDistance() + start.getEdgeToNode(neighbour).getWeight();
+		if(alternative < neighbour.getDistance())
+		{
+			neighbour.setDistance(alternative);
+			neighbour.setPrevious(start);
+		}
+	}
+	
+	public ArrayList<T> shortestPath(T start, T destination)
+	{
+		Dijkstra(start);
+		ArrayList<T> path = new ArrayList<T>();
+		T current = destination;
+		while(current.getPrevious() != null)
+		{
+			current= current.getPrevious();
+			path.add(0, current);
+		}
+		for(int i=0; i<path.size(); i++)
+		{
+			System.out.println(path.get(i));
+		}
+		
+		return path;
+	}
+	
+	private T getNodeWithSmallesDistance(){
+		ArrayList<T> nodes = (ArrayList<T>) graph.getNodes();
+		double smallestDist = nodes.get(0).getDistance();
+		T smallestNode = nodes.get(0);
+		for(int i=0; i < nodes.size(); i++)
+		{
+			if(nodes.get(i).getDistance() < smallestDist)
+			{
+				smallestDist = nodes.get(i).getDistance();
+				smallestNode = nodes.get(i);
+			}
+		}
+		return smallestNode;
+	}
 }
+	
