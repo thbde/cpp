@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.PriorityQueue;
 
+import edu.uaskl.cpp.model.edge.EdgeCppOSMDirected;
 import edu.uaskl.cpp.model.edge.EdgeExtended;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
+import edu.uaskl.cpp.model.node.NodeCppOSMDirected;
 import edu.uaskl.cpp.model.node.NodeExtended;
 import edu.uaskl.cpp.model.path.PathExtended;
 
@@ -20,7 +23,9 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     private HashMap<Long,Integer> id2index;
     private HashMap<Integer,Long> index2id;
     private boolean preprocessed = false;
-
+	private ArrayList<T> unvisitedNodes = new ArrayList<T>();
+	
+	
     public AlgorithmsUndirected(final GraphUndirected<T, V> graph) {
         this.graph = graph;
     }
@@ -44,7 +49,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
             return true;
 
         final T start = graph.getNodes().iterator().next();
-        visitAllEdgesFromStartNode(start);
+        visitAllNodesFromStartNode(start);
 
         return allNodesVisited();
     }
@@ -63,12 +68,12 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
      * Recursively marks all connected nodes as visited.
      * @param node start node
      */
-    public void visitAllEdgesFromStartNode(final T node) {
+    public void visitAllNodesFromStartNode(final T node) {
         node.setVisited();
 
         for (final V edgeItem : node.getEdges())
             if (!edgeItem.getRelatedNode(node).isVisited() == true)
-                visitAllEdgesFromStartNode(edgeItem.getRelatedNode(node));
+                visitAllNodesFromStartNode(edgeItem.getRelatedNode(node));
     }
 
     /**
@@ -443,6 +448,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     	ArrayList<ArrayList<T>> pairs = getPairsNaiveGreedy(oddNodes);
     	// create the paths
     	createDupEdges(pairs);
+    	removeRedundantEdges();
     }
 
 	/**
@@ -491,5 +497,125 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     	}
 		return oddNodes;
 	}
-    
+	
+	/**
+	 * Shortest path may have added duplicate edges.
+	 * So if you have 2 edges in the one direction and 2 matching ones in the other, delete one for each direction.
+	 */
+	private void removeRedundantEdges() {
+		for(T node : graph.getNodes()) {
+			boolean modified;
+			do {
+				modified = false;
+				graph.resetStates(); //TODO could be done more locally
+				//NodeCppOSMDirected node = (NodeCppOSMDirected) n;
+				//TODO find edges that are at least twice each direction
+				for(V edge : node.getEdges()) {
+					edge.setVisited();
+					V inverseEdge = getUnvisitedConnection(edge.getNode2(),edge.getNode1(),edge.getWeight());
+					if(inverseEdge != null) {
+						//we have at least one edge in each direction
+						inverseEdge.setVisited();
+						V dupEdge = getUnvisitedConnection(edge.getNode1(),edge.getNode2(),edge.getWeight());
+						edge.resetState();
+						if(dupEdge != null ) {
+							edge.getNode1().removeEdge(dupEdge);
+							edge.getNode1().removeEdge(inverseEdge);
+							modified = true;
+							break;
+						}
+						inverseEdge.resetState();
+					}
+				}
+			}while(modified);
+			
+		}
+		
+	}
+	
+	private V getUnvisitedConnection(T node1,
+			T node2, double weight) {
+		for(V edge : node1.getEdges()) {
+			if(!edge.isVisited() && ((edge.getNode1().equals(node1) && edge.getNode2().equals(node2))||(edge.getNode1().equals(node2) && edge.getNode2().equals(node1))) && edge.getWeight() == weight) {
+				return edge;
+			}
+		}
+		return null;
+	}
+	
+	
+	private void Dijkstra (T start)
+	{
+		initialize(start);
+		while(unvisitedNodes.size() != 0)
+		{
+			T smallestNode = getNodeWithSmallesDistance();
+			unvisitedNodes.remove(smallestNode);
+			for (int i = 0; i<start.getEdges().size(); i++)
+			{
+				T neighbour = start.getEdges().get(i).getRelatedNode(start);
+				if(unvisitedNodes.contains(neighbour))
+				{
+					distanceUpdate(start,neighbour);
+				}
+				
+			}
+		}
+	}
+	
+	private void initialize(T start)
+	{
+		ArrayList<T> nodes = (ArrayList<T>) graph.getNodes();
+		for (int i = 0; i < graph.getNumberOfNodes(); i++)
+		{
+			nodes.get(i).setDistance(Double.MAX_VALUE);
+			nodes.get(i).setPrevious(null);
+		}
+		start.setDistance(0);
+		unvisitedNodes = nodes;
+	}
+	
+	private void distanceUpdate(T start, T neighbour)
+	{
+		double alternative = start.getDistance() + start.getEdgeToNode(neighbour).getWeight();
+		if(alternative < neighbour.getDistance())
+		{
+			neighbour.setDistance(alternative);
+			neighbour.setPrevious(start);
+		}
+	}
+	
+	public ArrayList<T> shortestPath(T start, T destination)
+	{
+		Dijkstra(start);
+		ArrayList<T> path = new ArrayList<T>();
+		T current = destination;
+		while(current.getPrevious() != null)
+		{
+			current= current.getPrevious();
+			path.add(0, current);
+		}
+		for(int i=0; i<path.size(); i++)
+		{
+			System.out.println(path.get(i));
+		}
+		
+		return path;
+	}
+	
+	private T getNodeWithSmallesDistance(){
+		ArrayList<T> nodes = (ArrayList<T>) graph.getNodes();
+		double smallestDist = nodes.get(0).getDistance();
+		T smallestNode = nodes.get(0);
+		for(int i=0; i < nodes.size(); i++)
+		{
+			if(nodes.get(i).getDistance() < smallestDist)
+			{
+				smallestDist = nodes.get(i).getDistance();
+				smallestNode = nodes.get(i);
+			}
+		}
+		return smallestNode;
+	}
 }
+	
