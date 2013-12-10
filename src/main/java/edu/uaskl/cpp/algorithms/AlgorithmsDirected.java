@@ -236,10 +236,12 @@ public class AlgorithmsDirected<T extends NodeExtended<T, V>, V extends EdgeExte
     	initDist();
     	// create the matrix
     	for(int k = 0; k < dist.length; ++k) {
+			double[] distK = dist[k];
     		for(int i = 0; i < dist.length; ++i) {
+    			double[] distI = dist[i];
     			for(int j = 0; j < dist.length; ++j) {
-    				if(dist[i][k] + dist[k][j] < dist[i][j]) {
-    					dist[i][j] = dist[i][k] + dist[k][j];
+    				if(distI[k] + distK[j] < distI[j]) {
+    					distI[j] = distI[k] + distK[j];
     					next[i][j] = k;
     				}
     			}
