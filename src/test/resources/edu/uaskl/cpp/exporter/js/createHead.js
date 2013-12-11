@@ -35,3 +35,5 @@ function updateInLoop() {
 }
 var update = updateInLoop();
 loop = setInterval(update,50);
+
+document.getElementById("distance").innerHTML = distance;

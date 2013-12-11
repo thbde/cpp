@@ -456,7 +456,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     	ArrayList<ArrayList<T>> pairs = getPairsBlossomExtern(oddNodes);
     	// create the paths
     	createDupEdges(pairs);
-    	removeRedundantEdges();
+//    	removeRedundantEdges(); //not needed for Blossom
     }
 
 	private ArrayList<ArrayList<T>> getPairsBlossomExtern(ArrayList<T> oddNodes) {

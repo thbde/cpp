@@ -49,6 +49,7 @@ public class Exporter {
 	 */
 	public static void exportPathToHTML(PathExtended<NodeCppOSM> path, File folder){
 		final List<NodeCppOSM> nodes = path.getNodes();
+		double distance = 0;
 		NodeCppOSM previousNode = nodes.get(0);
 		NodeCppOSM currentNode;
 		try (Writer fw = new FileWriter( new File(folder, "overlay.js" ));) {
@@ -58,6 +59,7 @@ public class Exporter {
 				// find a unvisited edge between previousNode and currentNode and then write the .js file
 				currentNode = nodes.get(index);
 				final EdgeCppOSM edge = getUnvisitedEdge(previousNode, currentNode);
+				distance += edge.getWeight();
 				final List<WayNodeOSM> metaNodes = edge.getMetadata().getNodes();
 				if ((metaNodes.get(0).getID()) == currentNode.getId()){
 					Collections.reverse(metaNodes);
@@ -72,7 +74,7 @@ public class Exporter {
 				fw.append(System.lineSeparator());
 				previousNode = currentNode;
 			}
-			fw.write("];");
+			fw.write("];\n var distance = "+distance+";");
 		} catch (IOException e) {
             System.out.println("could not open the file");
 			System.exit(0);
