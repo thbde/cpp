@@ -1,10 +1,17 @@
 package edu.uaskl.cpp.algorithms;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Scanner;
 
 import edu.uaskl.cpp.model.edge.EdgeCppOSMDirected;
 import edu.uaskl.cpp.model.edge.EdgeExtended;
@@ -445,11 +452,83 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     	// Find list of all nodes with odd degree
     	ArrayList<T> oddNodes = getOddNodes();
     	// match their shortest path
-    	ArrayList<ArrayList<T>> pairs = getPairsNaiveGreedy(oddNodes);
+//    	ArrayList<ArrayList<T>> pairs = getPairsNaiveGreedy(oddNodes);
+    	ArrayList<ArrayList<T>> pairs = getPairsBlossomExtern(oddNodes);
     	// create the paths
     	createDupEdges(pairs);
-    	removeRedundantEdges();
+//    	removeRedundantEdges(); //not needed for Blossom
     }
+
+	private ArrayList<ArrayList<T>> getPairsBlossomExtern(ArrayList<T> oddNodes) {
+		if(!preprocessed) {
+			createDistNext();
+		}
+		int numberOfOddNodes = oddNodes.size();
+		int numberOfEdges = numberOfOddNodes/2 * (numberOfOddNodes-1);
+		Writer fw = null;
+		try
+		{
+		  fw = new FileWriter( "graph.txt" );
+		  fw.write( numberOfOddNodes +" "+numberOfEdges+"\n" );
+		  for(int i=0; i < numberOfOddNodes-1; ++i) {
+				for(int j=i+1; j< numberOfOddNodes;++j) {
+					fw.write(i+" "+j+" "+((int)(dist[id2index.get(oddNodes.get(i).getId())][id2index.get(oddNodes.get(j).getId())]*100))+"\n");
+				}
+			}
+		  fw.append( System.getProperty("line.separator") ); // e.g. "\n"
+		}
+		catch ( IOException e ) {
+		  System.err.println( "Konnte Datei nicht erstellen" );
+		}
+		finally {
+		  if ( fw != null )
+		    try { fw.close(); } catch ( IOException e ) { e.printStackTrace(); }
+		}
+		System.out.println("run blossom");
+		Scanner scan = new Scanner(System.in);
+		scan.nextLine().isEmpty();
+		scan.close();
+		String outputFile = "output.txt";
+		BufferedReader br = null;
+		String line = "";
+		boolean first = true;
+
+    	ArrayList<ArrayList<T>> pairs = new ArrayList<>();
+		try {
+	 
+			br = new BufferedReader(new FileReader(outputFile));
+			while ((line = br.readLine()) != null) {
+
+	    		ArrayList<T> pair = new ArrayList<>();
+				if(first) {
+					//skip the first line
+					first = false;
+					continue;
+				}
+				String[] values = line.split("\\s+");
+				pair.add(oddNodes.get(Integer.parseInt(values[0])));
+				pair.add(oddNodes.get(Integer.parseInt(values[1])));
+				pairs.add(pair);
+				
+	 
+			}
+	 
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return pairs;
+	}
 
 	/**
 	 * This function searches the shortest path for each of the pairs and then

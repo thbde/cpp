@@ -90,3 +90,4 @@ function createOccurrenceMap(listOfSegments){
 
 createOccurrenceMap(segments);
 
+document.getElementById("distance").innerHTML = distance;

@@ -34,15 +34,15 @@ public class testFH {
 
     @Test
     public void test() throws Exception {
-//        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importFH();
-        final GraphDirected<NodeCppOSMDirected, EdgeCppOSMDirected> graph = importZWDirected();
+        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importZW();
+//        final GraphDirected<NodeCppOSMDirected, EdgeCppOSMDirected> graph = importZWDirected();
         System.out.println("imported");
 //        for(NodeCppOSMDirected node1 : graph.getNodes()){
 //        	System.out.println(node1.getName());
 //        }
     	assertTrue("FH graph should be connected", graph.getAlgorithms().isConnected());
 //        assertFalse("FH graph has no Euler circle", graph.getAlgorithms().hasEulerCircle());
-    	NodeCppOSMDirected node = graph.getNode(281678042L);
+//    	NodeCppOSMDirected node = graph.getNode(281678042L);
         assertThat(graph.getNumberOfNodes()).isGreaterThan(0);
         graph.getAlgorithms().matchPerfect();
         System.out.println("matched");
@@ -51,14 +51,14 @@ public class testFH {
 //        <node id="260070509" version="-1" timestamp="1969-12-31T23:59:59Z" changeset="-1" lat="49.2538969" lon="7.3649591"/>
         
 //        assertTrue("matched graph", graph.getAlgorithms().hasEulerCircle());
-        final PathExtended<NodeCppOSMDirected> path = graph.getAlgorithms().getEulerianCircle();
-//        final PathExtended<NodeCppOSM> path = graph.getAlgorithms().getEulerianCircle();
+//        final PathExtended<NodeCppOSMDirected> path = graph.getAlgorithms().getEulerianCircle();
+        final PathExtended<NodeCppOSM> path = graph.getAlgorithms().getEulerianCircle();
         
         // TODO find the right folder for the real output
 //        exportPathToHTML(path, folder.getRoot());
         graph.resetStates();
-        exportPathToHTMLDirected(path, new File("./src/test/resources/edu/uaskl/cpp/exporter"));
-//        exportPathToHTML(path, new File("./src/test/resources/edu/uaskl/cpp/exporter"));
+//        exportPathToHTMLDirected(path, new File("./src/test/resources/edu/uaskl/cpp/exporter"));
+        exportPathToHTML(path, new File("./src/test/resources/edu/uaskl/cpp/exporter"));
         assertTrue(true);
 
     }
