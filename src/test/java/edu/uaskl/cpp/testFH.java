@@ -4,6 +4,7 @@ package edu.uaskl.cpp;
 import static org.fest.assertions.api.Assertions.*;
 import static edu.uaskl.cpp.importer.OsmImporter.importClean;
 import static edu.uaskl.cpp.importer.OsmImporter.importZW;
+import static edu.uaskl.cpp.importer.OsmImporter.importZWUBZ;
 import static edu.uaskl.cpp.importer.OsmImporter.importZWDirected;
 import static edu.uaskl.cpp.importer.OsmImporter.importKL;
 import static edu.uaskl.cpp.importer.OsmImporter.importKLDirected;
@@ -34,7 +35,7 @@ public class testFH {
 
     @Test
     public void test() throws Exception {
-        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importZW();
+        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importZWUBZ();
 //        final GraphDirected<NodeCppOSMDirected, EdgeCppOSMDirected> graph = importZWDirected();
         System.out.println("imported");
 //        for(NodeCppOSMDirected node1 : graph.getNodes()){

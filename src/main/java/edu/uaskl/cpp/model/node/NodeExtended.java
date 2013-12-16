@@ -8,6 +8,8 @@ public class NodeExtended<T extends NodeExtended<T, V>, V extends EdgeExtended<T
     private boolean isAllEdgesVisited = false;
     private T nodeForCPP;
 
+    public double lat,lon;
+
     public NodeExtended(EdgeCreator<T, V> edgeCreator) {
         super(edgeCreator);
     }
