@@ -623,40 +623,46 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 	}
 	
 	
-	private void Dijkstra (T start)
+	public void Dijkstra (T start)
 	{
 		initialize(start);
+		
 		while(unvisitedNodes.size() != 0)
 		{
 			T smallestNode = getNodeWithSmallesDistance();
+
 			unvisitedNodes.remove(smallestNode);
+			T neighbour= null;
 			for (int i = 0; i<start.getEdges().size(); i++)
 			{
-				T neighbour = start.getEdges().get(i).getRelatedNode(start);
+				neighbour = start.getEdges().get(i).getRelatedNode(start);
 				if(unvisitedNodes.contains(neighbour))
 				{
 					distanceUpdate(start,neighbour);
 				}
-				
-			}
+			}start = neighbour;
 		}
 	}
 	
 	private void initialize(T start)
 	{
-		ArrayList<T> nodes = (ArrayList<T>) graph.getNodes();
+		ArrayList<T> nodes = new ArrayList<T>();
+		nodes.addAll(graph.getNodes());
 		for (int i = 0; i < graph.getNumberOfNodes(); i++)
 		{
 			nodes.get(i).setDistance(Double.MAX_VALUE);
 			nodes.get(i).setPrevious(null);
 		}
 		start.setDistance(0);
+		
 		unvisitedNodes = nodes;
+
 	}
 	
 	private void distanceUpdate(T start, T neighbour)
 	{
 		double alternative = start.getDistance() + start.getEdgeToNode(neighbour).getWeight();
+
 		if(alternative < neighbour.getDistance())
 		{
 			neighbour.setDistance(alternative);
@@ -667,31 +673,29 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 	public ArrayList<T> shortestPath(T start, T destination)
 	{
 		Dijkstra(start);
+		
 		ArrayList<T> path = new ArrayList<T>();
 		T current = destination;
+		
 		while(current.getPrevious() != null)
 		{
 			current= current.getPrevious();
-			path.add(0, current);
+			path.add(0,current);
 		}
-		for(int i=0; i<path.size(); i++)
-		{
-			System.out.println(path.get(i));
-		}
-		
+		path.add(destination);
 		return path;
 	}
 	
-	private T getNodeWithSmallesDistance(){
-		ArrayList<T> nodes = (ArrayList<T>) graph.getNodes();
-		double smallestDist = nodes.get(0).getDistance();
-		T smallestNode = nodes.get(0);
-		for(int i=0; i < nodes.size(); i++)
+	private T getNodeWithSmallesDistance()
+	{
+		double smallestDist = unvisitedNodes.get(0).getDistance();
+		T smallestNode = unvisitedNodes.get(0);
+		for(int i=0; i < unvisitedNodes.size(); i++)
 		{
-			if(nodes.get(i).getDistance() < smallestDist)
+			if(unvisitedNodes.get(i).getDistance() < smallestDist)
 			{
-				smallestDist = nodes.get(i).getDistance();
-				smallestNode = nodes.get(i);
+				smallestDist = unvisitedNodes.get(i).getDistance();
+				smallestNode = unvisitedNodes.get(i);
 			}
 		}
 		return smallestNode;

@@ -263,5 +263,50 @@ public class GraphCompleteTest { // TODO this is not the right class for all of 
     }
 
     // TODO should add negative tests -tbach
+    @Test
+    public void ShortetstPathTEST() {
+
+        final GraphUndirected<NodeCpp, EdgeCpp> graph = new GraphUndirected<>();
+
+        final NodeCpp node0 = new NodeCpp();
+        final NodeCpp node1 = new NodeCpp();
+        final NodeCpp node2 = new NodeCpp();
+        final NodeCpp node3 = new NodeCpp();
+        final NodeCpp node4 = new NodeCpp();
+        final NodeCpp node5 = new NodeCpp();
+        final NodeCpp node6 = new NodeCpp();
+        final NodeCpp node7 = new NodeCpp();
+        final NodeCpp node8 = new NodeCpp();
+
+        node0.connectWithNode(node1);
+        node1.connectWithNode(node2);
+        node1.connectWithNode(node5);
+        node2.connectWithNode(node3);
+        node2.connectWithNode(node5);
+        node2.connectWithNode(node6);
+        node3.connectWithNode(node6);
+        node3.connectWithNode(node7);
+        node3.connectWithNode(node4);
+        node4.connectWithNode(node7);
+        node4.connectWithNode(node8);
+        node5.connectWithNode(node6);
+        node6.connectWithNode(node7);
+        node7.connectWithNode(node8);
+
+        graph.addNode(node0).addNode(node1).addNode(node2).addNode(node3).addNode(node4).addNode(node5).addNode(node6).addNode(node7).addNode(node8);
+
+        final ArrayList<NodeCpp> pathList = graph.getAlgorithms().shortestPath(node0, node8);
+        
+        /*
+        for (NodeCpp nodeCpp : pathList) {
+		 	System.out.println(nodeCpp);
+        }
+       */
+        assertThat(pathList).startsWith(node0);
+        assertThat(pathList).endsWith(node8);
+        assertThat(pathList.size()<=graph.getGetNumberOfEdges());
+
+    	
+    }
     
 }
