@@ -753,5 +753,83 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 		}
 		return smallestNode;
 	}
+	
+	//################################################################ alternative dijkstra
+	//																   getshortestPath(start, destination) to use it
+	
+	
+	
+	private ArrayList<T> Q = new ArrayList<T>();
+	
+	public void dijkstra(T start)
+	{
+		graph.resetStates();
+		
+		for (T node : graph.getNodes()) 
+		{
+			node.setDistance(Double.POSITIVE_INFINITY);
+			node.setPrevious(null);
+		}
+		
+		start.setDistance(0.0);
+		
+		Q.add(start);
+		
+		while(!Q.isEmpty())
+		{
+			T u = smalestDist(Q);
+			Q.remove(u);
+			u.setVisited();
+			double alt;
+			for (V edge : u.getEdges()) 
+			{
+				alt = u.getDistance() + edge.getWeight();
+				if(alt < edge.getRelatedNode(u).getDistance())
+				{
+					edge.getRelatedNode(u).setDistance(alt);
+					edge.getRelatedNode(u).setPrevious(u);
+					if(!edge.getRelatedNode(u).isVisited())
+					{
+						Q.add(edge.getRelatedNode(u));
+					}
+				}
+			}
+			
+		}
+		
+	}
+	
+	public ArrayList<T> getshortestPath(T start, T destination)
+	{
+		dijkstra(start);
+		ArrayList<T> path = new ArrayList<T>();
+		T u = destination;
+		
+		while(u.getPrevious() != null)
+		{
+			path.add(0, u);
+			u = u.getPrevious();
+		}
+		
+		path.add(0, u);
+
+		return path;
+	}
+	
+	public T smalestDist(ArrayList<T> Q)
+	{
+		double smallestDist = Q.get(0).getDistance();
+		T smallestNode = Q.get(0);
+		for(int i=0; i < Q.size(); i++)
+		{
+			if(Q.get(i).getDistance() < smallestDist)
+			{
+				smallestDist = Q.get(i).getDistance();
+				smallestNode = Q.get(i);
+			}
+		}
+		return smallestNode;
+	}
+	
 }
 	
