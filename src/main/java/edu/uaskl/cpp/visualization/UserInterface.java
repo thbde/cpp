@@ -15,7 +15,7 @@ public class UserInterface extends JApplet {
         final UserInterface ui = new UserInterface();
         ui.runApp();
     }
-    
+
     private void runApp() {
         graphPanel.showGraphPanel();
     }

@@ -25,14 +25,50 @@ public class GraphControlBox extends JPanel {
         super((LayoutManager) new FlowLayout(FlowLayout.LEFT));
 
         this.graph = graph;
-        
+
         add(createMouseInteractionComboBox());
+        add(createNodeLayoutComboBox());
         add(createEdgeTypeComboBox());
         add(createEdgeLabelAlignmentCheckBox());
     }
 
     /**
-     * Radio buttons for choosing an edge interpolation.
+     * Combo box for choosing a node layout.
+     */
+    private JPanel createNodeLayoutComboBox() {
+        final String[] nodeLayouts = { "ISOM", "KK" };
+        final JComboBox<String> nodeLayoutComboBox = new JComboBox<>();
+        nodeLayoutComboBox.setPreferredSize(new Dimension(150, 28));
+
+        nodeLayoutComboBox.addItem(nodeLayouts[0]);
+        nodeLayoutComboBox.addItem(nodeLayouts[1]);
+
+        nodeLayoutComboBox.addItemListener(new ItemListener() {
+            public void itemStateChanged(final ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    if ((String)e.getItem() == nodeLayouts[0]) {
+                        graph.createLayout(UIGraph.NodeLayout.ISOMLayout);
+                    }
+                    else if ((String)e.getItem() == nodeLayouts[1]) {
+                        graph.createLayout(UIGraph.NodeLayout.KKLayout);
+                    }
+                }
+            }
+        });
+
+        nodeLayoutComboBox.setSelectedIndex(0);
+
+        final JPanel nodeLayoutPanel = new JPanel();
+        nodeLayoutPanel.setPreferredSize(new Dimension(180, 65));
+        nodeLayoutPanel.setBorder(BorderFactory.createTitledBorder("Node Layout"));
+
+        nodeLayoutPanel.add(nodeLayoutComboBox);
+
+        return nodeLayoutPanel;
+    }
+
+    /**
+     * Combo box for choosing an edge interpolation.
      */
     private JPanel createEdgeTypeComboBox() {
         final String[] edgeTypes = { "Line", "Quad Curve" };
@@ -41,20 +77,20 @@ public class GraphControlBox extends JPanel {
 
         edgeTypeComboBox.addItem(edgeTypes[0]);
         edgeTypeComboBox.addItem(edgeTypes[1]);
-        
+
         edgeTypeComboBox.addItemListener(new ItemListener() {
             public void itemStateChanged(final ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     if ((String)e.getItem() == edgeTypes[0]) {
-                        graph.getLeftVisualizationViewer().getRenderContext().setEdgeShapeTransformer(new EdgeShape.Line<Integer, Integer>());
+                        graph.getLeftVisualizationViewer().getRenderContext().setEdgeShapeTransformer(new EdgeShape.Line<Long, Long>());
                         graph.getLeftVisualizationViewer().repaint();
-                        graph.getRightVisualizationViewer().getRenderContext().setEdgeShapeTransformer(new EdgeShape.Line<Integer, Integer>());
+                        graph.getRightVisualizationViewer().getRenderContext().setEdgeShapeTransformer(new EdgeShape.Line<Long, Long>());
                         graph.getRightVisualizationViewer().repaint();
                     }
                     else if ((String)e.getItem() == edgeTypes[1]) {
-                        graph.getLeftVisualizationViewer().getRenderContext().setEdgeShapeTransformer(new EdgeShape.QuadCurve<Integer, Integer>());
+                        graph.getLeftVisualizationViewer().getRenderContext().setEdgeShapeTransformer(new EdgeShape.QuadCurve<Long, Long>());
                         graph.getLeftVisualizationViewer().repaint();
-                        graph.getRightVisualizationViewer().getRenderContext().setEdgeShapeTransformer(new EdgeShape.QuadCurve<Integer, Integer>());
+                        graph.getRightVisualizationViewer().getRenderContext().setEdgeShapeTransformer(new EdgeShape.QuadCurve<Long, Long>());
                         graph.getRightVisualizationViewer().repaint();
                     }
                 }
@@ -62,13 +98,13 @@ public class GraphControlBox extends JPanel {
         });
 
         edgeTypeComboBox.setSelectedIndex(1);
-        
+
         final JPanel edgeTypePanel = new JPanel();
         edgeTypePanel.setPreferredSize(new Dimension(180, 65));
         edgeTypePanel.setBorder(BorderFactory.createTitledBorder("Edge Type"));
 
         edgeTypePanel.add(edgeTypeComboBox);
-        
+
         return edgeTypePanel;
     }
 
@@ -111,7 +147,7 @@ public class GraphControlBox extends JPanel {
         graphMouseComboBox.setPreferredSize(new Dimension(150, 28));
         // TODO create ordinary combobox!!
         mouseInteractionModePanel.add(graphMouseComboBox);
-        
+
         return mouseInteractionModePanel;
     }
 

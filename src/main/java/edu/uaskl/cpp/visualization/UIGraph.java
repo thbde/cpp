@@ -3,8 +3,10 @@ package edu.uaskl.cpp.visualization;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.collections15.Transformer;
 
@@ -14,6 +16,7 @@ import edu.uaskl.cpp.model.graph.GraphUndirected;
 import edu.uaskl.cpp.model.node.NodeCppOSM;
 import edu.uci.ics.jung.algorithms.layout.ISOMLayout;
 import edu.uci.ics.jung.algorithms.layout.KKLayout;
+import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.SparseMultigraph;
 import edu.uci.ics.jung.visualization.GraphZoomScrollPane;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
@@ -26,36 +29,55 @@ import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
 
 class UIGraph {
 
-    private VisualizationViewer<Integer, Integer> leftVisViewer;
-    private VisualizationViewer<Integer, Integer> rightVisViewer;
-    
-    public UIGraph() {
+    public enum NodeLayout {
+        ISOMLayout,
+        KKLayout
+    }
+
+    private GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph;
+    private VisualizationViewer<Long, Long> leftVisViewer;
+    private VisualizationViewer<Long, Long> rightVisViewer;
+    private Map<Long, EdgeCppOSM> leftEdgesWithID = new HashMap<>();
+    private Map<Long, EdgeCppOSM> rightEdgesWithID = new HashMap<>();
+
+    public UIGraph(String file) {
+
+        osmGraph = OsmImporter.importFH();
+
         // Empty Graphs
-        leftVisViewer = new VisualizationViewer<>(new KKLayout<>(new SparseMultigraph<Integer, Integer>()));
-        rightVisViewer = new VisualizationViewer<>(new KKLayout<>(new SparseMultigraph<Integer, Integer>()));
-        
+        leftVisViewer = new VisualizationViewer<>(new KKLayout<>(new SparseMultigraph<Long, Long>()));
+        rightVisViewer = new VisualizationViewer<>(new KKLayout<>(new SparseMultigraph<Long, Long>()));
+
         // Mouse Interaction
-        final DefaultModalGraphMouse<Integer, Integer> graphMouse = new DefaultModalGraphMouse<>();
+        final DefaultModalGraphMouse<Long, Long> graphMouse = new DefaultModalGraphMouse<>();
         graphMouse.setMode(ModalGraphMouse.Mode.TRANSFORMING);
         leftVisViewer.setGraphMouse(graphMouse);
         rightVisViewer.setGraphMouse(graphMouse);
 
         // Edge labels
-        leftVisViewer.getRenderContext().setEdgeLabelTransformer(new Transformer<Integer, String>() {
+        leftVisViewer.getRenderContext().setEdgeLabelTransformer(new Transformer<Long, String>() {
             @Override
-            public String transform(final Integer e) {
-                return "";
+            public String transform(Long e) {
+            	String output = leftEdgesWithID.get(e).getMetadata().getName();
+            	if (output == "unknown")
+            		return "";
+            	else
+            		return output;
             }
         });
-        rightVisViewer.getRenderContext().setEdgeLabelTransformer(new Transformer<Integer, String>() {
+        rightVisViewer.getRenderContext().setEdgeLabelTransformer(new Transformer<Long, String>() {
             @Override
-            public String transform(final Integer e) {
-                return "";
+            public String transform(final Long e) {
+            	String output = rightEdgesWithID.get(e).getMetadata().getName();
+            	if (output == "unknown")
+            		return "";
+            	else
+            		return output;
             }
         });
 
         // Centered edge labels
-        final ConstantDirectionalEdgeValueTransformer<Integer, Integer> edgeValueTransformer = 
+        final ConstantDirectionalEdgeValueTransformer<Long, Long> edgeValueTransformer =
                 new ConstantDirectionalEdgeValueTransformer<>(.5, .5);
         leftVisViewer.getRenderContext().setEdgeLabelClosenessTransformer(edgeValueTransformer);
         rightVisViewer.getRenderContext().setEdgeLabelClosenessTransformer(edgeValueTransformer);
@@ -73,91 +95,99 @@ class UIGraph {
                 new PickableVertexPaintTransformer<>(rightVisViewer.getPickedVertexState(), Color.gray, Color.red));
 
         // Tool tip displaying node number
-        leftVisViewer.setVertexToolTipTransformer(new ToStringLabeller<Integer>());
-        rightVisViewer.setVertexToolTipTransformer(new ToStringLabeller<Integer>());
+        leftVisViewer.setVertexToolTipTransformer(new ToStringLabeller<Long>());
+        rightVisViewer.setVertexToolTipTransformer(new ToStringLabeller<Long>());
+
+        createLeftGraph(file);
+        createRightGraph(file);
     }
-    
-    public VisualizationViewer<Integer, Integer> getLeftVisualizationViewer() {
+
+    public VisualizationViewer<Long, Long> getLeftVisualizationViewer() {
         return leftVisViewer;
     }
-    
-    public VisualizationViewer<Integer, Integer> getRightVisualizationViewer() {
+
+    public VisualizationViewer<Long, Long> getRightVisualizationViewer() {
         return rightVisViewer;
     }
-    
+
     public GraphZoomScrollPane createLeftGraphPane() {
         return new GraphZoomScrollPane(leftVisViewer);
     }
-    
+
     public GraphZoomScrollPane createRightGraphPane() {
         return new GraphZoomScrollPane(rightVisViewer);
     }
-    
-    public void createGraphFromOSMFile(String file) {
-        createImportGraph(file);
-        createFinalGraph(file);
-    }
-    
-    private void createImportGraph(String file) {
-        final SparseMultigraph<Integer, Integer> graph = new SparseMultigraph<>();
-    
-        GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph;
-        osmGraph = OsmImporter.importOsmUndirected(file);
-    
-        final Collection<NodeCppOSM> nodes = osmGraph.getNodes();
-        final Iterator<NodeCppOSM> iterator = nodes.iterator();
-    
-        int edgeNumber = 0;
-        final List<Integer> processedNodes = new ArrayList<>(); // you should use a hash* here, probably a hashset -tbach
-    
-        while (iterator.hasNext()) { // TODO you could use a foreach loop here -tbach
-            final NodeCppOSM node = iterator.next();
-            graph.addVertex(node.hashCode()); // TODO the id could be more interesting? -tbach
-    
-            final List<EdgeCppOSM> edges = node.getEdges();
-    
-            for (final EdgeCppOSM edge : edges)
-                // TODO the contains is a linear search with the arraylist -tbach
-                if (!processedNodes.contains(edge.getNode1().hashCode()) && !processedNodes.contains(edge.getNode2().hashCode())) {
-                    graph.addEdge(edgeNumber, edge.getNode1().hashCode(), edge.getNode2().hashCode());
-    
-                    edgeNumber++;
-                }
-            processedNodes.add(node.hashCode());
-        }
-        leftVisViewer.setGraphLayout(new KKLayout<>(graph));
-    }
-    
-    private void createFinalGraph(String file) {
-        final SparseMultigraph<Integer, Integer> graph = new SparseMultigraph<>();
-        
-        GraphUndirected<NodeCppOSM, EdgeCppOSM> osmGraph;
-        osmGraph = OsmImporter.importOsmUndirected(file);
-        osmGraph.getAlgorithms().matchPerfect();
-    
-        final Collection<NodeCppOSM> nodes = osmGraph.getNodes();
-        final Iterator<NodeCppOSM> iterator = nodes.iterator();
-    
-        int edgeNumber = 0;
-        final List<Integer> processedNodes = new ArrayList<>(); // you should use a hash* here, probably a hashset -tbach
-    
-        while (iterator.hasNext()) { // TODO you could use a foreach loop here -tbach
-            final NodeCppOSM node = iterator.next();
-            graph.addVertex(node.hashCode()); // TODO the id could be more interesting? -tbach
-    
-            final List<EdgeCppOSM> edges = node.getEdges();
-    
-            for (final EdgeCppOSM edge : edges)
-                // TODO the contains is a linear search with the arraylist -tbach
-                if (!processedNodes.contains(edge.getNode1().hashCode()) && !processedNodes.contains(edge.getNode2().hashCode())) {
-                    graph.addEdge(edgeNumber, edge.getNode1().hashCode(), edge.getNode2().hashCode());
-    
-                    edgeNumber++;
-                }
-            processedNodes.add(node.hashCode());
-        }
 
-        rightVisViewer.setGraphLayout(new KKLayout<>(graph));
+    private void createLeftGraph(String file) {
+        final SparseMultigraph<Long, Long> graph = new SparseMultigraph<>();
+
+        final Collection<NodeCppOSM> nodes = osmGraph.getNodes();
+        final Iterator<NodeCppOSM> iterator = nodes.iterator();
+
+        long edgeNumber = 0;
+        final List<Long> processedNodes = new ArrayList<>(); // you should use a hash* here, probably a hashset -tbach
+
+        while (iterator.hasNext()) {
+            final NodeCppOSM node = iterator.next();
+            graph.addVertex(node.getId());
+
+            final List<EdgeCppOSM> edges = node.getEdges();
+
+            for (final EdgeCppOSM edge : edges)
+                // TODO the contains is a linear search with the arraylist -tbach
+                if (!processedNodes.contains(edge.getNode1().getId()) && !processedNodes.contains(edge.getNode2().getId())) {
+                    graph.addEdge(edgeNumber, edge.getNode1().getId(), edge.getNode2().getId());
+                    leftEdgesWithID.put(edgeNumber, edge);
+                    edgeNumber++;
+                }
+            processedNodes.add(node.getId());
+        }
+        leftVisViewer.setGraphLayout(new ISOMLayout<>(graph));
+    }
+
+    private void createRightGraph(String file) {
+        final SparseMultigraph<Long, Long> graph = new SparseMultigraph<>();
+
+//        osmGraph.getAlgorithms().matchPerfect();
+
+        final Collection<NodeCppOSM> nodes = osmGraph.getNodes();
+        final Iterator<NodeCppOSM> iterator = nodes.iterator();
+
+        long edgeNumber = 0;
+        final List<Long> processedNodes = new ArrayList<>(); // you should use a hash* here, probably a hashset -tbach
+
+        while (iterator.hasNext()) {
+            final NodeCppOSM node = iterator.next();
+            graph.addVertex(node.getId());
+
+            final List<EdgeCppOSM> edges = node.getEdges();
+
+            for (final EdgeCppOSM edge : edges)
+                // TODO the contains is a linear search with the arraylist -tbach
+                if (!processedNodes.contains(edge.getNode1().getId()) && !processedNodes.contains(edge.getNode2().getId())) {
+                    graph.addEdge(edgeNumber, edge.getNode1().getId(), edge.getNode2().getId());
+                    rightEdgesWithID.put(edgeNumber, edge);
+                    edgeNumber++;
+                }
+            processedNodes.add(node.getId());
+        }
+        rightVisViewer.setGraphLayout(new ISOMLayout<>(graph));
+    }
+
+    public void createLayout(NodeLayout layout) {
+        Graph<Long, Long> leftGraph = leftVisViewer.getGraphLayout().getGraph();
+        Graph<Long, Long> rightGraph = rightVisViewer.getGraphLayout().getGraph();
+
+        switch (layout) {
+        case ISOMLayout: {
+            leftVisViewer.setGraphLayout(new ISOMLayout<>(leftGraph));
+            rightVisViewer.setGraphLayout(new ISOMLayout<>(rightGraph));
+        }
+        case KKLayout: {
+            leftVisViewer.setGraphLayout(new KKLayout<>(leftGraph));
+            rightVisViewer.setGraphLayout(new KKLayout<>(rightGraph));
+        }
+        }
     }
 
 }

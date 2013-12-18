@@ -15,7 +15,7 @@ public class GraphSplitPane extends JSplitPane {
         this.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         setOneTouchExpandable(true);
         setDividerLocation(DIVIDER_LOCATION);
-        
+
         getLeftComponent().setMinimumSize(MINIMUM_SIZE);
         getRightComponent().setMinimumSize(MINIMUM_SIZE);
 
