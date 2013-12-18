@@ -3,12 +3,15 @@ package edu.uaskl.cpp.importer;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeMap;
 
 import edu.uaskl.cpp.map.meta.WayNodeOSM;
@@ -193,7 +196,7 @@ public class OsmImporter {
 				// TODO: Handle way properly - what would name be in this context?
 				// TODO: names
 				osmGraph.getNode(node1id).connectWithNodeWeigthAndMeta(osmGraph.getNode(node2id), edge1.getWeight() + edge2.getWeight(),
-						new WayOSM(0, WayOSM.WayType.UNSPECIFIED, edge1.getMetadata().getName()+edge2.getMetadata().getName(), newMetaNodes));
+						new WayOSM(0, WayOSM.WayType.UNSPECIFIED, mergeStreetNames(edge1.getMetadata().getName(),edge2.getMetadata().getName()), newMetaNodes));
 				// remove the old node
 				// do this manually because we otherwise corrupt the iterator
 				node.removeAllEdges();
@@ -201,7 +204,13 @@ public class OsmImporter {
 			}
 		}
 	}
-
+	private static String mergeStreetNames(String names1, String names2) {
+		Set<String> n1 = new HashSet<String>(Arrays.asList(names1.split(", ")));
+		Set<String> n2 = new HashSet<String>(Arrays.asList(names2.split(", ")));
+		n1.addAll(n2);
+		
+		return Arrays.toString(n1.toArray()).replaceAll("[\\[\\]]", "");
+	}
 	/**
 	 * Simplifies the graph in place by removing all nodes with one edge incoming and one edge outgoing and adding them as metanodes to the edges.
 	 * @param osmGraph the graph to modify
