@@ -9,9 +9,12 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Scanner;
+import java.util.Set;
 
 import edu.uaskl.cpp.model.edge.EdgeCppOSMDirected;
 import edu.uaskl.cpp.model.edge.EdgeExtended;
@@ -408,6 +411,56 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     	return new PathExtended<T>(pathList);
     }
 
+    public PathExtended<T> getShortestPathAStar(T startNode, T endNode) {
+    	NodeExtendedComparator<T, V> comp = new NodeExtendedComparator<T, V>(startNode);
+    	Set<T> processedNodes = new HashSet<T>();
+    	PriorityQueue<T> knownNodes = new PriorityQueue<T>(11,comp);
+    	Map<T,T> predecessor = new HashMap<T,T>();
+    	Map<T,Double> costFromStart = new HashMap<T,Double>();
+    	Map<T,Double> costEstimateTotal = new HashMap<T,Double>();
+    	
+    	knownNodes.add(startNode);
+    	costFromStart.put(startNode, 0.);
+    	costEstimateTotal.put(startNode, comp.getDistance(startNode, endNode));
+    	while ( !knownNodes.isEmpty() ) {
+    		T currentNode = knownNodes.poll();
+    		if( currentNode == endNode){
+    			List<T> path = new ArrayList<>();
+    			while(currentNode != startNode) {
+    				path.add(0,currentNode);
+    				currentNode = predecessor.get(currentNode);
+    			}
+    			path.add(0,startNode);
+    			return new PathExtended<>(path);
+    		}
+    		processedNodes.add(currentNode);
+    		//get the neighbours
+    		Set<T> neighbours = new HashSet<T>();
+    		for( V edge : currentNode.getEdges()) {
+    			neighbours.add(edge.getRelatedNode(currentNode));
+    		}
+    		for(T node : neighbours) {
+    			//TODO does not bother with different edges
+    			double alternativeCostFromStart = costFromStart.get(currentNode) + currentNode.getEdgeToNode(node).getWeight();
+    			double alternativeCostEstimateTotal = alternativeCostFromStart + comp.getDistance(node, endNode);
+    			if (processedNodes.contains(node) && alternativeCostEstimateTotal >= costEstimateTotal.get(node)) {
+    				continue;
+    			}
+    			if (!knownNodes.contains(node) || alternativeCostEstimateTotal < costEstimateTotal.get(node)) {
+    				predecessor.put(node, currentNode);
+    				costEstimateTotal.put(node, alternativeCostEstimateTotal);
+    				costFromStart.put(node, alternativeCostFromStart);
+    				if (!knownNodes.contains(node)) {
+    					knownNodes.add(node);
+    				}
+    			}
+    		}
+    		
+    	}
+    	throw new IllegalStateException();
+//    	return null;
+    }
+    
     /**
      * This is a greedy version, taking a unmatched node and 
      * matching it with the nearest other unmatched node, until all nodes are matched.
