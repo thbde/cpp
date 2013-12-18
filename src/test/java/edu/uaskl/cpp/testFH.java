@@ -35,7 +35,7 @@ public class testFH {
 
     @Test
     public void test() throws Exception {
-        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importZWUBZ();
+        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importZW();
 //        final GraphDirected<NodeCppOSMDirected, EdgeCppOSMDirected> graph = importZWDirected();
         System.out.println("imported");
 //        for(NodeCppOSMDirected node1 : graph.getNodes()){
@@ -54,6 +54,10 @@ public class testFH {
 //        assertTrue("matched graph", graph.getAlgorithms().hasEulerCircle());
 //        final PathExtended<NodeCppOSMDirected> path = graph.getAlgorithms().getEulerianCircle();
         final PathExtended<NodeCppOSM> path = graph.getAlgorithms().getEulerianCircle();
+        graph.resetStates();
+//        final PathExtended<NodeCppOSM> path = new PathExtended<NodeCppOSM>(graph.getAlgorithms().shortestPath(graph.getNode(267970528l),graph.getNode(330044512l)));
+
+//        final PathExtended<NodeCppOSM> path = graph.getAlgorithms().getShortestPathAStar(graph.getNode(267970528l),graph.getNode(330044512l));
         
         // TODO find the right folder for the real output
 //        exportPathToHTML(path, folder.getRoot());

@@ -27,6 +27,9 @@
         return {color: '#f00'};
     }});
          shapefile.addTo(map);
+         window.onload = function() {
+            shapefile.bringToBack();
+         };
        </script>
     </body>
 </html>

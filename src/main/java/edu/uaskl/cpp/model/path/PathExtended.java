@@ -14,7 +14,8 @@ public class PathExtended<T extends NodeExtended<T, ?>> implements Path<T> {
     private int distance;
 
     public PathExtended(final List<T> nodes) {
-        this.nodes = nodes;
+    	this.nodes = nodes;
+        this.distance = 0;
     }
 
     public PathExtended(final List<T> nodes, final int distance) {

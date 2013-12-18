@@ -2,14 +2,19 @@ package edu.uaskl.cpp.model;
 
 import static org.fest.assertions.api.Assertions.*;
 
+import static edu.uaskl.cpp.importer.OsmImporter.importZW;
+
 import java.util.ArrayList;
 
 import org.junit.Test;
 
 import edu.uaskl.cpp.model.edge.EdgeCpp;
+import edu.uaskl.cpp.model.edge.EdgeCppOSM;
 import edu.uaskl.cpp.model.graph.GraphComplete;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
 import edu.uaskl.cpp.model.node.NodeCpp;
+import edu.uaskl.cpp.model.node.NodeCppOSM;
+import edu.uaskl.cpp.model.path.PathExtended;
 
 public class GraphCompleteTest { // TODO this is not the right class for all of this tests. was initially my fault :/ -tbach
 
@@ -304,9 +309,19 @@ public class GraphCompleteTest { // TODO this is not the right class for all of 
        */
         assertThat(pathList).startsWith(node0);
         assertThat(pathList).endsWith(node8);
-        assertThat(pathList.size()<=graph.getGetNumberOfEdges());
-
+        assertThat(pathList.size()).isLessThanOrEqualTo(graph.getGetNumberOfEdges());
+        assertThat(pathList.size()).isGreaterThan(2);
     	
     }
     
+    @Test
+    public void ShortetstPathTEST2() {
+
+        final GraphUndirected<NodeCppOSM, EdgeCppOSM> graph = importZW();
+        graph.getAlgorithms().matchPerfect();
+        final PathExtended<NodeCppOSM> path = new PathExtended<NodeCppOSM>(graph.getAlgorithms().shortestPath(graph.getNode(267970528l),graph.getNode(330044512l)));
+        assertThat(path.getNodes().size()).isLessThanOrEqualTo(graph.getGetNumberOfEdges());
+        assertThat(path.getNodes().size()).isGreaterThan(2);
+    	
+    }
 }

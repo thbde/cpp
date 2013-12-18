@@ -431,7 +431,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     				currentNode = predecessor.get(currentNode);
     			}
     			path.add(0,startNode);
-    			return new PathExtended<>(path);
+    			return new PathExtended<>(path,costFromStart.get(endNode).intValue());
     		}
     		processedNodes.add(currentNode);
     		//get the neighbours

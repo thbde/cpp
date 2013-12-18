@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeMap;
 
 import edu.uaskl.cpp.map.meta.WayNodeOSM;
 import edu.uaskl.cpp.map.meta.WayOSM;
@@ -190,8 +191,9 @@ public class OsmImporter {
 				List<WayNodeOSM> newMetaNodes = concatMetanodes(edge1.getMetadata().getNodes(), edge2.getMetadata().getNodes(), currentNodeId);
 				// add a new edge
 				// TODO: Handle way properly - what would name be in this context?
+				// TODO: names
 				osmGraph.getNode(node1id).connectWithNodeWeigthAndMeta(osmGraph.getNode(node2id), edge1.getWeight() + edge2.getWeight(),
-						new WayOSM(0, WayOSM.WayType.UNSPECIFIED, "unknown", newMetaNodes));
+						new WayOSM(0, WayOSM.WayType.UNSPECIFIED, edge1.getMetadata().getName()+edge2.getMetadata().getName(), newMetaNodes));
 				// remove the old node
 				// do this manually because we otherwise corrupt the iterator
 				node.removeAllEdges();
@@ -688,10 +690,18 @@ public class OsmImporter {
 		HashMap<Long, WayNodeOSM> osmNodes = getNodesFromOSM(fileNameTrack);
 		// right now just use the first way
 		Collection<NodeCppOSM> graphNodes = graph.getNodes();
-		for(int i = 1; i<=1;i++) { // < wayList.size()
+		for(int i = 0; i< wayList.size();i++) { // < wayList.size()
 			// for each way
+			System.out.println("processing track "+(i+1)+" of "+wayList.size());
+			first = true;
 			List<Long> wayNodeIDs = wayList.get(i).nodes;
+			
+			System.out.println(wayNodeIDs.size() +" waypoints to process");
 			for(int j = 0; j< wayNodeIDs.size();++j) {
+				
+				if(j%250==0 && j>0){
+					System.out.println("waypoint "+j);
+				}
 				if(osmNodes.get(wayNodeIDs.get(j)) == null) {
 					System.out.println("we missed one");
 					continue;
@@ -704,7 +714,12 @@ public class OsmImporter {
 					previous.setVisited();
 					continue;
 				}
-				current = getNearestPoint(osmNodes.get(wayNodeIDs.get(j)),graphNodes);
+				
+				if(wayNodeIDs.get(j) == wayNodeIDs.get(j-1)) {
+					continue;
+				}
+				
+				current = getNearestPoint(osmNodes.get(wayNodeIDs.get(j)),graphNodes,graph,previous);
 				// mark that point and mark the shortest path connecting the nodes
 				current.setVisited();
 				PathExtended<NodeCppOSM> path = graph.getAlgorithms().getShortestPathAStar(previous, current);
@@ -733,6 +748,53 @@ public class OsmImporter {
 		return graph;
 	}
 
+	
+	private static NodeCppOSM getNearestPoint(WayNodeOSM wayPoint,
+			Collection<NodeCppOSM> graphNodes, GraphUndirected<NodeCppOSM, EdgeCppOSM> graph,NodeCppOSM previous) {
+		if(graphNodes.isEmpty()) {
+			throw new IllegalStateException();
+		}
+		// calculate distances
+		Iterator<NodeCppOSM> iter = graphNodes.iterator();
+		TreeMap<Double, NodeCppOSM> directDistance = new TreeMap<Double,NodeCppOSM>();
+		while (iter.hasNext()) {
+			NodeCppOSM node = (NodeCppOSM) iter.next();
+			double currentDistance = getDistance(wayPoint, node);
+			directDistance.put(currentDistance, node);
+		}
+		
+		int counter = 0;
+		iter = directDistance.values().iterator();
+		double shortestPath = Double.POSITIVE_INFINITY;
+		int numberOfCheckedNodes = 10;
+		double threshold = 1.4;
+		// find the shortest path of the k nearest nodes
+		while (iter.hasNext() && counter < numberOfCheckedNodes) {
+			NodeCppOSM node = (NodeCppOSM) iter.next();
+			if(node == previous) {
+				continue;
+			}
+			double currentPath = graph.getAlgorithms().getShortestPathAStar(previous,node).getDistance();
+			if(currentPath == 0.){
+				continue;
+			}
+			if (currentPath < shortestPath) {
+				shortestPath = currentPath;
+			}
+			++counter;
+		}
+		
+		iter = directDistance.values().iterator();
+		while (iter.hasNext()) {
+			NodeCppOSM node = (NodeCppOSM) iter.next();
+			if(threshold * shortestPath > graph.getAlgorithms().getShortestPathAStar(previous,node).getDistance()) {
+				return node;
+			}	
+		}
+		
+		return null;
+//		return nodeNearest;
+	}
 
 	private static NodeCppOSM getNearestPoint(WayNodeOSM wayPoint,
 			Collection<NodeCppOSM> graphNodes) {
