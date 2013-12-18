@@ -75,4 +75,19 @@ public class NodeExtended<T extends NodeExtended<T, V>, V extends EdgeExtended<T
     	return edges.remove(edge);
     }
     
+    public V getShortestConnection(T otherNode) {
+    	V minEdge = null;
+    	double minWeight = Double.POSITIVE_INFINITY;
+		for(V edge : this.getEdges()) {
+			if( edge.getWeight() < minWeight && ((edge.getNode1().equals(this) && edge.getNode2().equals(otherNode))||(edge.getNode1().equals(otherNode) && edge.getNode2().equals(this))) ) {
+				minEdge = edge;
+				minWeight = edge.getWeight();
+			}
+		}
+		if(minEdge == null) {
+			throw new IllegalArgumentException("no connection from node "+this+" to "+otherNode);
+		}
+		return minEdge;
+	}
+    
 }

@@ -12,14 +12,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeMap;
 
-import edu.uaskl.cpp.model.edge.EdgeCppOSMDirected;
 import edu.uaskl.cpp.model.edge.EdgeExtended;
 import edu.uaskl.cpp.model.graph.GraphUndirected;
-import edu.uaskl.cpp.model.node.NodeCppOSMDirected;
 import edu.uaskl.cpp.model.node.NodeExtended;
 import edu.uaskl.cpp.model.path.PathExtended;
 
@@ -33,7 +31,7 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     private HashMap<Long,Integer> id2index;
     private HashMap<Integer,Long> index2id;
     private boolean preprocessed = false;
-	private ArrayList<T> unvisitedNodes = new ArrayList<T>();
+	private ArrayList<T> unvisitedKnownNodes = new ArrayList<T>();
 	
 	
     public AlgorithmsUndirected(final GraphUndirected<T, V> graph) {
@@ -414,16 +412,17 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     public PathExtended<T> getShortestPathAStar(T startNode, T endNode) {
     	NodeExtendedComparator<T, V> comp = new NodeExtendedComparator<T, V>(startNode);
     	Set<T> processedNodes = new HashSet<T>();
-    	PriorityQueue<T> knownNodes = new PriorityQueue<T>(11,comp);
+    	TreeMap<Double,T> knownUnprocessedNodes = new TreeMap<Double,T>();
     	Map<T,T> predecessor = new HashMap<T,T>();
     	Map<T,Double> costFromStart = new HashMap<T,Double>();
     	Map<T,Double> costEstimateTotal = new HashMap<T,Double>();
     	
-    	knownNodes.add(startNode);
+    	knownUnprocessedNodes.put(0.,startNode);
     	costFromStart.put(startNode, 0.);
     	costEstimateTotal.put(startNode, comp.getDistance(startNode, endNode));
-    	while ( !knownNodes.isEmpty() ) {
-    		T currentNode = knownNodes.poll();
+    	
+    	while ( !knownUnprocessedNodes.isEmpty() ) {
+    		T currentNode = knownUnprocessedNodes.pollFirstEntry().getValue();
     		if( currentNode == endNode){
     			List<T> path = new ArrayList<>();
     			while(currentNode != startNode) {
@@ -439,19 +438,19 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
     		for( V edge : currentNode.getEdges()) {
     			neighbours.add(edge.getRelatedNode(currentNode));
     		}
-    		for(T node : neighbours) {
+    		for(T neighbour : neighbours) {
     			//TODO does not bother with different edges
-    			double alternativeCostFromStart = costFromStart.get(currentNode) + currentNode.getEdgeToNode(node).getWeight();
-    			double alternativeCostEstimateTotal = alternativeCostFromStart + comp.getDistance(node, endNode);
-    			if (processedNodes.contains(node) && alternativeCostEstimateTotal >= costEstimateTotal.get(node)) {
+    			double alternativeCostFromStart = costFromStart.get(currentNode) + currentNode.getShortestConnection(neighbour).getWeight();
+    			double alternativeCostEstimateTotal = alternativeCostFromStart + comp.getDistance(neighbour, endNode);
+    			if (processedNodes.contains(neighbour) && alternativeCostEstimateTotal >= costEstimateTotal.get(neighbour)) {
     				continue;
     			}
-    			if (!knownNodes.contains(node) || alternativeCostEstimateTotal < costEstimateTotal.get(node)) {
-    				predecessor.put(node, currentNode);
-    				costEstimateTotal.put(node, alternativeCostEstimateTotal);
-    				costFromStart.put(node, alternativeCostFromStart);
-    				if (!knownNodes.contains(node)) {
-    					knownNodes.add(node);
+    			if (!knownUnprocessedNodes.containsValue(neighbour) || alternativeCostEstimateTotal < costEstimateTotal.get(neighbour)) {
+    				predecessor.put(neighbour, currentNode);
+    				costEstimateTotal.put(neighbour, alternativeCostEstimateTotal);
+    				costFromStart.put(neighbour, alternativeCostFromStart);
+    				if (!knownUnprocessedNodes.containsValue(neighbour)) {
+    					knownUnprocessedNodes.put(alternativeCostEstimateTotal,neighbour);
     				}
     			}
     		}
@@ -676,40 +675,38 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 	}
 	
 	
+	
 	public void Dijkstra (T start)
 	{
 		initialize(start);
 		
-		while(unvisitedNodes.size() != 0)
+		while(!unvisitedKnownNodes.isEmpty())
 		{
-			T smallestNode = getNodeWithSmallesDistance();
-
-			unvisitedNodes.remove(smallestNode);
+			T smallestNode = getNodeWithSmallestDistance();
+			unvisitedKnownNodes.remove(smallestNode);
+			smallestNode.setVisited();
 			T neighbour= null;
-			for (int i = 0; i<start.getEdges().size(); i++)
+			for (int i = 0; i<smallestNode.getEdges().size(); i++)
 			{
-				neighbour = start.getEdges().get(i).getRelatedNode(start);
-				if(unvisitedNodes.contains(neighbour))
-				{
-					distanceUpdate(start,neighbour);
-				}
-			}start = neighbour;
+				neighbour = smallestNode.getEdges().get(i).getRelatedNode(smallestNode);
+
+				distanceUpdate(smallestNode,neighbour);
+			}
+//			start = neighbour;
 		}
 	}
 	
 	private void initialize(T start)
 	{
-		ArrayList<T> nodes = new ArrayList<T>();
-		nodes.addAll(graph.getNodes());
-		for (int i = 0; i < graph.getNumberOfNodes(); i++)
-		{
-			nodes.get(i).setDistance(Double.MAX_VALUE);
-			nodes.get(i).setPrevious(null);
+		for(T node : graph.getNodes()) {
+			node.resetStates();
+			node.setPrevious(null);
+			node.setDistance(Double.POSITIVE_INFINITY);
 		}
 		start.setDistance(0);
-		
-		unvisitedNodes = nodes;
-
+//		unvisitedNodes = new ArrayList<T>(graph.getNodes());
+		unvisitedKnownNodes = new ArrayList<T>();
+		unvisitedKnownNodes.add(start);
 	}
 	
 	private void distanceUpdate(T start, T neighbour)
@@ -720,6 +717,9 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 		{
 			neighbour.setDistance(alternative);
 			neighbour.setPrevious(start);
+			if(!neighbour.isVisited() && !unvisitedKnownNodes.contains(neighbour)) {
+				unvisitedKnownNodes.add(neighbour);
+			}
 		}
 	}
 	
@@ -739,16 +739,16 @@ public class AlgorithmsUndirected<T extends NodeExtended<T, V>, V extends EdgeEx
 		return path;
 	}
 	
-	private T getNodeWithSmallesDistance()
+	private T getNodeWithSmallestDistance()
 	{
-		double smallestDist = unvisitedNodes.get(0).getDistance();
-		T smallestNode = unvisitedNodes.get(0);
-		for(int i=0; i < unvisitedNodes.size(); i++)
+		double smallestDist = unvisitedKnownNodes.get(0).getDistance();
+		T smallestNode = unvisitedKnownNodes.get(0);
+		for(int i=0; i < unvisitedKnownNodes.size(); i++)
 		{
-			if(unvisitedNodes.get(i).getDistance() < smallestDist)
+			if(unvisitedKnownNodes.get(i).getDistance() < smallestDist)
 			{
-				smallestDist = unvisitedNodes.get(i).getDistance();
-				smallestNode = unvisitedNodes.get(i);
+				smallestDist = unvisitedKnownNodes.get(i).getDistance();
+				smallestNode = unvisitedKnownNodes.get(i);
 			}
 		}
 		return smallestNode;
